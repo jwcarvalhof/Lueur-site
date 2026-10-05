@@ -1,0 +1,1339 @@
+<!doctype html><html lang="pt-BR"><head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lueur · Perfumaria</title>
+<meta name="description" content="Lueur: eaux de parfum feitas para ficar na pele o dia inteiro. A sua essência, algo que ninguém esquece.">
+<meta name="theme-color" content="#F8F6F3">
+<!-- DEPLOY STEP: patch og:url and og:image with the live absolute URL -->
+<meta property="og:title" content="Lueur · O que fica depois que você sai">
+<meta property="og:description" content="A sua essência. Algo que ninguém esquece.">
+<meta property="og:image" content="assets/campanha-peau-w.webp">
+<meta property="og:url" content="">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F1ECE6'/%3E%3Cellipse cx='32' cy='22' rx='11' ry='8' fill='%23C9AFA3'/%3E%3Crect x='22' y='31' width='20' height='22' rx='4' fill='none' stroke='%23292827' stroke-width='2.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Hanken+Grotesk:wght@400;500&family=Instrument+Serif:ital@1&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --canvas:#F8F6F3; --panel:#F1ECE6; --ink:#292827; --ink-2:#6B6560; --line:#D9CFC6; --line-strong:#9C8F85;
+  --nude:#C9AFA3; --nude-soft:#E7D9D0; --accent:#7E6154; --accent-hover:#5F463B;
+  --sec-bg:var(--canvas); --sec-ink:var(--ink); --sec-ink-2:var(--ink-2); --sec-line:var(--line);
+  --f-display:"Jost",system-ui,sans-serif; --f-body:"Hanken Grotesk",system-ui,sans-serif;
+  --f-it:"Instrument Serif",Georgia,serif; --f-mono:"DM Mono",ui-monospace,monospace;
+  --ease-out:cubic-bezier(.22,.61,.36,1); --ease-io:cubic-bezier(.65,0,.35,1);
+  --gutter:clamp(20px,4vw,64px); --header-h:76px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{overflow-x:hidden;overflow-x:clip;scroll-behavior:auto;-webkit-text-size-adjust:100%}
+body{margin:0;overflow-x:hidden;overflow-x:clip;background:var(--canvas);color:var(--ink);font:400 16px/1.65 var(--f-body);-webkit-font-smoothing:antialiased;animation:pageIn .9s var(--ease-out) both}
+@keyframes pageIn{from{opacity:0}to{opacity:1}}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:2px}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:fixed;left:16px;top:-60px;z-index:100;background:var(--ink);color:var(--canvas);padding:10px 16px;text-decoration:none;transition:top .3s var(--ease-out)}
+.skip:focus{top:16px}
+.mono{font:400 11px/1.4 var(--f-mono);letter-spacing:.14em;text-transform:uppercase}
+.it{font-family:var(--f-it);font-style:italic;font-weight:400;letter-spacing:0}
+
+/* one environment: grain + a slow warm glow behind everything */
+.env{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.env::before{content:"";position:absolute;width:70vmax;height:70vmax;left:-20vmax;top:-10vmax;border-radius:50%;background:radial-gradient(circle,rgba(201,175,163,.22),rgba(201,175,163,0) 65%);animation:drift 90s ease-in-out -20s infinite alternate}
+.env::after{content:"";position:absolute;inset:0;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .16 0 0 0 0 .15 0 0 0 0 .14 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+@keyframes drift{to{transform:translate(70vw,60vh)}}
+
+/* header */
+.hdr{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:40;height:var(--header-h);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 var(--gutter);transition:background-color .5s var(--ease-out),height .5s var(--ease-out),box-shadow .5s var(--ease-out),transform .5s var(--ease-out)}
+.hdr.scrolled{height:60px;background:rgba(248,246,243,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(41,40,39,.06)}
+.hdr.hide{transform:translateY(-100%)}
+.logo{font:300 19px/1 var(--f-display);letter-spacing:.42em;text-decoration:none;justify-self:start;padding:8px 0}
+.nav{display:flex;gap:clamp(20px,3vw,44px)}
+.nav a{font:400 12px/1 var(--f-display);letter-spacing:.24em;text-transform:uppercase;text-decoration:none;position:relative;padding:8px 0}
+.nav a::after,.tlink::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease-out)}
+.nav a:hover::after,.tlink:hover::after{transform:scaleX(1);transform-origin:left}
+.bag-btn{justify-self:end;display:inline-flex;align-items:baseline;gap:8px;font:400 12px/1 var(--f-display);letter-spacing:.24em;text-transform:uppercase;padding:10px 0}
+.bag-btn .count{font-family:var(--f-mono);letter-spacing:.06em;display:inline-block;min-width:1.2em;transition:transform .4s var(--ease-out)}
+.bag-btn.bump .count{transform:translateY(-4px)}
+.menu-btn{display:none}
+
+/* hero: one bottle opens as you scroll, then the house appears */
+.hero{position:relative;height:340vh;background:var(--canvas);color:var(--ink)}
+.hero-pin{position:sticky;top:0;height:100svh;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 48% 64% at var(--gx,64%) 58%,#EBDDD1 0%,#F0E6DD 34%,#F5EFE9 64%,#F8F6F3 100%)}
+.hero-bg::before{content:"";position:absolute;inset:-30%;background:linear-gradient(112deg,rgba(255,255,255,0) 36%,rgba(255,255,255,.55) 46%,rgba(255,255,255,.2) 53%,rgba(255,255,255,0) 60%);animation:beam 24s ease-in-out -6s infinite alternate}
+@keyframes beam{to{transform:translateX(12%) rotate(2deg)}}
+.hero-bg::after{content:"";position:absolute;left:0;right:0;bottom:0;height:22vh;background:linear-gradient(180deg,rgba(231,216,203,0),rgba(231,216,203,.55))}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hb{position:absolute;left:50%;bottom:4vh;height:70vh;transform-origin:50% 100%;will-change:transform,opacity}
+.hb .bottle{height:100%}
+.hb .bottle .cap,.hb .bottle .body{transition:none}
+.hb-side{height:46vh;opacity:0}
+.hcopy{position:absolute;left:var(--gutter);top:50%;transform:translateY(-50%);max-width:min(560px,44vw);will-change:transform,opacity}
+.hero-kicker{display:block;color:var(--ink-2);margin-bottom:28px;animation:fadeUp 1.1s .5s var(--ease-out) both}
+.hero h1{font:200 clamp(44px,6vw,96px)/1.02 var(--f-display);letter-spacing:-.01em;margin:0 0 30px}
+.hero h1 .ln{display:block;overflow:hidden;padding:.06em 0 .12em;margin:-.06em 0 -.12em}
+.hero h1 .ln>span{display:inline-block;animation:rise 1.3s var(--ease-out) both}
+.hero h1 .ln:nth-child(1)>span{animation-delay:.6s}.hero h1 .ln:nth-child(2)>span{animation-delay:.72s}.hero h1 .ln:nth-child(3)>span{animation-delay:.84s}
+.hero h1 .it{font-size:1.08em}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hero-sub{margin:0 0 40px;display:flex;flex-direction:column;gap:10px;animation:fadeUp 1.1s 1.05s var(--ease-out) both}
+.hero-sub .ess{font:300 13px/1 var(--f-display);letter-spacing:.42em;text-transform:uppercase}
+.hero-sub .it{font-size:clamp(24px,2.2vw,32px);line-height:1.15;color:var(--accent)}
+.hero .tlink{color:var(--ink);animation:fadeUp 1.1s 1.25s var(--ease-out) both}
+.tlink{position:relative;display:inline-flex;align-items:baseline;gap:14px;font:400 12px/1 var(--f-display);letter-spacing:.26em;text-transform:uppercase;text-decoration:none;padding:10px 0}
+.tlink .arr{display:inline-block;transition:transform .7s var(--ease-out)}
+.tlink:hover .arr{transform:translateX(6px)}
+#heroCta:hover .arr{transform:translateY(4px)}
+.beat{position:absolute;left:var(--gutter);top:50%;transform:translateY(-50%);max-width:min(460px,36vw);opacity:0;pointer-events:none;will-change:opacity,transform}
+.beat p{margin:0;font:400 clamp(38px,4.4vw,70px)/1.05 var(--f-it);font-style:italic;color:var(--ink)}
+.beat small{display:block;margin-top:18px;font-size:15px;color:var(--ink-2);max-width:30ch}
+.beat.final{top:auto;bottom:auto;top:16vh;transform:none;max-width:min(380px,28vw)}
+.beat.final h2{font:200 clamp(32px,3.3vw,52px)/1.05 var(--f-display);margin:12px 0 16px;color:var(--ink)}
+.beat.final .mono{color:var(--ink-2)}
+.beat.final small{margin:0 0 22px}
+.beat.on{pointer-events:auto}
+.hero-def{position:absolute;left:var(--gutter);bottom:30px;color:var(--ink-2);animation:fadeUp 1.1s 1.6s var(--ease-out) both}
+.hero-def .it{font-size:17px;text-transform:none;letter-spacing:0;color:var(--ink)}
+.scroll-cue{position:absolute;right:var(--gutter);bottom:30px;display:flex;align-items:center;gap:14px;color:var(--ink-2);transition:opacity .4s}
+.scroll-cue i{display:block;width:1px;height:46px;background:var(--line-strong);transform-origin:top;animation:cue 2.8s var(--ease-io) -1s infinite}
+@keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1);transform-origin:top}50.1%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.hprog{position:absolute;right:var(--gutter);top:50%;translate:0 -50%;display:flex;flex-direction:column;gap:10px}
+.hprog i{display:block;width:1px;height:28px;background:var(--line);position:relative;overflow:hidden}
+.hprog i b{position:absolute;inset:0;background:var(--accent);transform-origin:top;transform:scaleY(var(--f,0))}
+.hdr.dark{color:#F3E9DD}
+.hdr.dark.scrolled{background:rgba(30,22,17,.5);box-shadow:0 1px 0 rgba(243,233,221,.08)}
+/* manifesto */
+.manifesto{padding:clamp(120px,22vh,240px) var(--gutter) clamp(110px,18vh,200px);display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px}
+.manifesto .mono{grid-column:2 / span 3;color:var(--ink-2);padding-top:18px}
+.manifesto p{grid-column:5 / span 7;margin:0;font:400 clamp(30px,3.6vw,56px)/1.18 var(--f-it);font-style:italic;letter-spacing:-.005em}
+.manifesto .w{opacity:.16;transition:opacity .5s var(--ease-out)}
+.manifesto .w.on{opacity:1}
+.manifesto small{grid-column:5 / span 5;display:block;margin-top:42px;font-size:16px;color:var(--ink-2);max-width:46ch}
+
+/* collection */
+.col{position:relative;background:var(--sec-bg);color:var(--sec-ink);transition:background-color .8s var(--ease-io),color .8s var(--ease-io);padding:clamp(80px,12vh,140px) var(--gutter) clamp(100px,14vh,160px);min-height:100svh}
+.col-head{display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;margin-bottom:clamp(56px,9vh,110px);transition:opacity .45s var(--ease-out),transform .45s var(--ease-out)}
+.col-head h2{grid-column:1 / span 6;margin:0;font:200 clamp(40px,5vw,76px)/1 var(--f-display);letter-spacing:.02em;text-transform:uppercase}
+.col-head .it{display:block;text-transform:none;font-size:.62em;letter-spacing:0;margin-top:14px;color:var(--ink-2)}
+.col-head .mono{grid-column:10 / span 3;justify-self:end;align-self:end;color:var(--ink-2)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;align-items:start}
+.item{position:relative;text-align:left;display:block;transition:opacity .45s var(--ease-out),transform .6s var(--ease-out)}
+.item:nth-child(1){grid-column:1 / span 4;margin-top:0}
+.item:nth-child(2){grid-column:5 / span 4;margin-top:clamp(60px,12vh,140px)}
+.item:nth-child(3){grid-column:9 / span 4;margin-top:clamp(20px,4vh,48px)}
+.case{position:relative;display:block;aspect-ratio:3/4;border-radius:50% 50% 4px 4px / 34% 34% 4px 4px;overflow:hidden;isolation:isolate;transition:transform 1.1s var(--ease-out),box-shadow 1.1s var(--ease-out)}
+.case .tone{position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,var(--ta),var(--tb));transition:opacity .8s var(--ease-out)}
+.item[data-id=aube]{--ta:#F1F0EE;--tb:#E3E2DE}
+.item[data-id=peau]{--ta:#F4EAE2;--tb:#E7D7CB}
+.item[data-id=minuit]{--ta:#EFE2D4;--tb:#E0CCB8}
+.item[data-id=lin]{--ta:#F2F0F5;--tb:#E3DFE9}
+.item[data-id=figue]{--ta:#F0F1E7;--tb:#DFE2D1}
+.item[data-id=velours]{--ta:#F3E7E7;--tb:#E6D1D3}
+.case::before{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at var(--lx,30%) var(--ly,20%),rgba(255,252,247,.55),rgba(255,252,247,0) 42%);opacity:.55;transition:opacity 1s var(--ease-out);z-index:-1}
+
+.case::after{content:none}
+
+.bwrap{position:absolute;left:6%;right:6%;bottom:6%;height:70%;display:flex;justify-content:center;pointer-events:none}
+.item:hover .case,.item:focus-visible .case{box-shadow:0 30px 60px -30px rgba(60,40,25,.35)}
+.item:hover .case::before,.item:focus-visible .case::before{opacity:1}
+.item:hover .case::after,.item:focus-visible .case::after,.item.peek .case::after{transform:scaleX(.82);opacity:.75}
+.item .hint{position:absolute;left:50%;bottom:22px;transform:translate(-50%,8px);opacity:0;transition:opacity .6s var(--ease-out),transform .6s var(--ease-out);background:rgba(248,246,243,.86);color:var(--ink);padding:9px 16px;border-radius:40px;white-space:nowrap;z-index:2}
+.item:hover .hint,.item:focus-visible .hint{opacity:1;transform:translate(-50%,0)}
+
+.bottle[data-k=aube]{--ar:435/1200;--nx:.392;--ny:.071}
+.bottle[data-k=peau]{--ar:768/1200;--nx:.418;--ny:.054}
+.bottle[data-k=minuit]{--ar:1101/1200;--nx:.436;--ny:.09}
+/* the bottle mockup: body + cap layers, the cap lifts like the bottle is being opened */
+.bottle{position:relative;display:block;height:100%;aspect-ratio:var(--ar,.47);transform-origin:0 0;--cap:0;--capr:0;--px:0px}
+.bottle img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;user-select:none}
+.bottle .body{transform:translate(var(--px),calc(var(--lift,0) * -1%));transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.bottle .cap{transform-origin:28% 22%;transform:translate(calc(var(--px) * 1.9),calc(var(--cap) * -1%)) rotate(calc(var(--capr) * 1deg));transition:transform 1.25s cubic-bezier(.2,.85,.2,1) .06s;filter:drop-shadow(0 calc(var(--cap) * .25px) calc(var(--cap) * .8px) rgba(40,25,15,.18))}
+.bottle.is-open,.item:hover .bottle,.item:focus-visible .bottle,.item.peek .bottle{--cap:9;--capr:-8;--lift:.8}
+.item .bottle .cap{transition-duration:1.25s}
+.mist{position:absolute;left:calc(var(--nx,.4) * 100%);top:calc(var(--ny,.1) * 100%);width:min(70%,160px);aspect-ratio:1;translate:-50% -50%;pointer-events:none}
+.mist i{position:absolute;left:50%;top:50%;width:46%;aspect-ratio:1;margin:-23% 0 0 -23%;border-radius:50%;background:radial-gradient(closest-side,rgba(170,146,130,.32),rgba(170,146,130,0));filter:blur(7px);opacity:0}
+.item:hover .mist i,.item:focus-visible .mist i,.item.peek .mist i{animation:mist 2.8s var(--ease-out) .45s 1 both}
+.item:hover .mist i:nth-child(2),.item:focus-visible .mist i:nth-child(2),.item.peek .mist i:nth-child(2){animation-delay:.75s}
+.item:hover .mist i:nth-child(3),.item:focus-visible .mist i:nth-child(3),.item.peek .mist i:nth-child(3){animation-delay:1.05s}
+.stage .bottle .mist i{animation:mist 5.5s var(--ease-out) infinite}
+.stage .bottle .mist i:nth-child(2){animation-delay:-1.8s}.stage .bottle .mist i:nth-child(3){animation-delay:-3.6s}
+.col.dark .mist i{background:radial-gradient(closest-side,rgba(255,214,160,.55),rgba(255,214,160,0))}
+@keyframes mist{0%{opacity:0;transform:translate(0,0) scale(.3)}22%{opacity:.75}100%{opacity:0;transform:translate(calc(-90% - var(--mx,0) * 20%),calc(-30% + var(--mx,0) * 20%)) scale(1.7)}}
+.mist i:nth-child(2){--mx:-1}.mist i:nth-child(3){--mx:.4}
+.item-meta{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding-top:22px;border-top:1px solid transparent}
+.item-name{font:300 24px/1 var(--f-display);letter-spacing:.32em;text-transform:uppercase}
+.item-line{display:block;margin-top:10px;font:400 19px/1.3 var(--f-it);font-style:italic;color:var(--ink-2)}
+.item .mono{color:var(--ink-2);white-space:nowrap}
+.item .idx{position:absolute;top:13%;left:50%;translate:-50% 0;color:rgba(41,40,39,.5)}
+.item:nth-child(3) .idx{color:rgba(41,40,39,.5)}
+.grid.away .item:not(.chosen),.col.open .col-head{opacity:0;transform:translateY(18px);pointer-events:none}
+.grid.away .item.chosen .item-meta,.grid.away .item.chosen .tone,.grid.away .item.chosen .case::before,.grid.away .item.chosen .case::after,.grid.away .item.chosen .hint,.grid.away .item.chosen .idx{opacity:0}
+.grid.away .item.chosen .case,.grid.landing .item.chosen .case{box-shadow:none;overflow:visible}
+.case::before,.case::after,.idx,.item-meta{transition:opacity .8s var(--ease-out),transform 1s var(--ease-out)}
+.stage.leaving .rv,.stage.leaving .ghost-name{transition-duration:.45s!important;transition-delay:0s!important}
+.stage.leaving .bottle{--cap:0;--capr:0;--lift:0}
+.stage.leaving .halo{opacity:0}
+.item .case,.item .item-meta{transition:opacity .7s var(--ease-out),transform 1.1s var(--ease-out),box-shadow 1.1s var(--ease-out),background-color .6s}
+.col.open .grid,.col.open .col-head,.col.open .strip-hint{display:none!important}
+#sName:focus{outline:none}
+
+/* detail stage */
+.stage{display:none;position:relative}
+.col.open .stage{display:grid}
+.stage{grid-template-columns:minmax(0,1fr) minmax(300px,32vw) minmax(0,1fr);gap:0 clamp(28px,4vw,72px);align-items:start;min-height:calc(100svh - 120px)}
+.ghost-name{position:absolute;left:50%;top:clamp(10px,4vh,40px);transform:translateX(-50%);font:200 clamp(90px,15vw,240px)/1 var(--f-display);letter-spacing:.18em;text-transform:uppercase;color:var(--sec-ink);opacity:.06;white-space:nowrap;pointer-events:none;user-select:none;margin-right:-.18em}
+.s-left,.s-right{position:relative;z-index:2;padding-top:clamp(20px,5vh,60px)}
+.s-center{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center}
+.s-img{height:min(60svh,620px);min-height:340px;aspect-ratio:var(--ar,.47);position:relative;margin:clamp(10px,3vh,30px) auto 18px}
+.s-img::after{display:none;content:"";position:absolute;left:50%;bottom:-2%;width:90%;height:6%;translate:-50% 0;border-radius:50%;background:radial-gradient(closest-side,rgba(60,40,25,.3),rgba(60,40,25,0));z-index:-1;transition:opacity .6s}
+.col.dark .s-img::after{background:radial-gradient(closest-side,rgba(0,0,0,.55),rgba(0,0,0,0))}
+.halo{position:absolute;left:50%;top:46%;width:260%;aspect-ratio:1;translate:-50% -50%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,252,247,.7),rgba(255,252,247,0));opacity:0;transition:opacity 1.4s var(--ease-out);pointer-events:none;z-index:-2}
+.col.dark .halo{background:radial-gradient(closest-side,rgba(232,170,96,.28),rgba(232,170,96,0))}
+.stage.settled .halo{opacity:1}
+.float{width:100%;height:100%;animation:float 7s ease-in-out -2s infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.tilt{position:relative;width:100%;height:100%;transform:perspective(1100px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform 1s var(--ease-out)}
+.stage .bottle{height:100%;transform-origin:0 0}
+.stage .bottle .body,.stage .bottle .cap{transition-duration:1.1s}
+.flipping .float{animation:none}
+.flipping .tilt{transform:none;transition:none}
+.sheen{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at var(--sx,35%) var(--sy,30%),rgba(255,252,247,.55),rgba(255,252,247,0) 34%);mix-blend-mode:soft-light;opacity:0;transition:opacity .9s var(--ease-out);-webkit-mask-size:100% 100%;mask-size:100% 100%}
+.s-img.live .sheen{opacity:1}
+.back{display:inline-flex;align-items:baseline;gap:12px;font:400 12px/1 var(--f-display);letter-spacing:.24em;text-transform:uppercase;padding:12px 0;position:absolute;left:0;top:clamp(8px,3vh,40px);z-index:3}
+.s-left{padding-top:calc(clamp(8px,3vh,40px) + 110px)!important}
+.back .arr{transition:transform .5s var(--ease-out)}
+.back:hover .arr{transform:translateX(-6px)}
+.lbl{display:block;color:var(--sec-ink-2);margin-bottom:16px}
+.insp{font:400 clamp(22px,1.9vw,30px)/1.3 var(--f-it);font-style:italic;margin:0 0 clamp(40px,7vh,72px);max-width:22ch}
+.occ{list-style:none;margin:0;padding:0;border-top:1px solid var(--sec-line)}
+.occ li{display:flex;align-items:baseline;gap:18px;padding:14px 0;border-bottom:1px solid var(--sec-line)}
+.occ .mono{color:var(--sec-ink-2);min-width:4.2em}
+.occ span:last-child{font:300 17px/1.3 var(--f-display);letter-spacing:.02em}
+.s-name{font:300 clamp(30px,2.6vw,40px)/1 var(--f-display);letter-spacing:.34em;text-transform:uppercase;margin:6px 0 10px;padding-left:.34em}
+.s-desc{color:var(--sec-ink-2);margin:0 auto 22px;max-width:40ch}
+.buy{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px 22px}
+.sizes{display:inline-flex;border:1px solid var(--sec-line);border-radius:40px;padding:3px}
+.sizes button{font:400 12px/1 var(--f-mono);letter-spacing:.08em;padding:10px 18px;border-radius:40px;color:var(--sec-ink-2);transition:background-color .4s var(--ease-out),color .4s var(--ease-out)}
+.sizes button[aria-pressed=true]{background:var(--sec-ink);color:var(--sec-bg)}
+.price{font:300 22px/1 var(--f-display);letter-spacing:.06em}
+.add{display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:48px;padding:0 30px;border-radius:48px;background:var(--sec-ink);color:var(--sec-bg);font:400 12px/1 var(--f-display);letter-spacing:.24em;text-transform:uppercase;transition:transform .4s var(--ease-out),opacity .4s}
+.add:hover{transform:translateY(-2px)}
+.add .arr{transition:transform .5s var(--ease-out)}
+.add:hover .arr{transform:translateX(5px)}
+
+/* notes in time: the signature */
+.time{position:relative}
+.time h3{font:300 13px/1 var(--f-display);letter-spacing:.26em;text-transform:uppercase;margin:0 0 6px}
+.time .hintline{color:var(--sec-ink-2);font-size:14px;margin:0 0 22px}
+.curve{width:100%;height:96px;display:block;overflow:visible}
+.curve .area{fill:var(--nude);opacity:.35}
+.curve .edge{fill:none;stroke:var(--sec-ink);stroke-width:1;opacity:.55}
+.curve .ph{stroke:var(--accent);stroke-width:1.25}
+.curve .dot{fill:var(--accent)}
+.col.dark .curve .ph{stroke:#E6C9A8}.col.dark .curve .dot{fill:#E6C9A8}
+.range{width:100%;margin:10px 0 4px;-webkit-appearance:none;appearance:none;background:transparent;height:32px;cursor:ew-resize}
+.range::-webkit-slider-runnable-track{height:1px;background:var(--sec-line)}
+.range::-moz-range-track{height:1px;background:var(--sec-line)}
+.range::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--sec-bg);border:1px solid var(--sec-ink);margin-top:-9px;transition:transform .3s var(--ease-out)}
+.range::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--sec-bg);border:1px solid var(--sec-ink)}
+.range:active::-webkit-slider-thumb{transform:scale(1.25)}
+.ticks{display:flex;justify-content:space-between;color:var(--sec-ink-2);margin-bottom:26px}
+.readout{min-height:3.2em;font:400 19px/1.35 var(--f-it);font-style:italic;margin:0 0 26px}
+.readout .hr{font:400 11px/1 var(--f-mono);font-style:normal;letter-spacing:.14em;color:var(--accent);display:block;margin-bottom:8px}
+.col.dark .readout .hr{color:#E6C9A8}
+.tiers{list-style:none;margin:0;padding:0}
+.tier{padding:14px 0;border-top:1px solid var(--sec-line)}
+.tier:last-child{border-bottom:1px solid var(--sec-line)}
+.tier-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.tier .mono{color:var(--sec-ink-2)}
+.tier .bar{display:block;height:2px;background:var(--sec-line);position:relative;overflow:hidden;width:72px}
+.tier .bar i{position:absolute;inset:0;background:var(--sec-ink);transform-origin:left;transform:scaleX(var(--i,1));transition:transform .25s linear}
+.tier .notes{font:300 18px/1.35 var(--f-display);opacity:calc(.22 + .78*var(--i,1));transition:opacity .25s linear}
+
+/* stage entrances */
+.stage .rv{opacity:0;transform:translateY(16px);transition:opacity .7s var(--ease-out),transform .8s var(--ease-out)}
+.stage.in .rv{opacity:1;transform:none}
+.stage.in .rv:nth-of-type(1){transition-delay:.05s}
+.stage.in .s-left .rv{transition-delay:.18s}.stage.in .s-left .rv+.rv{transition-delay:.26s}.stage.in .s-left .rv+.rv+.rv{transition-delay:.34s}
+.stage.in .s-right .rv{transition-delay:.3s}
+.stage.in .s-center .rv{transition-delay:.42s}
+.stage.settled .rv{transition-delay:0s!important}
+.ghost-name{transition:opacity 1.2s var(--ease-out),letter-spacing 1.4s var(--ease-out)}
+.stage:not(.in) .ghost-name{opacity:0;letter-spacing:.32em}
+
+/* dark section (Minuit) */
+.col.dark{--sec-ink:#F3E9DD;--sec-ink-2:#CDB9A6;--sec-line:rgba(243,233,221,.2)}
+.col.dark .add{background:#F3E9DD;color:#3B2B1F}
+.col.dark .sizes button[aria-pressed=true]{background:#F3E9DD;color:#3B2B1F}
+
+/* campaign */
+.camp{padding:clamp(120px,18vh,200px) var(--gutter);display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;align-items:start}
+.camp-w{grid-column:1 / -1;margin:0 0 clamp(90px,14vh,160px);aspect-ratio:21/9;overflow:hidden;position:relative}
+.camp-w img{width:100%;height:116%;object-fit:cover;object-position:60% 40%;will-change:transform}
+.camp-w figcaption{position:absolute;left:18px;bottom:16px;color:rgba(41,40,39,.65)}
+.camp-a{grid-column:1 / span 7;margin:0;aspect-ratio:4/5;overflow:hidden;position:relative}
+.camp-a img{width:100%;height:118%;object-fit:cover;object-position:50% 15%;will-change:transform}
+.camp-b{grid-column:9 / span 4;margin:clamp(160px,30vh,320px) 0 0;aspect-ratio:3/4;overflow:hidden;position:relative}
+.camp-b img{width:100%;height:118%;object-fit:cover;will-change:transform}
+.camp figcaption{position:absolute;left:16px;bottom:14px;color:rgba(248,246,243,.85)}
+.camp-a figcaption{color:rgba(41,40,39,.6)}
+.camp-quote{grid-column:2 / span 7;margin:clamp(70px,10vh,120px) 0 0;font:400 clamp(34px,4.4vw,68px)/1.08 var(--f-it);font-style:italic;letter-spacing:-.01em}
+.camp-quote span{display:block}
+.camp-quote span:nth-child(2){padding-left:1.4em}
+.camp-c{grid-column:10 / span 3;margin:clamp(40px,6vh,80px) 0 0;color:var(--ink-2);font-size:15px;max-width:30ch}
+.camp-c .mono{display:block;margin-bottom:12px}
+
+/* kit */
+.kit{background:var(--panel);padding:clamp(100px,16vh,180px) var(--gutter);display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;align-items:center;position:relative}
+.kit-visual{grid-column:1 / span 6;position:relative;padding:clamp(28px,4vw,56px)}
+.kit-visual svg.box{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.kit-visual svg.box rect{fill:none;stroke:var(--line-strong);stroke-width:1;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);transition:stroke-dashoffset 2.2s var(--ease-io)}
+.kit-visual.in svg.box rect{stroke-dashoffset:0}
+.vials{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.4vw,20px)}
+.vials figure{margin:0;aspect-ratio:3/4;overflow:hidden;opacity:0;transform:translateY(24px);transition:opacity .9s var(--ease-out),transform 1s var(--ease-out)}
+.kit-visual.in .vials figure{opacity:1;transform:none}
+.kit-visual.in .vials figure:nth-child(2){transition-delay:.15s}.kit-visual.in .vials figure:nth-child(3){transition-delay:.3s}
+.kit-visual.done .vials figure{transition-delay:0s!important}
+.vials figure{display:flex;justify-content:center;align-items:flex-end;padding:14% 0 10%;background:linear-gradient(180deg,var(--ta),var(--tb));border-radius:50% 50% 3px 3px / 30% 30% 3px 3px}
+.vials figure[data-id=aube]{--ta:#F1F0EE;--tb:#E3E2DE}.vials figure[data-id=peau]{--ta:#F4EAE2;--tb:#E7D7CB}.vials figure[data-id=minuit]{--ta:#EFE2D4;--tb:#E0CCB8}
+.vials .bottle{height:100%}
+.kit-visual:hover .bottle{--cap:9;--capr:-7;--lift:.8}
+.vials figure:nth-child(2) .bottle .cap{transition-delay:.12s}.vials figure:nth-child(3) .bottle .cap{transition-delay:.24s}
+.vials figcaption{display:none}
+.kit-vlabel{display:flex;justify-content:space-between;margin-top:16px;color:var(--ink-2)}
+.kit-copy{grid-column:8 / span 5}
+.kit-copy h2{font:200 clamp(36px,3.8vw,58px)/1.05 var(--f-display);margin:14px 0 24px;letter-spacing:-.005em}
+.kit-copy h2 .it{display:block;font-size:1.06em}
+.kit-copy p{color:var(--ink-2);max-width:42ch;margin:0 0 30px}
+.kit-buy{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-bottom:56px}
+.kit-buy .price{font-size:24px}
+.kit .add{background:var(--ink);color:var(--canvas)}
+.faq details{border-top:1px solid var(--line)}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:18px 0;font:300 18px/1.35 var(--f-display);transition:color .5s var(--ease-out),padding-left .6s var(--ease-out)}
+.faq summary:hover{color:var(--accent);padding-left:6px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary i{font-style:normal;font-family:var(--f-mono);transition:transform .7s var(--ease-out);color:var(--ink-2)}
+.faq details.on summary i{transform:rotate(45deg)}
+.faq .ans{overflow:hidden}
+.faq .ans p{margin:0;padding:0 0 22px;color:var(--ink-2);max-width:48ch;font-size:15px;opacity:0;transform:translateY(-6px);filter:blur(2px);transition:opacity .7s .08s var(--ease-out),transform .8s .08s var(--ease-out),filter .7s .08s var(--ease-out)}
+.faq details.on .ans p{opacity:1;transform:none;filter:none}
+
+/* stay close */
+.close{position:relative;padding:clamp(140px,22vh,260px) var(--gutter);text-align:center;overflow:hidden}
+.close .big{position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);font:400 clamp(180px,30vw,520px)/1 var(--f-it);font-style:italic;color:var(--nude);opacity:.28;white-space:nowrap;pointer-events:none;user-select:none;will-change:transform}
+.close .inner{position:relative;max-width:620px;margin:0 auto}
+.close h2{font:300 clamp(14px,1.1vw,16px)/1 var(--f-display);letter-spacing:.42em;text-transform:uppercase;margin:0 0 26px;padding-left:.42em}
+.close p{font:400 clamp(24px,2.4vw,34px)/1.3 var(--f-it);font-style:italic;margin:0 auto 48px;max-width:24ch}
+.nl{display:flex;align-items:flex-end;gap:20px;max-width:520px;margin:0 auto;border-bottom:1px solid var(--ink);padding-bottom:6px;transition:border-color .4s}
+.nl:focus-within{border-color:var(--accent)}
+.nl label{flex:1;text-align:left}
+.nl input{width:100%;border:0;background:transparent;font:300 18px/1.4 var(--f-display);padding:10px 0;color:var(--ink);outline:0}
+.nl input::placeholder{color:var(--ink-2)}
+.nl button{font:400 12px/1 var(--f-display);letter-spacing:.24em;text-transform:uppercase;padding:14px 0;display:inline-flex;gap:12px;white-space:nowrap}
+.nl button .arr{transition:transform .5s var(--ease-out)}
+.nl button:hover .arr{transform:translateX(5px)}
+.nl-msg{min-height:1.6em;margin-top:18px;color:var(--ink-2);font-size:15px}
+.nl-msg.err{color:#8A3B2E}
+
+/* footer */
+.ftr{padding:clamp(80px,12vh,120px) var(--gutter) 36px;border-top:1px solid var(--line)}
+.ftr-top{display:grid;grid-template-columns:repeat(12,1fr);gap:40px 24px}
+.ftr-brand{grid-column:1 / span 5}
+.ftr-brand .logo{font-size:28px;display:inline-block;margin-bottom:18px}
+.ftr-brand p{color:var(--ink-2);max-width:32ch;margin:0;font:400 19px/1.35 var(--f-it);font-style:italic}
+.ftr-col{grid-column:span 2}
+.ftr-col:first-of-type{grid-column:7 / span 2}
+.ftr-col .mono{display:block;color:var(--ink-2);margin-bottom:18px}
+.ftr-col ul{list-style:none;margin:0;padding:0}
+.ftr-col a{display:inline-block;padding:5px 0;text-decoration:none;font:300 16px/1.4 var(--f-display);position:relative}
+.ftr-col a::after{content:"";position:absolute;left:0;right:0;bottom:4px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease-out)}
+.ftr-col a:hover::after{transform:scaleX(1);transform-origin:left}
+.ftr-bot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:clamp(70px,10vh,120px);padding-top:24px;border-top:1px solid var(--line);color:var(--ink-2);font-size:13px}
+.ftr-bot p{margin:0;max-width:70ch}
+
+/* bag drawer */
+.scrim{position:fixed;inset:0;z-index:60;background:rgba(41,40,39,.28);opacity:0;pointer-events:none;transition:opacity .6s var(--ease-out)}
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:61;width:min(440px,100vw);background:var(--canvas);transform:translateX(102%);visibility:hidden;transition:transform .7s var(--ease-io),visibility 0s .7s;display:flex;flex-direction:column}
+body.bag-open .scrim{opacity:1;pointer-events:auto}
+body.bag-open .drawer{transform:none;visibility:visible;transition:transform .7s var(--ease-io),visibility 0s;box-shadow:-30px 0 60px rgba(41,40,39,.08)}
+.d-head{display:flex;justify-content:space-between;align-items:center;padding:26px 28px;border-bottom:1px solid var(--line)}
+.d-head h2{margin:0;font:300 13px/1 var(--f-display);letter-spacing:.3em;text-transform:uppercase}
+.d-x{font:400 12px/1 var(--f-display);letter-spacing:.2em;text-transform:uppercase;padding:12px 0}
+.d-body{flex:1;overflow:auto;padding:8px 28px}
+.d-empty{padding:56px 0;text-align:center}
+.d-empty p{font:400 22px/1.3 var(--f-it);font-style:italic;margin:0 0 20px}
+.line{display:grid;grid-template-columns:72px 1fr auto;gap:18px;align-items:center;padding:20px 0;border-bottom:1px solid var(--line)}
+.line img{width:72px;height:96px;object-fit:cover}
+.line .nm{font:300 15px/1.2 var(--f-display);letter-spacing:.24em;text-transform:uppercase}
+.line .sub{display:block;color:var(--ink-2);font-size:13px;margin-top:6px}
+.qty{display:inline-flex;align-items:center;gap:12px;margin-top:10px;font-family:var(--f-mono);font-size:13px}
+.qty button{width:28px;height:28px;border:1px solid var(--line);border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
+.line .lp{font:300 15px/1 var(--f-display);text-align:right}
+.d-foot{padding:24px 28px 28px;border-top:1px solid var(--line)}
+.d-total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.d-total strong{font:300 22px/1 var(--f-display)}
+.d-note{color:var(--ink-2);font-size:13px;margin:0 0 20px}
+.d-foot .add{width:100%;background:var(--ink);color:var(--canvas)}
+.d-foot .add[disabled]{opacity:.35;cursor:not-allowed;transform:none}
+.d-done{padding:64px 0;text-align:center}
+.d-done .mono{color:var(--accent)}
+.d-done p.it{font-size:26px;line-height:1.3;margin:16px 0 14px}
+.d-done p{color:var(--ink-2);font-size:14px;max-width:32ch;margin:0 auto 22px}
+
+/* reveal */
+.rv-s{opacity:0;transform:translateY(22px);transition:opacity 1s var(--ease-out),transform 1.1s var(--ease-out)}
+.rv-s.in{opacity:1;transform:none}
+
+/* ---------- tablet & mobile: redesigned, not stacked ---------- */
+@media (max-width:1023px){
+  .stage{grid-template-columns:1fr 1fr;gap:0 32px}
+  .s-center{grid-column:1 / -1;order:1}
+  .s-left{order:2}.s-right{order:3}
+  .s-left{grid-column:1}.s-right{grid-column:2}
+  .back{position:sticky}
+  .s-img{height:min(50svh,520px)}
+  .ghost-name{font-size:18vw}
+}
+@media (max-width:860px){
+  :root{--header-h:64px}
+  .nav{display:none}
+  .hdr{grid-template-columns:auto 1fr auto;gap:16px}
+  .menu-btn{display:inline-flex;font:400 12px/1 var(--f-display);letter-spacing:.24em;text-transform:uppercase;padding:12px 0;justify-self:start;order:-1}
+  .logo{justify-self:center;margin-right:-.42em}
+  body.menu-open .nav{display:flex;position:fixed;inset:var(--header-h) 0 auto 0;flex-direction:column;gap:0;background:var(--canvas);padding:12px var(--gutter) 28px;border-bottom:1px solid var(--line)}
+  body.menu-open .nav a{font-size:15px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .hero{height:300vh}
+  .hcopy{top:calc(var(--header-h) + 28px);transform:none;max-width:none;right:var(--gutter)}
+  .hero h1{font-size:clamp(40px,11.5vw,60px);margin-bottom:18px}
+  .hero-kicker{margin-bottom:16px}
+  .hero-sub{margin-bottom:18px}
+  .hero-sub .it{font-size:22px}
+  .hb{height:46svh;bottom:3svh}
+  .hb-side{height:26svh}
+  .beat{top:calc(var(--header-h) + 34px);transform:none;max-width:none;right:var(--gutter)}
+  .beat p{font-size:clamp(34px,10vw,48px)}
+  .beat.final{top:calc(var(--header-h) + 24px);max-width:none}
+  .beat.final h2{font-size:clamp(30px,8.6vw,40px)}
+  .hero-def{display:none}
+  .scroll-cue{bottom:14px;right:50%;translate:50% 0}
+  .hprog{display:none}
+  .manifesto{grid-template-columns:1fr;padding:110px var(--gutter) 100px}
+  .manifesto .mono,.manifesto p,.manifesto small{grid-column:1}
+  .manifesto .mono{margin-bottom:26px;padding:0}
+  .col-head{grid-template-columns:1fr}
+  .col-head h2,.col-head .mono{grid-column:1;justify-self:start}
+  .col-head .mono{margin-top:22px}
+  /* collection becomes a swipeable strip, one object at a time */
+  .grid{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 calc(var(--gutter) * -1);padding:0 var(--gutter) 8px;scrollbar-width:none}
+  .grid::-webkit-scrollbar{display:none}
+  .item,.item:nth-child(n){flex:0 0 78%;margin-top:0;scroll-snap-align:center}
+  .strip-hint{display:flex!important}
+  .stage{display:none;grid-template-columns:1fr;min-height:0}
+  .col.open .stage{display:flex;flex-direction:column}
+  .s-center{order:1}
+  .s-right{order:2}
+  .s-left{order:3;display:flex;flex-direction:column}
+  .back{position:sticky;top:calc(var(--header-h) + 8px);left:auto;align-self:flex-start;order:0;margin:0 0 8px -14px;padding:0 16px;min-height:44px;border-radius:44px;background:var(--sec-bg);box-shadow:0 0 0 1px var(--sec-line);transition:background-color .8s var(--ease-io)}
+  .s-left{padding-top:48px!important}
+  .s-center{order:1}
+  .s-img{height:min(52svh,480px);min-height:300px}
+  .ghost-name{font-size:24vw;top:80px}
+  .insp{margin-bottom:40px}
+  .s-left{padding-top:48px}
+  .camp{grid-template-columns:repeat(6,1fr)}
+  .camp-w{aspect-ratio:4/5;margin-bottom:64px}
+  .camp-a{grid-column:1 / span 5}
+  .camp-b{grid-column:3 / span 4;margin-top:-80px}
+  .camp-quote{grid-column:1 / -1;margin-top:64px}
+  .camp-quote span:nth-child(2){padding-left:.8em}
+  .camp-c{grid-column:1 / -1;margin-top:32px}
+  .kit{grid-template-columns:1fr;gap:56px}
+  .kit-visual,.kit-copy{grid-column:1}
+  .ftr-top{grid-template-columns:repeat(2,1fr)}
+  .ftr-brand{grid-column:1 / -1}
+  .ftr-col,.ftr-col:first-of-type{grid-column:auto}
+  .nl{flex-direction:column;align-items:stretch;border-bottom:0;gap:10px}
+  .nl label{border-bottom:1px solid var(--ink)}
+  .nl button{justify-content:center;border:1px solid var(--ink);border-radius:48px;min-height:48px}
+}
+.strip-hint{display:none;justify-content:space-between;margin-top:22px;color:var(--ink-2)}
+@media (pointer:coarse){.add,.tlink,.back,.nav a,.bag-btn,.d-x,.menu-btn{min-height:44px;display:inline-flex;align-items:center}.qty button{width:40px;height:40px}}
+@media (max-height:620px) and (min-width:861px){.hero-def,.scroll-cue{display:none}}
+
+/* reduced motion: final states, no movement */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;transition-delay:0s!important}
+  .veil{display:none}
+  .rv-s,.stage .rv,.vials figure{opacity:1!important;transform:none!important}
+  .manifesto .w{opacity:1}
+  .kit-visual svg.box rect{stroke-dashoffset:0}
+  .faq .ans p{opacity:1!important;transform:none!important;filter:none!important}
+  .float,.mist i{animation:none!important}
+  .camp img,.close .big{transform:none!important}
+  .hero{height:auto}.hero-pin{position:relative;height:100svh;min-height:640px}
+  .close .big{transform:translate(-50%,-52%)!important}
+}
+html.gl .bottle{height:var(--gh,100%);top:calc(100% - var(--gh,100%));margin-inline:auto}
+html.gl .vials .bottle{top:0}
+html.gl .kit-visual:hover .bottle{--cap:0;--lift:0}
+.gl-view{position:absolute;pointer-events:none;max-width:none;z-index:0}
+html.gl .bottle>img{visibility:hidden}
+html.gl .tilt{transform:none!important;transition:none}
+html.gl .sheen{display:none}
+html.gl #sBox{cursor:grab;touch-action:pan-y;user-select:none}
+html.gl #sBox.dragging{cursor:grabbing}
+.drag-hint{display:none}
+html.gl .drag-hint{display:block;position:absolute;right:-14%;top:50%;translate:0 -50%;writing-mode:vertical-rl;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);opacity:0;transition:opacity .8s var(--ease-out) .9s;white-space:nowrap;pointer-events:none}
+html.gl .stage.settled .drag-hint{opacity:.75}
+html.gl .drag-hint.gone,html.gl .stage.leaving .drag-hint{opacity:0!important;transition-delay:0s}
+
+/* ---------- Coleção I: one perfume at a time, white room, ingredients in the corners ---------- */
+.c1{background:#FDFCFA;position:relative}
+.c1-head{padding:clamp(90px,14vh,150px) var(--gutter) 0;max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr auto;align-items:end;gap:12px 32px}
+.c1-head .mono{grid-column:1 / -1;color:var(--ink-2);font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+.c1-head h2{margin:0;font:200 clamp(40px,5vw,76px)/1 var(--f-display);letter-spacing:.02em;text-transform:uppercase}
+.c1-head h2 .it{display:block;text-transform:none;font:400 .62em/1.2 var(--f-it);letter-spacing:0;margin-top:14px;color:var(--ink-2)}
+.c1-head p{margin:0;color:var(--ink-2);max-width:26ch}
+.c1-track{position:relative;height:calc(var(--n,3) * 115vh + 40vh + var(--c1-intro,70vh))}
+.c1-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--room,#FDFCFA);transition:background-color 2.2s var(--ease-io)}
+.c1-tints>i{position:absolute;inset:0;opacity:0;transition:opacity 2.4s var(--ease-io);background:radial-gradient(ellipse 34% 46% at 50% 50%,var(--t) 0%,transparent 70%)}
+.c1-tints>i.on{opacity:.16}
+.c1-ghosts>span{position:absolute;left:50%;top:44%;translate:-50% -50%;font:200 clamp(110px,21vw,340px)/1 var(--f-display);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;color:var(--t);opacity:0;filter:blur(8px);transform:scale(.985);transition:opacity 2.2s var(--ease-io),transform 2.6s var(--ease-out)}
+.c1-ghosts>span.on{opacity:.2;transform:none}
+.c1-ings figure{position:absolute;margin:0;width:clamp(150px,17vw,280px);opacity:0;transition:opacity 2s var(--ease-io),transform 2.6s var(--ease-out),filter 2s var(--ease-io)}
+.c1-ings figure img{width:100%;height:auto;display:block;filter:saturate(.9) drop-shadow(0 26px 34px rgba(80,60,45,.07))}
+.c1-ings figure::after{content:"";position:absolute;inset:0;background:var(--t);mix-blend-mode:color;opacity:.22;-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat}
+.c1-ings figure.tl,.c1-ings figure.br{filter:blur(1.3px)}
+.c1-ings figure.on.tl,.c1-ings figure.on.br{opacity:.9}
+.c1-ings figure.tl{left:-2%;top:6%;transform:translate(-30px,-24px) rotate(-8deg)}
+.c1-ings figure.tr{right:-1%;top:4%;transform:translate(30px,-24px) rotate(7deg)}
+.c1-ings figure.bl{left:-5%;bottom:-3%;transform:translate(-30px,24px) rotate(6deg)}
+.c1-ings figure.br{right:-2%;bottom:-4%;transform:translate(30px,24px) rotate(-6deg)}
+.c1-ings figure.on{opacity:1}
+.c1-ings figure.on.tl{transform:rotate(-8deg)}.c1-ings figure.on.tr{transform:rotate(7deg)}.c1-ings figure.on.bl{transform:rotate(6deg)}.c1-ings figure.on.br{transform:rotate(-6deg)}
+.c1-ings figure.wide{width:clamp(200px,24vw,380px)}
+.c1-ings figure.on{transition-delay:.25s}.c1-ings figure.on:nth-child(4n+2){transition-delay:.45s}.c1-ings figure.on:nth-child(4n+3){transition-delay:.65s}.c1-ings figure.on:nth-child(4n){transition-delay:.85s}
+.c1-bottles{position:absolute;left:50%;top:47%;width:0;height:0}
+.c1-bottles .bottle{position:absolute;left:0;bottom:calc(var(--bh) * -.5);height:var(--bh);translate:-50% 0;--bh:min(46vh,40vw);opacity:0;transform:translateY(10px);transition:opacity 1.8s var(--ease-io),transform 2.4s var(--ease-out)}
+html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:auto;margin:0}
+.c1-bottles .bottle.on{opacity:1;transform:none;transition-delay:.15s}
+.c1-bottles .bottle img{object-fit:contain}
+.c1-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.c1-lines path{fill:none;stroke:rgba(41,40,39,.32);stroke-width:1;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.1s cubic-bezier(.45,0,.2,1)}
+.c1-lines circle{fill:var(--ink);opacity:0;transition:opacity .7s var(--ease-io)}
+.c1-lines .go path{stroke-dashoffset:0}.c1-lines .go circle{opacity:.45}
+/* on wide screens each piece of information waits for its line to reach it */
+@media (min-width:861px){
+  .c1-left .c1-row,.c1-right .c1-row{opacity:0;transition:opacity 1s var(--ease-io),transform 1.3s var(--ease-out)}
+  .c1-left .c1-row{transform:translateX(12px)}.c1-right .c1-row{transform:translateX(-12px)}
+  .c1-row.in{opacity:1;transform:none}
+  .c1-left .c1-block.on,.c1-right .c1-block.on{transition-delay:0s}
+}
+.c1-left,.c1-right{position:absolute;top:50%;translate:0 -50%;width:min(22vw,310px)}
+.c1-left{left:max(var(--gutter),7vw);text-align:right}
+.c1-right{right:max(var(--gutter),7vw)}
+.c1-block{position:absolute;inset:auto 0;top:50%;translate:0 -50%;opacity:0;transition:opacity 1.1s var(--ease-io),transform 1.6s var(--ease-out);transform:translateY(10px);pointer-events:none}
+.c1-block.on{opacity:1;transform:none;transition:opacity 1.8s var(--ease-io) .9s,transform 2.2s var(--ease-out) .9s;pointer-events:auto}
+.c1-foot .c1-block.on{transition-delay:1.2s,1.2s}
+.c1-row{padding:14px 0}
+.c1-row .mono{display:block;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);margin-bottom:4px}
+.c1-row .v{font:300 17px/1.35 var(--f-display);letter-spacing:.01em}
+.c1-row .v i{font:400 19px/1.3 var(--f-it)}
+.c1-int{display:inline-flex;gap:6px;align-items:center;margin-right:10px;vertical-align:middle}
+.c1-int b{width:7px;height:7px;border-radius:50%;border:1px solid var(--ink);opacity:.8}
+.c1-int b.f{background:var(--ink)}
+.c1-foot{position:absolute;left:50%;bottom:clamp(22px,5vh,52px);translate:-50% 0;width:min(560px,90vw);height:150px;text-align:center}
+.c1-foot .c1-block{top:auto;bottom:0;translate:0 0}
+.c1-foot .nm{font:200 clamp(30px,3.2vw,46px)/1 var(--f-display);letter-spacing:.24em;text-transform:uppercase;margin:4px 0 8px}
+.c1-foot .ds{margin:0 auto 14px;color:var(--ink-2);max-width:44ch;font-size:15px}
+.c1-foot .act{display:flex;gap:22px;justify-content:center;align-items:center}
+.c1-foot .pr{font:300 18px var(--f-display)}
+.c1-foot button{font:500 11px/1 var(--f-body);letter-spacing:.18em;text-transform:uppercase;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:14px 22px;cursor:pointer;transition:background .4s}
+.c1-foot button:hover{background:var(--accent)}
+.c1-prog{position:absolute;right:var(--gutter);top:50%;translate:0 -50%;list-style:none;margin:0;padding:0;display:grid;gap:12px;font-size:10px;letter-spacing:.2em;color:var(--ink-2)}
+.c1-prog li{opacity:.35;transition:opacity .6s}.c1-prog li.on{opacity:1}
+@media (max-width:860px){
+  .c1-head{grid-template-columns:1fr;padding-top:80px}
+  .c1-track{height:calc(var(--n,3) * 110svh + 30svh + var(--c1-intro,70vh))}
+  .c1-ghosts>span{top:20%;font-size:30vw}
+  .c1-bottles{top:31%}
+  .c1-bottles .bottle{--bh:30svh}
+  .c1-ings figure{width:25vw}
+  .c1-ings figure.tl{top:7%}.c1-ings figure.tr{top:5%}.c1-ings figure.bl,.c1-ings figure.br{bottom:auto;top:30%}
+  .c1-ings figure.bl{left:-9%}.c1-ings figure.br{right:-9%}
+  .c1-ings figure.wide{width:27vw}
+  .c1-left,.c1-right{top:auto;bottom:178px;translate:0;width:44vw}
+  .c1-left{left:var(--gutter);text-align:left}.c1-right{right:var(--gutter)}
+  .c1-block{top:auto;bottom:0;translate:0}
+  .c1-row{padding:6px 0}.c1-row .v{font-size:14px}.c1-row .v i{font-size:15px}
+  .c1-lines,.c1-prog{display:none}
+  .c1-foot{height:160px;bottom:16px}
+  .c1-foot .ds{font-size:13.5px;margin-bottom:10px}
+}
+
+/* one photographed set per fragrance: the ingredients share the light and shadows of the room */
+.c1-scenes img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.035);transition:opacity 2.2s var(--ease-io),transform 3.2s var(--ease-out)}
+.c1-scenes img.on{opacity:1;transform:none}
+.c1-ghosts>span.on{opacity:.13}
+@media (max-width:860px){
+  .c1-scenes img{height:auto;inset:auto 0;top:3%;-webkit-mask:linear-gradient(#000 62%,transparent 98%);mask:linear-gradient(#000 62%,transparent 98%)}
+}
+@media (prefers-reduced-motion:reduce){.c1-scenes img,.c1-ings figure,.c1-block,.c1-ghosts>span,.c1-tints>i,.c1-bottles .bottle{transition:none!important}}
+
+/* ---------- hero: the first room of Collection I. The set settles, the words step aside, the collection begins ---------- */
+.c1-anchor{position:absolute;top:var(--c1-intro,70vh)}
+.c1-scenes,.c1-bottles{will-change:transform}
+.c1-scenes{position:absolute;inset:0;transform-origin:50% 50%}
+.c1-intro{position:absolute;left:7vw;top:50%;translate:0 -50%;max-width:min(30vw,440px);z-index:3;will-change:opacity,transform}
+.c1-intro .mono{display:block;color:var(--ink-2);margin-bottom:26px;animation:fadeUp 1.1s .5s var(--ease-out) both}
+.c1-intro h1{font:200 clamp(40px,4.4vw,76px)/1.02 var(--f-display);letter-spacing:-.01em;margin:0 0 22px}
+.c1-intro h1 .ln{display:block;overflow:hidden;padding:.06em 0 .12em;margin:-.06em 0 -.12em}
+.c1-intro h1 .ln>span{display:inline-block;animation:rise 1.3s var(--ease-out) both}
+.c1-intro h1 .ln:nth-child(1)>span{animation-delay:.6s}.c1-intro h1 .ln:nth-child(2)>span{animation-delay:.72s}.c1-intro h1 .ln:nth-child(3)>span{animation-delay:.84s}
+.c1-intro h1 .it{font:400 1.06em/1 var(--f-it);font-style:italic}
+.c1-intro p{margin:0;font:400 clamp(20px,1.7vw,26px)/1.2 var(--f-it);font-style:italic;color:var(--accent);animation:fadeUp 1.1s 1.05s var(--ease-out) both}
+.c1-cue{position:absolute;left:50%;bottom:28px;translate:-50% 0;display:flex;align-items:center;gap:12px;color:var(--ink-2);z-index:3}
+.c1-cue i{display:block;width:1px;height:34px;background:var(--line-strong);transform-origin:top;animation:cue 2.8s var(--ease-io) -1s infinite}
+.c1-pin.intro .c1-prog{opacity:0}
+.c1-prog{transition:opacity .8s}
+@media (max-width:860px){
+  .c1-intro{left:var(--gutter);right:var(--gutter);top:auto;bottom:76px;translate:none;max-width:none}
+  .c1-intro .mono{margin-bottom:12px}
+  .c1-intro h1{font-size:clamp(36px,10.5vw,52px);margin-bottom:10px}
+  .c1-cue{bottom:16px}
+}
+@media (prefers-reduced-motion:reduce){.c1-intro *{animation:none!important}}
+/* the opening: one photograph, the bottle where it belongs. It gives way to the collection as you scroll */
+.c1-photo{position:absolute;inset:0;overflow:hidden;z-index:2;pointer-events:none;will-change:opacity;background:#fff}
+.c1-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 50%;transform-origin:62% 60%;will-change:transform;animation:photoIn 2.4s var(--ease-out) both}
+.c1-photo::after{content:none}
+@keyframes photoIn{from{opacity:0;transform:scale(1.05)}to{opacity:1;transform:scale(1)}}
+.c1-intro{z-index:4}.c1-cue{z-index:4}
+@media (max-width:860px){
+  .c1-photo{background:#fff}
+  .c1-photo img{height:62svh;top:6svh;object-position:66% 55%;-webkit-mask:linear-gradient(#000 72%,transparent);mask:linear-gradient(#000 72%,transparent)}
+  .c1-photo::after{display:none}
+}
+@media (prefers-reduced-motion:reduce){.c1-photo img{animation:none}}
+
+
+/* photographed bottles (with their boxes): square frames, transparent studio white, real shadows */
+.bottle[data-k]{--ar:1}
+.bottle .cap{display:none}
+.bottle .body{transform:none!important;transition:none}
+.c1-bottles .bottle{--bh:min(45vh,34vw);bottom:calc(var(--bh) * -.52);translate:calc(-50% + var(--bx,0) * var(--bh)) 0}
+.c1-bottles .bottle[data-k=aube]{--bx:-.0675}.c1-bottles .bottle[data-k=peau]{--bx:-.0475}.c1-bottles .bottle[data-k=minuit]{--bx:-.0775}
+.bwrap{left:8%;right:8%;bottom:5%;height:68%}
+.vials figure{padding:6% 0 4%}
+.vials .bottle{height:100%;translate:8% 0}
+@media (max-width:860px){.c1-bottles .bottle{--bh:42svh}}
+.s-img{height:auto!important;min-height:0!important;width:min(100%,46svh,460px);aspect-ratio:1!important}
+.float{animation:none!important}.tilt{transform:none!important;transition:none!important}
+.s-img .halo,.s-img .sheen,.bottle .mist{display:none}
+@media (max-width:860px){.s-img{width:min(88vw,40svh,400px)}}
+</style>
+
+
+<a class="skip" href="#main">Pular para o conteúdo</a>
+<div class="env" aria-hidden="true"></div>
+
+<header class="hdr" id="hdr">
+  <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
+  <a class="logo" href="#top" aria-label="Lueur, início">LUEUR</a>
+  <nav class="nav" id="nav" aria-label="Principal">
+    <a href="#colecao">Coleção</a>
+    <a href="#kit">Kit de descoberta</a>
+    <a href="#casa">A casa</a>
+  </nav>
+  <button class="bag-btn" id="bagBtn" aria-haspopup="dialog" aria-controls="drawer">Sacola <span class="count" id="bagCount">0</span><span class="sr"> itens</span></button>
+</header>
+
+<main id="main" tabindex="-1">
+
+  <section class="c1 c1-hero" id="top" aria-labelledby="h1">
+    <span id="colecao" class="c1-anchor"></span>
+    <div class="c1-track" id="c1Track">
+      <div class="c1-pin" id="c1Pin">
+        <div class="c1-scenes" aria-hidden="true"></div>
+        <div class="c1-photo" id="heroPhoto" aria-hidden="true"><img src="assets/hero-white.webp" alt="" fetchpriority="high" decoding="async"></div>
+        <div class="c1-ghosts" aria-hidden="true"></div>
+        <svg class="c1-lines" id="c1Lines" aria-hidden="true"></svg>
+        <div class="c1-left"></div>
+        <div class="c1-bottles"></div>
+        <div class="c1-right"></div>
+        <div class="c1-foot"></div>
+        <ol class="c1-prog mono" aria-hidden="true"></ol>
+        <div class="c1-intro" id="heroCopy">
+          <h1 id="h1"><span class="ln"><span>O que fica</span></span><span class="ln"><span>depois que</span></span><span class="ln"><span class="it">você sai.</span></span></h1>
+          <p>Algo que ninguém esquece.</p>
+        </div>
+        <div class="c1-cue mono" id="cue" aria-hidden="true"><i></i>Role devagar</div>
+      </div>
+    </div>
+  </section>
+  <section class="manifesto" id="casa" aria-label="A casa">
+    <span class="mono">A casa · Lueur</span>
+    <p id="manifesto">O que importa num perfume é o que ainda está na sua pele às seis da tarde.</p>
+    <small class="rv-s">Mostramos cada fragrância do jeito que ela acontece: a primeira borrifada, o meio do dia, o fim da noite. Escolha pelo que fica.</small>
+  </section>
+
+
+  <section class="col" id="selecao" aria-labelledby="colTitle">
+    <div class="col-head">
+      <h2 id="colTitle">Coleção II <span class="it">Uma pequena seleção.</span></h2>
+      <span class="mono">Eau de parfum · 50 e 100 ml</span>
+    </div>
+    <div class="grid" id="grid">
+      <button class="item rv-s" data-id="lin" aria-label="Abrir Lin">
+        <span class="case"><span class="tone" aria-hidden="true"></span><span class="idx mono">I</span><span class="bwrap"><span class="bottle" data-k="lin"><img class="body" src="assets/p-lin.webp" alt="" width="1024" height="1024"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
+        <span class="item-meta"><span><span class="item-name">Lin</span><span class="item-line">Limpa, branca, delicada.</span></span><span class="mono">R$ 459</span></span>
+      </button>
+      <button class="item rv-s" data-id="figue" aria-label="Abrir Figue">
+        <span class="case"><span class="tone" aria-hidden="true"></span><span class="idx mono">II</span><span class="bwrap"><span class="bottle" data-k="figue"><img class="body" src="assets/p-figue.webp" alt="" width="1024" height="1024"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
+        <span class="item-meta"><span><span class="item-name">Figue</span><span class="item-line">Verde, leitosa, ensolarada.</span></span><span class="mono">R$ 479</span></span>
+      </button>
+      <button class="item rv-s" data-id="velours" aria-label="Abrir Velours">
+        <span class="case"><span class="tone" aria-hidden="true"></span><span class="idx mono">III</span><span class="bwrap"><span class="bottle" data-k="velours"><img class="body" src="assets/p-velours.webp" alt="" width="1024" height="1024"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
+        <span class="item-meta"><span><span class="item-name">Velours</span><span class="item-line">Rosa escura, profunda.</span></span><span class="mono">R$ 599</span></span>
+      </button>
+    </div>
+    <div class="strip-hint mono" aria-hidden="true"><span>Deslize</span><span>Toque para abrir</span></div>
+
+    <div class="stage" id="stage" role="region" aria-labelledby="sName">
+      <div class="ghost-name" id="ghost" aria-hidden="true"></div>
+      <button class="back rv" id="back"><span class="arr" aria-hidden="true">←</span> Voltar à coleção</button>
+      <div class="s-left">
+        <div class="rv"><span class="lbl mono">Inspiração</span><p class="insp" id="sInsp"></p></div>
+        <div class="rv"><span class="lbl mono">Quando usar</span><ul class="occ" id="sOcc"></ul></div>
+      </div>
+      <div class="s-center">
+        <div class="s-img" id="sBox"><span class="halo" aria-hidden="true"></span><div class="float"><div class="tilt" id="tilt"><span class="bottle is-open" id="sBottle" role="img" data-k="peau"><img class="body" id="sBody" src="" alt=""><img class="cap" id="sCap" src="" alt=""><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span><span class="sheen" id="sSheen" aria-hidden="true"></span></span></div></div></div>
+        <div class="rv">
+          <span class="mono" id="sMeaning" style="color:var(--sec-ink-2)"></span>
+          <h3 class="s-name" id="sName" tabindex="-1"></h3>
+          <p class="s-desc" id="sDesc"></p>
+          <div class="buy">
+            <div class="sizes" role="group" aria-label="Tamanho">
+              <button type="button" data-size="50" aria-pressed="true">50 ml</button>
+              <button type="button" data-size="100" aria-pressed="false">100 ml</button>
+            </div>
+            <span class="price" id="sPrice"></span>
+            <button class="add" id="sAdd">Adicionar à sacola <span class="arr" aria-hidden="true">→</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="s-right">
+        <div class="time rv">
+          <h3>Notas no tempo</h3>
+          <p class="hintline">Arraste e veja como ele muda na pele ao longo do dia.</p>
+          <svg class="curve" id="curve" viewBox="0 0 300 96" preserveAspectRatio="none" aria-hidden="true">
+            <path class="area" id="cArea"/><path class="edge" id="cEdge"/>
+            <line class="ph" id="cPh" x1="0" x2="0" y1="0" y2="96"/><circle class="dot" id="cDot" r="3.5"/>
+          </svg>
+          <label class="sr" for="range">Horas depois de aplicar</label>
+          <input class="range" id="range" type="range" min="0" max="10" step="0.05" value="0" aria-valuetext="0 horas">
+          <div class="ticks mono" aria-hidden="true"><span>0h</span><span>2h</span><span>4h</span><span>6h</span><span>8h</span><span>10h</span></div>
+          <p class="readout" id="readout" aria-live="polite"></p>
+          <ul class="tiers" id="tiers">
+            <li class="tier" data-t="top"><div class="tier-top"><span class="mono">Saída</span><span class="bar"><i></i></span></div><div class="notes"></div></li>
+            <li class="tier" data-t="heart"><div class="tier-top"><span class="mono">Coração</span><span class="bar"><i></i></span></div><div class="notes"></div></li>
+            <li class="tier" data-t="base"><div class="tier-top"><span class="mono">Fundo</span><span class="bar"><i></i></span></div><div class="notes"></div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="camp" aria-label="Campanha">
+    <figure class="camp-w rv-s"><img src="assets/campanha-peau-w.webp" alt="Mulher de costas, em luz de fim de tarde, borrifando o Peau" loading="lazy" data-par="0.06"><figcaption class="mono">Campanha Lueur · Peau</figcaption></figure>
+    <figure class="camp-a rv-s"><img src="assets/campanha-peau.webp" alt="Mulher em luz de fim de tarde segurando o frasco do Peau junto à clavícula" loading="lazy" data-par="0.08"><figcaption class="mono">Peau · na pele</figcaption></figure>
+    <figure class="camp-b rv-s"><img src="assets/campanha-minuit-2.webp" alt="Mãos borrifando o Minuit no pulso em luz baixa e quente" loading="lazy" data-par="0.12"><figcaption class="mono">Minuit · à noite</figcaption></figure>
+    <blockquote class="camp-quote rv-s"><span>Ninguém lembra do frasco.</span><span>Lembram de você passando.</span></blockquote>
+    <p class="camp-c rv-s"><span class="mono">Campanha · Outono 2026</span>Fotografamos os perfumes como eles vivem: perto da pele, em luz de verdade, sem pressa.</p>
+  </section>
+
+  <section class="kit" id="kit" aria-labelledby="kitTitle">
+    <div class="kit-visual" id="kitVis">
+      <svg class="box" aria-hidden="true"><rect x="0.5" y="0.5" rx="2"/></svg>
+      <div class="vials">
+        <figure class="item-mini" data-id="aube"><span class="bottle" data-k="aube"><img class="body" src="assets/p-aube.webp" alt="" loading="lazy"></span></figure>
+        <figure class="item-mini" data-id="peau"><span class="bottle" data-k="peau"><img class="body" src="assets/p-peau.webp" alt="" loading="lazy"></span></figure>
+        <figure class="item-mini" data-id="minuit"><span class="bottle" data-k="minuit"><img class="body" src="assets/p-minuit.webp" alt="" loading="lazy"></span></figure>
+      </div>
+      <div class="kit-vlabel mono" aria-hidden="true"><span>Aube</span><span>Peau</span><span>Minuit</span></div>
+    </div>
+    <div class="kit-copy rv-s">
+      <span class="mono" style="color:var(--ink-2)">Kit de descoberta · 3 × 10 ml</span>
+      <h2 id="kitTitle">Na dúvida, <span class="it">comece pelos três.</span></h2>
+      <p>Use cada um por uma semana, na sua pele, no seu dia. Se depois escolher um frasco de 50 ml, o valor do kit volta como desconto.</p>
+      <div class="kit-buy">
+        <span class="price">R$ 149</span>
+        <button class="add" id="kitAdd">Adicionar o kit <span class="arr" aria-hidden="true">→</span></button>
+      </div>
+      <div class="faq">
+        <details><summary>Quanto tempo dura na pele? <i aria-hidden="true">+</i></summary><div class="ans"><p>Entre 7 e 11 horas, dependendo do perfume e da sua pele. A linha do tempo de cada fragrância mostra o que acontece em cada hora.</p></div></details>
+        <details><summary>E se eu não gostar de nenhum? <i aria-hidden="true">+</i></summary><div class="ans"><p>Você devolve o kit em até 30 dias e recebe o valor de volta. Sem formulário, só uma mensagem.</p></div></details>
+        <details><summary>Quando chega? <i aria-hidden="true">+</i></summary><div class="ans"><p>Em 2 a 5 dias úteis para capitais, com frete grátis acima de R$ 400.</p></div></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="close" aria-labelledby="closeTitle">
+    <span class="big" id="bigWord" aria-hidden="true">perto</span>
+    <div class="inner rv-s">
+      <h2 id="closeTitle">Fique por perto</h2>
+      <p>Novos perfumes, histórias da casa e convites antes de todo mundo. Uma carta por mês.</p>
+      <form class="nl" id="nl" novalidate>
+        <label><span class="sr">Seu e-mail</span><input type="email" id="email" name="email" placeholder="Seu e-mail" autocomplete="email" required></label>
+        <button type="submit">Assinar <span class="arr" aria-hidden="true">→</span></button>
+      </form>
+      <p class="nl-msg" id="nlMsg" role="status"></p>
+    </div>
+  </section>
+</main>
+
+<footer class="ftr">
+  <div class="ftr-top">
+    <div class="ftr-brand"><a class="logo" href="#top">LUEUR</a><p>Um brilho que demora a ir embora.</p></div>
+    <div class="ftr-col"><span class="mono">Explore</span><ul><li><a href="#colecao">Coleção</a></li><li><a href="#casa">A casa</a></li><li><a href="#kit">Kit de descoberta</a></li></ul></div>
+    <div class="ftr-col"><span class="mono">Ajuda</span><ul><li><a href="#kit">Entregas</a></li><li><a href="#kit">Trocas</a></li><li><a href="#contato">Contato</a></li></ul></div>
+    <div class="ftr-col"><span class="mono">Siga</span><ul><li><a href="#top">Instagram</a></li><li><a href="#top">Pinterest</a></li><li><a href="#top">TikTok</a></li></ul></div>
+  </div>
+  <div class="ftr-bot">
+    <p>© 2026 Lueur. Marca conceitual criada para portfólio: perfumes, preços e pedidos são fictícios, e as imagens foram geradas por IA. Nenhuma compra é cobrada.</p>
+    <span class="mono" id="contato">contato@lueur.example · São Paulo</span>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dTitle" aria-hidden="true" inert>
+  <div class="d-head"><h2 id="dTitle">Sua sacola</h2><button class="d-x" id="dClose">Fechar</button></div>
+  <div class="d-body" id="dBody"></div>
+  <div class="d-foot" id="dFoot">
+    <div class="d-total"><span class="mono">Subtotal</span><strong id="dTotal">R$ 0</strong></div>
+    <p class="d-note">Frete grátis acima de R$ 400. Loja de demonstração: nada é cobrado.</p>
+    <button class="add" id="dCheckout">Finalizar compra <span class="arr" aria-hidden="true">→</span></button>
+  </div>
+</aside>
+
+<script>
+(() => {
+'use strict';
+const RM = matchMedia('(prefers-reduced-motion: reduce)');
+const $ = s => document.querySelector(s);
+const brl = n => 'R$ ' + n.toLocaleString('pt-BR');
+
+/* ---------- data ---------- */
+const P = {
+  aube:{name:'Aube',meaning:'Amanhecer',img:'assets/p-aube.webp',bg:'#E9E8E5',dark:false,
+    desc:'Fresca, luminosa, limpa. Para quem quer cheirar a banho tomado o dia inteiro.',
+    insp:'A janela aberta antes de todo mundo acordar. Lençol limpo, casca de bergamota, o ar ainda frio.',
+    occ:[['Manhã','Dias de trabalho'],['Tarde','Calor e sol'],['Sempre','Quando você quer parecer descansada']],
+    notes:{top:'Bergamota · Pera · Pimenta rosa',heart:'Flor de laranjeira · Íris',base:'Almíscar branco · Cedro claro'},
+    price:{50:489,100:689},life:7,
+    say:[[0,1,'Bergamota e pera logo de cara. Fresco, quase cítrico.'],[1,3,'A flor de laranjeira aparece e tudo fica mais macio.'],[3,6,'O almíscar branco assume. Cheiro de pele limpa.'],[6,10.1,'Ainda está lá, bem perto da pele. Só quem chega perto sente.']]},
+  peau:{name:'Peau',meaning:'Pele',img:'assets/p-peau.webp',bg:'#ECE4DB',dark:false,
+    desc:'Macia, morna, íntima. Parece o cheiro da sua pele, só que melhor.',
+    insp:'Aquele perfume que ninguém identifica, mas todo mundo quer saber qual é. Chegam perto para descobrir.',
+    occ:[['Todo dia','Do café ao jantar'],['Noite','Encontros a dois'],['Inverno','Abraços longos']],
+    notes:{top:'Semente de âmbar · Aldeídos suaves',heart:'Íris · Rosa',base:'Almíscar · Sândalo · Baunilha'},
+    price:{50:529,100:749},life:9.5,
+    say:[[0,1,'Começa leve, quase um sussurro de âmbar.'],[1,4,'A íris e a rosa esquentam junto com a sua pele.'],[4,8,'Sândalo e baunilha. É aqui que perguntam qual perfume você está usando.'],[8,10.1,'No fim do dia, ainda na sua roupa.']]},
+  minuit:{name:'Minuit',meaning:'Meia-noite',img:'assets/p-minuit.webp',bg:'#EADCCD',dark:false,
+    desc:'Âmbar, densa, magnética. Chega antes de você e fica depois.',
+    insp:'A última taça, a música mais baixa, o caminho de volta para casa com o casaco de outra pessoa.',
+    occ:[['Noite','Jantares e festas'],['Especial','Dias que pedem presença'],['Frio','Outono e inverno']],
+    notes:{top:'Açafrão · Ameixa',heart:'Jasmim · Tuberosa',base:'Âmbar · Fava tonka · Oud suave'},
+    price:{50:569,100:799},life:12,
+    say:[[0,1,'Açafrão e ameixa de cara. Ele anuncia que você chegou.'],[1,4,'Jasmim e tuberosa abrem espaço. É o auge.'],[4,9,'Âmbar e fava tonka. Deixa rastro por onde você passa.'],[9,10.1,'No dia seguinte, ainda no seu casaco.']]},
+  lin:{name:'Lin',meaning:'Linho',img:'assets/p-lin.webp',bg:'#ECEAF0',dark:false,
+    desc:'Limpa, branca, delicada. Lençol de linho secando ao sol.',
+    insp:'Uma camisa branca recém-passada, a janela aberta, a íris no vaso da mesa.',
+    occ:[['Manhã','Escritório e reuniões'],['Verão','Dias claros'],['Sempre','Quando você quer leveza']],
+    notes:{top:'Aldeídos · Bergamota',heart:'Íris · Flor de algodão',base:'Almíscar branco · Cashmeran'},
+    price:{50:459,100:659},life:7,
+    say:[[0,1,'Aldeídos e bergamota. Cheiro de roupa limpa.'],[1,3,'A íris aparece, empoada e macia.'],[3,6,'Almíscar branco, bem rente à pele.'],[6,10.1,'Fica como um tecido bom: discreto e presente.']]},
+  figue:{name:'Figue',meaning:'Figo',img:'assets/p-figue.webp',bg:'#E9EBE1',dark:false,
+    desc:'Verde, leitosa, ensolarada. Um quintal no fim da tarde.',
+    insp:'A figueira do quintal da avó, a folha amassada entre os dedos, o chá servido na varanda.',
+    occ:[['Tarde','Fins de semana'],['Viagem','Dias ao ar livre'],['Verão','Calor seco']],
+    notes:{top:'Folha de figo · Cassis',heart:'Leite de figo · Chá verde',base:'Cedro · Vetiver'},
+    price:{50:479,100:679},life:8,
+    say:[[0,1,'Folha de figo verde, quase crocante.'],[1,4,'O leite de figo amacia tudo. Fica cremoso.'],[4,8,'Cedro e vetiver, como madeira ao sol.'],[8,10.1,'Um verde suave que ainda aparece no fim do dia.']]},
+  velours:{name:'Velours',meaning:'Veludo',img:'assets/p-velours.webp',bg:'#EEDFE0',dark:false,
+    desc:'Rosa escura, profunda, envolvente. Veludo na pele.',
+    insp:'Um vestido de veludo, cortinas pesadas, a rosa que alguém deixou na mesa do jantar.',
+    occ:[['Noite','Ocasiões especiais'],['Inverno','Noites frias'],['Encontro','Quando você quer ser lembrada']],
+    notes:{top:'Framboesa · Pimenta rosa',heart:'Rosa turca · Peônia',base:'Oud · Couro macio · Patchouli'},
+    price:{50:599,100:829},life:11,
+    say:[[0,1,'Framboesa e pimenta rosa. Começa vibrante.'],[1,4,'A rosa turca abre, densa e aveludada.'],[4,9,'Oud e couro macio. Profundo e envolvente.'],[9,10.1,'Na manhã seguinte, a rosa ainda está na sua pele.']]}
+};
+/* Collection I presentation: ingredients, intensity, liquid tint */
+const C1 = {
+  aube:{room:'#FDF6EC',bg:['#FEF6ED','#F8F0E6'],tint:'#E8C77A',int:2,intL:'Leve',fix:'6 a 8 horas',ing:[['aube-citrus','Bergamota','tl'],['aube-pear','Pera','tr'],['aube-blossom','Flor de laranjeira','bl'],['aube-slice','Cítricos','br']]},
+  peau:{room:'#FEF4EB',bg:['#FBE8E2','#FDF0E8'],tint:'#E7A48C',int:3,intL:'Moderada',fix:'8 a 10 horas',ing:[['peau-rose','Rosa','tl'],['peau-iris','Íris','tr'],['peau-vanilla','Baunilha','bl'],['peau-rosestem','Rosa','br']]},
+  minuit:{room:'#FDE8D4',bg:['#FDE9D4','#E8DACD'],tint:'#C2702A',int:5,intL:'Intensa',fix:'10 a 12 horas',ing:[['minuit-saffron','Açafrão','tl'],['minuit-plum','Ameixa','tr'],['minuit-jasmine','Jasmim','bl'],['minuit-tonka','Fava tonka','br']]}
+};
+
+/* ---------- header ---------- */
+const hdr = $('#hdr'); let lastY = 0;
+const menuBtn = $('#menuBtn');
+menuBtn.addEventListener('click', () => { const o = document.body.classList.toggle('menu-open'); menuBtn.setAttribute('aria-expanded', o); });
+document.querySelectorAll('.nav a').forEach(a => a.addEventListener('click', () => { document.body.classList.remove('menu-open'); menuBtn.setAttribute('aria-expanded', false); }));
+
+/* ---------- scroll-driven bits (one rAF, rests when idle) ---------- */
+const heroCopy = $('#heroCopy'), bigWord = $('#bigWord');
+/* ---------- hero: the bottle opens with the scroll ---------- */
+const H = (() => {
+  const t = $('#c1Track');
+  return { onScroll: () => {}, place: () => {}, end: () => t.offsetTop + innerHeight * .7, at: f => t.offsetTop + innerHeight * .7 * f, rerender: () => { if (window.c1) dispatchEvent(new Event('scroll')); } };
+})();
+/* soft, eased scrolling for the calls to action */
+let easeRaf = null;
+function easeScrollTo(y, dur){
+  if (RM.matches){ scrollTo(0, y); return; }
+  cancelAnimationFrame(easeRaf); const y0 = scrollY, t0 = performance.now(), dy = y - y0;
+  const stop = () => { cancelAnimationFrame(easeRaf); removeEventListener('wheel', stop); removeEventListener('touchstart', stop); };
+  addEventListener('wheel', stop, {passive:true}); addEventListener('touchstart', stop, {passive:true});
+  const step = now => { const k = Math.min(1, (now - t0) / dur), e = k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; scrollTo(0, y0 + dy * e); if (k < 1) easeRaf = requestAnimationFrame(step); else stop(); };
+  easeRaf = requestAnimationFrame(step);
+}
+document.querySelectorAll('a[href="#colecao"], a[href="#kit"], a[href="#casa"]').forEach(a => a.addEventListener('click', e => { const t = document.querySelector(a.getAttribute('href')); if (!t) return; e.preventDefault(); easeScrollTo(t.getBoundingClientRect().top + scrollY - (a.getAttribute('href') === '#colecao' ? 0 : 40), 1700); }));
+const parImgs = [...document.querySelectorAll('[data-par]')];
+const mWords = (() => { const p = $('#manifesto'); const words = p.textContent.trim().split(/\s+/); p.setAttribute('aria-label', p.textContent.trim()); p.innerHTML = words.map(w => '<span class="w" aria-hidden="true">' + w + '</span>').join(' '); return [...p.querySelectorAll('.w')]; })();
+let ticking = false, lastWordsOn = -1, hdrState = '', progScroll = 0;
+function frame(){
+  ticking = false;
+  const y = scrollY, vh = innerHeight;
+  // header: discreet sticky, hides on fast scroll down, returns on scroll up
+  let st = y > 40 ? 'scrolled' : '';
+  H.onScroll();
+  if (y > H.end() + vh * .5 && y > lastY + 4 && performance.now() - progScroll > 500 && !document.body.classList.contains('menu-open')) st += ' hide';
+  if (st !== hdrState){ hdr.className = 'hdr ' + st; hdrState = st; }
+  lastY = y;
+  if (RM.matches) return;
+  // manifesto words light up as it crosses the viewport
+  const mp = $('#manifesto').getBoundingClientRect();
+  const prog = Math.min(1, Math.max(0, (vh * 0.85 - mp.top) / (vh * 0.55)));
+  const on = Math.round(prog * mWords.length);
+  if (on !== lastWordsOn){ mWords.forEach((w, i) => w.classList.toggle('on', i < on)); lastWordsOn = on; }
+  // campaign parallax
+  parImgs.forEach(img => { const r = img.parentElement.getBoundingClientRect(); if (r.bottom < 0 || r.top > vh) return; const c = (r.top + r.height / 2 - vh / 2) / vh; img.style.transform = 'translate3d(0,' + (c * -100 * +img.dataset.par - 8).toFixed(2) + '%,0)'; });
+  // the big word drifts sideways
+  const br = bigWord.parentElement.getBoundingClientRect();
+  if (br.bottom > 0 && br.top < vh){ const c = (br.top + br.height / 2 - vh / 2) / vh; bigWord.style.transform = 'translate(calc(-50% + ' + (c * 12).toFixed(2) + 'vw),-52%)'; }
+}
+const onScroll = () => { if (!ticking){ ticking = true; requestAnimationFrame(frame); } };
+addEventListener('scroll', onScroll, {passive:true});
+addEventListener('resize', onScroll);
+frame();
+
+/* ---------- reveals ---------- */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.18, rootMargin:'0px 0px -6% 0px'});
+document.querySelectorAll('.rv-s').forEach((el, i) => { if (el.classList.contains('item')) el.style.transitionDelay = (i % 3) * 0.12 + 's'; io.observe(el); });
+// retire the stagger once the entrance has played, so hovers never lag
+document.querySelectorAll('.item').forEach(el => el.addEventListener('transitionend', e => { if (e.propertyName === 'opacity' && el.classList.contains('in')) el.style.transitionDelay = '0s'; }));
+const kitVis = $('#kitVis'), boxRect = kitVis.querySelector('rect');
+function sizeBox(){ const w = kitVis.clientWidth, h = kitVis.clientHeight; boxRect.setAttribute('width', w - 1); boxRect.setAttribute('height', h - 1); kitVis.style.setProperty('--len', 2 * (w + h)); }
+sizeBox(); addEventListener('resize', sizeBox);
+new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting){ kitVis.classList.add('in'); setTimeout(() => kitVis.classList.add('done'), 1600); o.disconnect(); } }), {threshold:.3}).observe(kitVis);
+
+// pause looping animations on hidden tabs
+const pauseStyle = document.createElement('style'); pauseStyle.textContent = 'body.paused *,body.paused *::before,body.paused *::after{animation-play-state:paused!important}'; document.head.appendChild(pauseStyle);
+document.addEventListener('visibilitychange', () => document.body.classList.toggle('paused', document.hidden));
+
+
+/* ---------- Coleção I: the room changes with the scroll, the bottle stays still ---------- */
+const C1K = ['aube','peau','minuit'];
+window.c1 = (() => {
+  const track = $('#c1Track'), pin = $('#c1Pin'), lines = $('#c1Lines');
+  track.style.setProperty('--n', C1K.length);
+  const ROMAN = ['I','II','III','IV','V','VI'];
+  const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+  const parts = { tint:[], ghost:[], bottle:[], left:[], right:[], foot:[], prog:[] };
+  C1K.forEach((k, i) => {
+    const p = P[k], c = C1[k];
+    const t = el('img'); t.src = 'assets/scene-' + k + '.webp'; t.alt = ''; t.decoding = 'async'; if (i) t.loading = 'lazy'; pin.querySelector('.c1-scenes').append(t); parts.tint.push(t);
+    const g = el('span', '', p.name); g.style.setProperty('--t', c.tint); pin.querySelector('.c1-ghosts').append(g); parts.ghost.push(g);
+    const ig = [];
+    const b = el('span', 'bottle'); b.dataset.k = k; b.setAttribute('role', 'img'); b.setAttribute('aria-label', 'Frasco do ' + p.name);
+    b.innerHTML = '<img class="body" src="assets/p-' + k + '.webp" alt="">'; pin.querySelector('.c1-bottles').append(b); parts.bottle.push(b);
+    const L = el('div', 'c1-block', [['Saída', p.notes.top], ['Coração', p.notes.heart], ['Fundo', p.notes.base]].map(r => '<div class="c1-row"><span class="mono">' + r[0] + '</span><span class="v">' + r[1] + '</span></div>').join(''));
+    pin.querySelector('.c1-left').append(L); parts.left.push(L);
+    const dots = Array.from({length:5}, (_, j) => '<b class="' + (j < c.int ? 'f' : '') + '"></b>').join('');
+    const R = el('div', 'c1-block', '<div class="c1-row"><span class="mono">Ocasião</span><span class="v">' + p.occ.slice(0, 2).map(o => o[0] + ' <i>· ' + o[1].toLowerCase() + '</i>').join('<br>') + '</span></div>' +
+      '<div class="c1-row"><span class="mono">Intensidade</span><span class="v"><span class="c1-int" aria-hidden="true">' + dots + '</span>' + c.intL + '</span></div>' +
+      '<div class="c1-row"><span class="mono">Fixação</span><span class="v">' + c.fix + '</span></div>');
+    pin.querySelector('.c1-right').append(R); parts.right.push(R);
+    const F = el('div', 'c1-block', '<span class="mono" style="color:var(--ink-2)">' + ROMAN[i] + ' · ' + p.meaning + '</span><h3 class="nm">' + p.name + '</h3><p class="ds">' + p.desc + '</p><div class="act"><span class="pr">' + brl(p.price[50]) + ' <small class="mono" style="color:var(--ink-2)">50 ml</small></span><button type="button" data-k="' + k + '">Adicionar à sacola</button></div>');
+    pin.querySelector('.c1-foot').append(F); parts.foot.push(F);
+    const pr = el('li', '', ROMAN[i]); pin.querySelector('.c1-prog').append(pr); parts.prog.push(pr);
+  });
+  pin.querySelector('.c1-foot').addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (!b) return; const k = b.dataset.k; add({key:k + 50, name:P[k].name, sub:'Eau de parfum · 50 ml', img:P[k].img || 'assets/b-' + k + '.webp', price:P[k].price[50]}); });
+  let cur = -1;
+  const mix = (hex, k) => { const n = parseInt(hex.slice(1), 16), base = [253, 252, 250]; return 'rgb(' + [n >> 16, n >> 8 & 255, n & 255].map((v, j) => Math.round(base[j] + (v - base[j]) * k)).join(',') + ')'; };
+  function show(i){
+    if (i === cur) return; cur = i;
+    pin.style.setProperty('--room', i >= 0 ? C1[C1K[i]].room : '#FDFCFA');
+    for (const key of Object.keys(parts)) parts[key].forEach((x, j) => {
+      const on = j === i; (Array.isArray(x) ? x : [x]).forEach(n => { n.classList.toggle('on', on); if (key === 'left' || key === 'right' || key === 'foot') n.setAttribute('aria-hidden', on ? 'false' : 'true'); });
+    });
+    drawLines();
+  }
+  // each line starts just off the bottle and travels out to its information, which then appears
+  let lineT = null, rowT = [];
+  function drawLines(){
+    rowT.forEach(clearTimeout); rowT = [];
+    document.querySelectorAll('.c1-row.in').forEach(r => r.classList.remove('in'));
+    if (cur < 0) { lines.innerHTML = ''; return; }
+    const rows = [...parts.left[cur].querySelectorAll('.c1-row')].map(r => [r, -1]).concat([...parts.right[cur].querySelectorAll('.c1-row')].map(r => [r, 1]));
+    if (innerWidth <= 860) { lines.innerHTML = ''; rows.forEach(([r]) => r.classList.add('in')); return; }
+    const pr = pin.getBoundingClientRect(), bf = parts.bottle[cur].getBoundingClientRect(), BB = { aube:[.17,.17,.62,.85], peau:[.13,.18,.59,.86], minuit:[.19,.10,.58,.89] }[C1K[cur]] || [.2,.15,.6,.85];
+    const b = { left: bf.left + bf.width * BB[0], top: bf.top + bf.height * BB[1], right: bf.left + bf.width * .965, bottom: bf.top + bf.height * BB[3] }; b.width = b.right - b.left; b.height = b.bottom - b.top;   // the right side clears the box
+    const top = b.top - pr.top + b.height * .3, bot = b.bottom - pr.top - b.height * .08, gap = 34;
+    lines.setAttribute('viewBox', '0 0 ' + pr.width + ' ' + pr.height);
+    let html = '';
+    const plan = [];
+    rows.forEach(([r, side], n) => {
+      const rr = r.querySelector('.v').getBoundingClientRect();
+      const yt = rr.top - pr.top + rr.height / 2, yb = Math.min(bot, Math.max(top, yt));
+      const xb = side < 0 ? b.left - pr.left - gap : b.right - pr.left + gap;   // start: a clear breath away from the glass
+      const xt = side < 0 ? rr.right - pr.left + 14 : rr.left - pr.left - 14;           // end: just before the words
+      const k = side < 0 ? n : n - 3, delay = 1.15 + k * .22;
+      if ((side < 0 ? xb - xt : xt - xb) < 40) { plan.push([r, delay]); return; }        // no room: the words simply appear
+      html += '<g style="--d:' + delay + 's"><circle cx="' + xb.toFixed(1) + '" cy="' + yb.toFixed(1) + '" r="2" style="transition-delay:' + delay + 's"/>' +
+        '<path pathLength="1" d="M' + xb.toFixed(1) + ' ' + yb.toFixed(1) + ' L' + xt.toFixed(1) + ' ' + yt.toFixed(1) + '" style="transition-delay:' + delay + 's"/></g>';
+      plan.push([r, delay + .85]);
+    });
+    lines.innerHTML = html;
+    requestAnimationFrame(() => requestAnimationFrame(() => lines.querySelectorAll('g').forEach(g => g.classList.add('go'))));
+    plan.forEach(([r, t]) => rowT.push(setTimeout(() => r.classList.add('in'), t * 1000)));
+  }
+  const redraw = () => { clearTimeout(lineT); lineT = setTimeout(drawLines, 120); };
+  new ResizeObserver(redraw).observe(pin);
+  // the opening: the first room, a little closer, with the headline. As you scroll it settles back into place
+  const intro = $('#heroCopy'), cue = $('#cue'), scenes = pin.querySelector('.c1-scenes'), bottles = pin.querySelector('.c1-bottles');
+  const introLen = () => innerHeight * .7;
+  const photo = $('#heroPhoto'), pimg = photo.querySelector('img');
+  function showIntro(){
+    if (cur === -2) return; cur = -2;
+    pin.style.setProperty('--room', '#FAF1EB');   // clean: just the bottle and the words; the scene and notes come after
+    for (const key of Object.keys(parts)) parts[key].forEach((x, j) => (Array.isArray(x) ? x : [x]).forEach(n => n.classList.toggle('on', false)));
+    drawLines();
+  }
+  function onScroll(){
+    const r = track.getBoundingClientRect(), y = -r.top, L0 = introLen(), range = track.offsetHeight - innerHeight - L0;
+    const t = Math.min(1, Math.max(0, y / L0)), e = t * t * (3 - 2 * t), RMm = RM.matches;
+    pin.classList.toggle('intro', t < 1);
+    const sc = RMm ? 1 : 1.04 - .04 * e;
+    scenes.style.transform = 'scale(' + sc.toFixed(4) + ')'; bottles.style.transform = 'scale(' + sc.toFixed(4) + ')';
+    const fo = Math.max(0, 1 - t * 1.6);
+    intro.style.opacity = fo.toFixed(3); intro.style.transform = 'translateY(' + (-t * 40).toFixed(1) + 'px)'; intro.style.visibility = fo > 0 ? 'visible' : 'hidden';
+    cue.style.opacity = Math.max(0, 1 - t * 4).toFixed(3);
+    // the photograph holds, drifts a touch closer, then dissolves into the first room of the collection
+    const po = 1 - Math.max(0, Math.min(1, (t - .5) / .5));
+    photo.style.opacity = po.toFixed(3); photo.style.visibility = po > 0 ? 'visible' : 'hidden';
+    if (!RMm) pimg.style.scale = (1 + t * .05).toFixed(4);
+    if (t < 1) { showIntro(); return; }
+    const p = Math.min(.999, Math.max(0, (y - L0) / range));
+    show(Math.min(C1K.length - 1, Math.floor(p * C1K.length)));
+  }
+  addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  return { parts, redraw: drawLines };
+})();
+const c1 = window.c1;
+/* ---------- notes in time ---------- */
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const ss = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+function intensity(p, t){
+  const top = 1 - ss(0.2, 2.2, t);
+  const heart = ss(0.15, 1.1, t) * (1 - 0.85 * ss(4, p.life - 1.5, t));
+  const base = (0.22 + 0.78 * ss(0.8, 3.2, t)) * (1 - ss(p.life - 2.5, p.life + 1, t)) ;
+  return {top, heart, base: clamp(base, 0, 1)};
+}
+const range = $('#range'), readout = $('#readout'), tierEls = {};
+document.querySelectorAll('.tier').forEach(li => tierEls[li.dataset.t] = li);
+let cur = null, size = 50, sweepRaf = null, lastSay = '';
+function drawCurve(p){
+  const pts = []; for (let i = 0; i <= 60; i++){ const t = i / 6, I = intensity(p, t); const v = clamp(0.45 * I.top + 0.6 * I.heart + 0.75 * I.base, 0, 1.15) / 1.15; pts.push([i * 5, 92 - v * 84]); }
+  const d = 'M' + pts.map(q => q[0] + ' ' + q[1].toFixed(1)).join(' L');
+  $('#cEdge').setAttribute('d', d); $('#cArea').setAttribute('d', d + ' L300 96 L0 96 Z');
+  drawCurve.pts = pts;
+}
+function setTime(t){
+  const p = P[cur]; if (!p) return;
+  const I = intensity(p, t);
+  for (const k of ['top','heart','base']) tierEls[k].style.setProperty('--i', I[k].toFixed(3));
+  const x = t * 30, pt = drawCurve.pts[Math.round(t * 6)];
+  $('#cPh').setAttribute('x1', x); $('#cPh').setAttribute('x2', x);
+  $('#cDot').setAttribute('cx', x); $('#cDot').setAttribute('cy', pt[1]);
+  const h = Math.floor(t), m = Math.round((t - h) * 60 / 15) * 15;
+  const label = (m === 60 ? h + 1 : h) + 'h' + (m && m !== 60 ? String(m).padStart(2, '0') : '');
+  range.setAttribute('aria-valuetext', label.replace('h', ' horas '));
+  const s = p.say.find(x => t >= x[0] && t < x[1]) || p.say[p.say.length - 1];
+  const html = '<span class="hr">' + (t < 0.05 ? 'Primeira borrifada' : label + ' depois') + '</span>' + s[2];
+  if (html !== lastSay){ readout.innerHTML = html; lastSay = html; }
+}
+range.addEventListener('input', () => { if (sweepRaf){ cancelAnimationFrame(sweepRaf); sweepRaf = null; } setTime(+range.value); });
+function sweep(to){ // one guided sweep on open: shows the visitor that the notes change with time
+  if (RM.matches){ range.value = 0; setTime(0); return; }
+  const t0 = performance.now(), dur = 1800;
+  const step = now => { const k = clamp((now - t0) / dur, 0, 1), e = 1 - Math.pow(1 - k, 3); const v = to * e; range.value = v; setTime(v); sweepRaf = k < 1 ? requestAnimationFrame(step) : null; };
+  sweepRaf = requestAnimationFrame(step);
+}
+
+/* ---------- collection: select and return ---------- */
+const col = $('#selecao'), grid = $('#grid'), stage = $('#stage'), sBottle = $('#sBottle');
+let busy = false, openBtn = null;
+const DUR = 900, EASE = 'cubic-bezier(.76,0,.24,1)';
+function fill(id){
+  const p = P[id]; cur = id; size = 50;
+  $('#ghost').textContent = p.name; $('#sName').textContent = p.name; $('#sMeaning').textContent = p.meaning;
+  $('#sDesc').textContent = p.desc; $('#sInsp').textContent = p.insp;
+  $('#sOcc').innerHTML = p.occ.map(o => '<li><span class="mono">' + o[0] + '</span><span>' + o[1] + '</span></li>').join('');
+  for (const k in p.notes) tierEls[k].querySelector('.notes').textContent = p.notes[k];
+  sBottle.dataset.k = id; $('#sBox').style.setProperty('--ar', getComputedStyle(sBottle).getPropertyValue('--ar'));
+  $('#sBody').src = 'assets/p-' + id + '.webp'; $('#sCap').removeAttribute('src'); sBottle.setAttribute('aria-label', 'Frasco do perfume ' + p.name);
+  const m = 'url(' + p.img + ')'; $('#sSheen').style.webkitMaskImage = m; $('#sSheen').style.maskImage = m; resetTilt();
+  document.querySelectorAll('.sizes button').forEach(b => b.setAttribute('aria-pressed', b.dataset.size === '50'));
+  $('#sPrice').textContent = brl(p.price[50]);
+  drawCurve(p); lastSay = ''; range.value = 0; setTime(0);
+}
+function flip(el, from, to, done){
+  if (RM.matches){ done && done(); return; }
+  const dx = from.left - to.left, dy = from.top - to.top, sx = from.width / to.width, sy = from.height / to.height;
+  el.animate([{transform:'translate(' + dx + 'px,' + dy + 'px) scale(' + sx + ',' + sy + ')'},{transform:'none'}], {duration:DUR, easing:EASE}).onfinish = done;
+}
+function sectionTop(){ progScroll = performance.now(); return col.getBoundingClientRect().top + scrollY - (innerWidth <= 860 ? 0 : 20); }
+function open(id, fromHistory){
+  if (busy || !P[id] || col.classList.contains('open') && cur === id) return;
+  busy = true;
+  const btn = grid.querySelector('[data-id="' + id + '"]'); openBtn = btn;
+  const gb = btn.querySelector('.bottle');
+  fill(id);
+  btn.classList.add('chosen'); grid.classList.add('away');
+  col.style.setProperty('--sec-bg', P[id].bg);
+  col.classList.toggle('dark', P[id].dark);
+  setTimeout(() => {
+    const from = gb.getBoundingClientRect();
+    scrollTo({top: sectionTop(), behavior:'instant'});
+    col.classList.add('open'); stage.classList.add('flipping');
+    const to = sBottle.getBoundingClientRect();
+    flip(sBottle, from, to, () => stage.classList.remove('flipping'));
+    requestAnimationFrame(() => stage.classList.add('in'));
+    setTimeout(() => { stage.classList.add('settled'); busy = false; sweep(3.2); $('#sName').focus({preventScroll:true}); }, RM.matches ? 0 : DUR + 150);
+    if (!fromHistory) try { history.pushState({p:id}, '', '#' + id); } catch(_){}
+  }, RM.matches ? 0 : 380);
+}
+function close(fromHistory){
+  if (busy || !col.classList.contains('open')) return;
+  busy = true; if (sweepRaf){ cancelAnimationFrame(sweepRaf); sweepRaf = null; }
+  const btn = openBtn, gb = btn.querySelector('.bottle');
+  const others = [...grid.querySelectorAll('.item')].filter(x => x !== btn);
+  // 1. the reading fades out first, the bottle settles still
+  resetTilt(); stage.classList.add('leaving'); stage.classList.remove('in','settled');
+  setTimeout(() => {
+    // 2. the bottle travels home while the room changes color
+    const from = sBottle.getBoundingClientRect();
+    col.classList.remove('open','dark'); col.style.removeProperty('--sec-bg'); stage.classList.remove('leaving');
+    grid.classList.add('landing');
+    scrollTo({top: sectionTop(), behavior:'instant'});
+    if (innerWidth <= 860) btn.scrollIntoView({inline:'center', block:'nearest', behavior:'instant'});
+    const to = gb.getBoundingClientRect();
+    flip(gb, from, to, () => { grid.classList.remove('landing'); });
+    // 3. its case and the siblings return in sequence, after the bottle is on its way
+    setTimeout(() => { btn.classList.remove('chosen'); }, RM.matches ? 0 : DUR * 0.55);
+    others.forEach((el, i) => el.style.transitionDelay = (0.12 + i * 0.12) + 's');
+    setTimeout(() => grid.classList.remove('away'), RM.matches ? 0 : DUR * 0.45);
+    setTimeout(() => { others.forEach(el => el.style.transitionDelay = '0s'); busy = false; btn.focus({preventScroll:true}); }, RM.matches ? 0 : DUR + 500);
+    if (!fromHistory) try { history.pushState({}, '', location.pathname + location.search); } catch(_){}
+  }, RM.matches ? 0 : 720);
+}
+grid.addEventListener('pointermove', e => { const c = e.target.closest('.case'); if (!c) return; const r = c.getBoundingClientRect(); c.style.setProperty('--lx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%'); c.style.setProperty('--ly', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%'); });
+if (!matchMedia('(hover: hover)').matches && !RM.matches){
+  const peekIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !e.target.dataset.peeked){ e.target.dataset.peeked = 1; e.target.classList.add('peek'); setTimeout(() => e.target.classList.remove('peek'), 2400); } }), {threshold:.85});
+  grid.querySelectorAll('.item').forEach(el => peekIO.observe(el));
+}
+grid.addEventListener('click', e => { const b = e.target.closest('.item'); if (b) open(b.dataset.id); });
+$('#back').addEventListener('click', () => close());
+addEventListener('keydown', e => { if (e.key === 'Escape'){ if (document.body.classList.contains('bag-open')) closeBag(); else close(); } });
+addEventListener('popstate', () => { const id = location.hash.slice(1); if (P[id]) open(id, true); else close(true); });
+document.querySelectorAll('.sizes button').forEach(b => b.addEventListener('click', () => {
+  size = +b.dataset.size; document.querySelectorAll('.sizes button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  $('#sPrice').textContent = brl(P[cur].price[size]);
+}));
+// deep link: /#peau opens that perfume
+if (P[location.hash.slice(1)]) setTimeout(() => open(location.hash.slice(1), true), 400);
+
+/* ---------- the bottle lives: tilt with the pointer, sway while reading on touch ---------- */
+const sBox = $('#sBox'), tilt = $('#tilt'), FINE = matchMedia('(pointer: fine)');
+function resetTilt(){ tilt.style.setProperty('--rx','0deg'); tilt.style.setProperty('--ry','0deg'); sBottle.style.removeProperty('--px'); sBottle.style.removeProperty('--capr'); sBox.classList.remove('live'); }
+let tiltRaf = null, tiltEv = null;
+stage.addEventListener('pointermove', e => {
+  if (!FINE.matches || RM.matches || !stage.classList.contains('settled')) return;
+  tiltEv = e; if (tiltRaf) return;
+  tiltRaf = requestAnimationFrame(() => {
+    tiltRaf = null; const r = sBox.getBoundingClientRect();
+    const dx = clamp((tiltEv.clientX - (r.left + r.width / 2)) / (r.width * 2.5), -1, 1), dy = clamp((tiltEv.clientY - (r.top + r.height / 2)) / r.height, -1, 1);
+    tilt.style.setProperty('--ry', (dx * 14).toFixed(2) + 'deg'); tilt.style.setProperty('--rx', (-dy * 5).toFixed(2) + 'deg');
+    sBottle.style.setProperty('--px', (dx * 7).toFixed(2) + 'px');
+    sBottle.style.setProperty('--capr', (-7 + dx * 6).toFixed(2));
+    tilt.style.setProperty('--sx', (50 + dx * 60).toFixed(1) + '%'); tilt.style.setProperty('--sy', (38 + dy * 30).toFixed(1) + '%');
+    sBox.classList.add('live');
+  });
+});
+stage.addEventListener('pointerleave', resetTilt);
+addEventListener('scroll', () => {
+  if (FINE.matches || RM.matches || !stage.classList.contains('settled')) return;
+  const r = stage.getBoundingClientRect(), p = clamp((innerHeight * .5 - r.top) / r.height, 0, 1);
+  tilt.style.setProperty('--ry', ((p - .15) * 18).toFixed(2) + 'deg');
+  tilt.style.setProperty('--rx', (Math.sin(p * Math.PI) * 4).toFixed(2) + 'deg');
+}, {passive:true});
+
+/* ---------- questions open softly ---------- */
+document.querySelectorAll('.faq details').forEach(d => {
+  const sum = d.querySelector('summary'), ans = d.querySelector('.ans'); let anim = null;
+  sum.addEventListener('click', e => {
+    e.preventDefault();
+    if (anim) anim.cancel();
+    if (RM.matches){ d.open = !d.open; d.classList.toggle('on', d.open); return; }
+    if (d.classList.contains('on')){
+      d.classList.remove('on');
+      const h = ans.offsetHeight;
+      anim = ans.animate([{height:h + 'px'},{height:'0px'}], {duration:620, delay:120, easing:'cubic-bezier(.45,0,.2,1)', fill:'forwards'});
+      anim.onfinish = () => { d.open = false; anim.cancel(); anim = null; };
+    } else {
+      d.open = true; const h = ans.offsetHeight;
+      requestAnimationFrame(() => d.classList.add('on'));
+      anim = ans.animate([{height:'0px'},{height:h + 'px'}], {duration:760, easing:'cubic-bezier(.22,.61,.36,1)'});
+      anim.onfinish = () => { anim = null; };
+    }
+  });
+});
+
+/* ---------- bag (demo) ---------- */
+const bag = []; const drawer = $('#drawer');
+const KIT = {key:'kit', name:'Kit de descoberta', sub:'3 × 10 ml', img:'assets/p-peau.webp', price:149};
+function add(item){
+  const f = bag.find(x => x.key === item.key); if (f) f.q++; else bag.push({...item, q:1});
+  render(); const c = $('#bagBtn'); c.classList.add('bump'); setTimeout(() => c.classList.remove('bump'), 350); openBag();
+}
+function render(done){
+  const n = bag.reduce((a, x) => a + x.q, 0); $('#bagCount').textContent = n;
+  const body = $('#dBody'), foot = $('#dFoot');
+  if (done){ body.innerHTML = '<div class="d-done"><span class="mono">Pedido de demonstração</span><p class="it">Pedido recebido.</p><p>A Lueur é uma marca conceitual, então nada foi cobrado e nada será enviado.</p><button class="tlink" id="dAgain">Continuar navegando <span class="arr" aria-hidden="true">→</span></button></div>'; foot.hidden = true; $('#dAgain').addEventListener('click', closeBag); return; }
+  foot.hidden = false;
+  if (!bag.length){ body.innerHTML = '<div class="d-empty"><p>Sua sacola está vazia.</p><a class="tlink" href="#colecao" id="dGo">Conhecer a coleção <span class="arr" aria-hidden="true">→</span></a></div>'; $('#dGo').addEventListener('click', closeBag); }
+  else body.innerHTML = bag.map((x, i) => '<div class="line"><img src="' + x.img + '" alt=""><div><span class="nm">' + x.name + '</span><span class="sub">' + x.sub + '</span><span class="qty"><button aria-label="Diminuir" data-i="' + i + '" data-d="-1">−</button><span>' + x.q + '</span><button aria-label="Aumentar" data-i="' + i + '" data-d="1">+</button></span></div><span class="lp">' + brl(x.price * x.q) + '</span></div>').join('');
+  $('#dTotal').textContent = brl(bag.reduce((a, x) => a + x.price * x.q, 0));
+  $('#dCheckout').disabled = !bag.length;
+}
+$('#dBody').addEventListener('click', e => { const b = e.target.closest('[data-d]'); if (!b) return; const x = bag[+b.dataset.i]; x.q += +b.dataset.d; if (x.q <= 0) bag.splice(+b.dataset.i, 1); render(); });
+let lastFocus = null;
+function openBag(){ lastFocus = document.activeElement; document.body.classList.add('bag-open'); drawer.removeAttribute('inert'); drawer.setAttribute('aria-hidden', 'false'); setTimeout(() => $('#dClose').focus(), 60); }
+function closeBag(){ document.body.classList.remove('bag-open'); drawer.setAttribute('inert', ''); drawer.setAttribute('aria-hidden', 'true'); if (lastFocus) lastFocus.focus({preventScroll:true}); if ($('#dFoot').hidden){ bag.length = 0; render(); } }
+$('#bagBtn').addEventListener('click', () => { render(); openBag(); });
+$('#dClose').addEventListener('click', closeBag); $('#scrim').addEventListener('click', closeBag);
+$('#sAdd').addEventListener('click', () => add({key:cur + size, name:P[cur].name, sub:'Eau de parfum · ' + size + ' ml', img:P[cur].img, price:P[cur].price[size]}));
+$('#kitAdd').addEventListener('click', () => add(KIT));
+$('#dCheckout').addEventListener('click', () => { if (bag.length) render(true); });
+render();
+
+/* ---------- newsletter (demo) ---------- */
+$('#nl').addEventListener('submit', e => {
+  e.preventDefault(); const v = $('#email').value.trim(), msg = $('#nlMsg');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){ msg.textContent = 'Confira o e-mail, parece que falta alguma coisa.'; msg.classList.add('err'); $('#email').focus(); return; }
+  msg.classList.remove('err'); msg.textContent = 'Pronto. A primeira carta chega em breve.'; e.target.reset();
+});
+
+/* ---------- reduced motion, live ---------- */
+RM.addEventListener('change', () => { H.rerender(); lastWordsOn = -1; frame(); });
+})();
+</script>
+<script type="module">
+/* ---------- real 3D bottles: glass, metal and light rendered in the browser. Photos stay as the fallback ---------- */
+import { supported, View, dims } from './assets/lueur3d.js';
+const q = s => document.querySelector(s), qa = s => [...document.querySelectorAll(s)];
+const RMq = matchMedia('(prefers-reduced-motion: reduce)'), FINEq = matchMedia('(pointer: fine)');
+const small = () => innerWidth <= 860;
+function boot(){
+  // the models decide the proportions of each bottle box
+  const st = document.createElement('style');
+  const KINDS = ['aube','peau','minuit','lin','figue','velours'], maxH = Math.max(...KINDS.map(k => dims(k).h));
+  // every bottle keeps its true size relative to the others
+  st.textContent = KINDS.map(k => { const d = dims(k); return 'html.gl .bottle[data-k=' + k + ']{--ar:' + (d.w / d.h).toFixed(4) + ';--gh:' + (d.h / maxH * 100).toFixed(1) + '%;--ghn:' + (d.h / maxH).toFixed(3) + '}'; }).join('');
+  document.head.appendChild(st);
+  document.documentElement.classList.add('gl');
+  const tones = el => { const cs = getComputedStyle(el); return [cs.getPropertyValue('--ta').trim(), cs.getPropertyValue('--tb').trim()]; };
+  const nozzleSync = v => () => { const n = v.nozzleFrac(), h = v.host;
+    if (Math.abs((h._nx || 0) - n.x) > .002 || Math.abs((h._ny || 0) - n.y) > .002){ h._nx = n.x; h._ny = n.y; h.style.setProperty('--nx', n.x.toFixed(4)); h.style.setProperty('--ny', n.y.toFixed(4)); } };
+
+  /* collection: each case holds the real bottle; hovering unscrews the cap and the bottle follows the pointer */
+  const G = {};
+  qa('#grid .item').forEach(item => {
+    const k = item.dataset.id, v = new View(item.querySelector('.bottle'), { pad:[.5,.55,.2,.55], mode:'lift', bg: tones(item) });
+    const it = v.set(k); it.rot = it.rotT = -.32; G[k] = v;
+    const on = () => { it.openT = 1; v.kick(); }, off = () => { if (item.classList.contains('peek')) return; it.openT = 0; it.rotT = -.32; v.kick(); };
+    item.addEventListener('pointerenter', on); item.addEventListener('focus', on);
+    item.addEventListener('pointerleave', off); item.addEventListener('blur', off);
+    item.addEventListener('pointermove', e => { if (!FINEq.matches) return; const r = item.getBoundingClientRect(); it.rotT = -.32 + ((e.clientX - r.left) / r.width - .5) * 1.3; v.kick(); });
+    new MutationObserver(() => { if (item.classList.contains('peek')){ it.openT = 1; it.rotT = .25; } else if (!item.matches(':hover')){ it.openT = 0; it.rotT = -.32; } v.kick(); }).observe(item, { attributes:true, attributeFilter:['class'] });
+  });
+
+  /* the chosen bottle: open, turning in your hand. Drag to turn it */
+  const sB = q('#sBottle'), sBox = q('#sBox'), stage = q('#stage'), col = q('#selecao'), grid = q('#grid');
+  const vS = new View(sB, { group:'stage', dpr:1.75, pad:[.3,.75,.16,.75], side:-1, mode:'aside', bg: ['#F1EBE5', '#E6DDD3'] });
+  let s = vS.set(sB.dataset.k || 'peau');
+  vS.onDraw = nozzleSync(vS);
+  const lighten = (hex, t) => { const n = parseInt(hex.slice(1), 16), c = [n >> 16, n >> 8 & 255, n & 255].map(x => Math.round(x + (255 - x) * t)); return '#' + c.map(x => x.toString(16).padStart(2, '0')).join(''); };
+  const hint = document.createElement('span'); hint.className = 'drag-hint mono'; hint.textContent = 'Arraste para girar'; sBox.appendChild(hint);
+  let wasOpen = false, wasLeaving = false;
+  new MutationObserver(() => {
+    const k = sB.dataset.k; if (s.k !== k){ s = vS.set(k); }
+    const open = col.classList.contains('open');
+    if (open && !wasOpen){            // the bottle leaves its case: start from exactly how it looked there
+      const p = typeof P !== 'undefined' && P[k]; if (p) vS.setBg([lighten(p.bg, .35), p.bg]);
+      const g = G[k] && G[k].it; s.rot = g ? g.rot : -.32; s.open = g ? g.open : 0; s.sway = s.swayT = 0;
+      vS.o.capDur = 2100; s.tw = null; s.rotT = .38; s.openT = 1; vS.layout(); vS.now(); vS.kick();
+    }
+    const leaving = stage.classList.contains('leaving');
+    if (leaving && !wasLeaving){ vS.o.capDur = 680; s.tw = null; s.openT = 0; s.rotT = -.32; s.swayT = 0; vS.kick(); }
+    if (!open && wasOpen){            // and lands back in its case, closed, turned as it arrived
+      const v = G[k]; if (v){ v.it.rot = s.rot; v.it.open = v.it.openT = 0; v.it.tw = null; v.it.rotT = -.32; v.layout(); v.now(); v.kick(); }
+    }
+    wasOpen = open; wasLeaving = leaving;
+  }).observe(document.documentElement, { attributes:true, subtree:true, attributeFilter:['class','data-k'] });
+  // pointer: the bottle leans toward you; drag: it turns freely
+  let drag = null;
+  sBox.addEventListener('pointerdown', e => { if (!stage.classList.contains('settled')) return; drag = { x: e.clientX, r: s.rotT }; sBox.setPointerCapture(e.pointerId); sBox.classList.add('dragging'); hint.classList.add('gone'); });
+  sBox.addEventListener('pointermove', e => { if (!drag) return; s.rotT = drag.r + (e.clientX - drag.x) * .012; s.rot += (s.rotT - s.rot) * .5; vS.kick(); });
+  const end = () => { drag = null; sBox.classList.remove('dragging'); };
+  sBox.addEventListener('pointerup', end); sBox.addEventListener('pointercancel', end);
+  stage.addEventListener('pointermove', e => {
+    if (drag || !FINEq.matches || RMq.matches || !stage.classList.contains('settled')) return;
+    const r = sBox.getBoundingClientRect(); s.swayT = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / (r.width * 2.5))) * .55; vS.kick();
+  });
+  stage.addEventListener('pointerleave', () => { s.swayT = 0; vS.kick(); });
+  addEventListener('scroll', () => {   // on touch, reading the page turns it slowly
+    if (FINEq.matches || RMq.matches || !stage.classList.contains('settled') || drag) return;
+    const r = stage.getBoundingClientRect(), p = Math.max(0, Math.min(1, (innerHeight * .5 - r.top) / r.height));
+    s.swayT = (p - .15) * 1.1; vS.kick();
+  }, { passive:true });
+
+  /* Coleção I: still bottles in a white room, only the light around them changes */
+  qa('.c1-bottles .bottle').forEach(el => { const v = new View(el, { group:'c1', dpr:1.75, pad:[.3,.6,.2,.6], mode:'lift', bg: (typeof C1 !== 'undefined' && C1[el.dataset.k].bg) || ['#FDFCFA', '#F3EEE8'] }); const it = v.set(el.dataset.k); it.rot = it.rotT = -.3; });
+  setTimeout(() => window.c1 && c1.redraw(), 400);
+  /* discovery kit: the miniatures open together */
+  const kit = q('#kitVis'), K = [];
+  qa('.vials figure').forEach((f, i) => { const v = new View(f.querySelector('.bottle'), { pad:[.4,.45,.12,.45], mode:'lift', bg: tones(f) }); const it = v.set(f.dataset.id); it.rot = it.rotT = [.3, -.15, -.4][i]; K.push([v, it]); });
+}
+if (false && supported){ Promise.race([document.fonts.ready, new Promise(r => setTimeout(r, 1500))]).then(() => { try { boot(); } catch (e){ console.warn('3D off', e); document.documentElement.classList.remove('gl'); } }); }
+</script>
+
+
+</html>
