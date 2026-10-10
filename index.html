@@ -53,6 +53,11 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .nav a{font:400 12px/1 var(--f-display);letter-spacing:.24em;text-transform:uppercase;text-decoration:none;position:relative;padding:8px 0}
 .nav a::after,.tlink::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease-out)}
 .nav a:hover::after,.tlink:hover::after{transform:scaleX(1);transform-origin:left}
+.hdr-end{justify-self:end;display:flex;align-items:baseline;gap:clamp(18px,2.4vw,34px)}
+.lang{display:inline-flex;align-items:baseline;gap:7px;font:400 12px/1 var(--f-display);letter-spacing:.24em;text-transform:uppercase;padding:10px 0}
+.lang span{opacity:.35}
+.lang a{text-decoration:none;color:inherit;opacity:.45;transition:opacity .3s var(--ease-out)}
+.lang a:hover,.lang a.on{opacity:1}
 .bag-btn{justify-self:end;display:inline-flex;align-items:baseline;gap:8px;font:400 12px/1 var(--f-display);letter-spacing:.24em;text-transform:uppercase;padding:10px 0}
 .bag-btn .count{font-family:var(--f-mono);letter-spacing:.06em;display:inline-block;min-width:1.2em;transition:transform .4s var(--ease-out)}
 .bag-btn.bump .count{transform:translateY(-4px)}
@@ -649,7 +654,10 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
     <a href="#kit">Kit de descoberta</a>
     <a href="#casa">A casa</a>
   </nav>
-  <button class="bag-btn" id="bagBtn" aria-haspopup="dialog" aria-controls="drawer">Sacola <span class="count" id="bagCount">0</span><span class="sr"> itens</span></button>
+  <div class="hdr-end">
+    <div class="lang" role="group" aria-label="Idioma"><a href="?lang=pt" data-l="pt" hreflang="pt-BR" lang="pt-BR">PT</a><span aria-hidden="true">/</span><a href="?lang=en" data-l="en" hreflang="en" lang="en">EN</a></div>
+    <button class="bag-btn" id="bagBtn" aria-haspopup="dialog" aria-controls="drawer">Sacola <span class="count" id="bagCount">0</span><span class="sr"> itens</span></button>
+  </div>
 </header>
 
 <main id="main" tabindex="-1">
@@ -820,6 +828,157 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
   </div>
 </aside>
 
+<script>
+/* ---------- idioma: PT (padrão) e EN. Troca pelo seletor no canto superior direito ---------- */
+(function(){
+  var q = new URLSearchParams(location.search).get('lang'), saved = null;
+  try { saved = localStorage.getItem('lueur-lang'); } catch (e) {}
+  var L = (q === 'en' || q === 'pt') ? q : (saved === 'en' ? 'en' : 'pt');
+  try { if (q === 'en' || q === 'pt') localStorage.setItem('lueur-lang', q); } catch (e) {}
+  window.LANG = L;
+  document.querySelectorAll('.lang a[data-l]').forEach(function(a){
+    var on = a.dataset.l === L; a.classList.toggle('on', on); if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    a.addEventListener('click', function(e){ e.preventDefault(); try { localStorage.setItem('lueur-lang', a.dataset.l); } catch (x) {}
+      var u = new URL(location.href); u.searchParams.set('lang', a.dataset.l); location.replace(u.toString()); });
+  });
+  if (L !== 'en') return;
+  document.documentElement.lang = 'en';
+  var D = {
+    /* header, navegação */
+    'Pular para o conteúdo':'Skip to content','Coleção':'Collection','Kit de descoberta':'Discovery kit','A casa':'The house','Sacola':'Bag','itens':'items',
+    'Lueur, início':'Lueur, home','Principal':'Main','Idioma':'Language',
+    /* hero */
+    'O que fica':'What stays','depois que':'after','você sai.':'you leave.','Algo que ninguém esquece.':'Something no one forgets.','Role devagar':'Scroll slowly',
+    'Deslize':'Swipe','Toque para abrir':'Tap to open',
+    /* coleção I */
+    'Saída':'Top','Coração':'Heart','Fundo':'Base','Ocasião':'Occasion','Intensidade':'Intensity','Fixação':'Longevity',
+    'Leve':'Light','Moderada':'Moderate','Intensa':'Intense','6 a 8 horas':'6 to 8 hours','8 a 10 horas':'8 to 10 hours','10 a 12 horas':'10 to 12 hours',
+    'I · Amanhecer':'I · Dawn','II · Pele':'II · Skin','III · Meia-noite':'III · Midnight',
+    'Adicionar à sacola':'Add to bag','Adicionar o kit':'Add the kit',
+    /* manifesto */
+    'A casa · Lueur':'The house · Lueur',
+    'O que importa num perfume é o que ainda está na sua pele às seis da tarde.':'What matters in a perfume is what is still on your skin at six in the evening.',
+    'Mostramos cada fragrância do jeito que ela acontece: a primeira borrifada, o meio do dia, o fim da noite. Escolha pelo que fica.':'We show each fragrance the way it happens: the first spray, the middle of the day, the end of the night. Choose by what stays.',
+    /* coleção II */
+    'Coleção II':'Collection II','Uma pequena seleção.':'A small selection.','Eau de parfum · 50 e 100 ml':'Eau de parfum · 50 and 100 ml','Descobrir':'Discover',
+    'Limpa, branca, delicada.':'Clean, white, delicate.','Verde, leitosa, ensolarada.':'Green, milky, sunlit.','Rosa escura, profunda.':'Dark rose, deep.',
+    'Abrir Lin':'Open Lin','Abrir Figue':'Open Figue','Abrir Velours':'Open Velours',
+    /* página do perfume */
+    'Voltar à coleção':'Back to the collection','Inspiração':'Inspiration','Quando usar':'When to wear','Tamanho':'Size',
+    'Notas no tempo':'Notes over time','Arraste e veja como ele muda na pele ao longo do dia.':'Drag to see how it changes on your skin through the day.',
+    'Horas depois de aplicar':'Hours after applying','Primeira borrifada':'First spray','Arraste para girar':'Drag to turn',
+    /* campanha */
+    'Campanha':'Campaign','Campanha Lueur · Peau':'Lueur campaign · Peau','Peau · na pele':'Peau · on the skin','Minuit · à noite':'Minuit · at night',
+    'Ninguém lembra do frasco.':'No one remembers the bottle.','Lembram de você passando.':'They remember you walking by.','Campanha · Outono 2026':'Campaign · Autumn 2026',
+    'Fotografamos os perfumes como eles vivem: perto da pele, em luz de verdade, sem pressa.':'We photograph the perfumes the way they live: close to the skin, in real light, without hurry.',
+    'Mulher de costas, em luz de fim de tarde, borrifando o Peau':'A woman seen from behind, in late afternoon light, spraying Peau',
+    'Mulher em luz de fim de tarde segurando o frasco do Peau junto à clavícula':'A woman in late afternoon light holding the Peau bottle against her collarbone',
+    'Mãos borrifando o Minuit no pulso em luz baixa e quente':'Hands spraying Minuit on the wrist in low, warm light',
+    /* kit e FAQ */
+    'Kit de descoberta · 3 × 10 ml':'Discovery kit · 3 × 10 ml','Na dúvida,':'Not sure?','comece pelos três.':'Start with all three.',
+    'Use cada um por uma semana, na sua pele, no seu dia. Se depois escolher um frasco de 50 ml, o valor do kit volta como desconto.':'Wear each one for a week, on your skin, in your day. If you then choose a 50 ml bottle, the price of the kit comes back as a discount.',
+    'Quanto tempo dura na pele?':'How long does it last on the skin?',
+    'Entre 7 e 11 horas, dependendo do perfume e da sua pele. A linha do tempo de cada fragrância mostra o que acontece em cada hora.':'Between 7 and 11 hours, depending on the perfume and your skin. Each fragrance’s timeline shows what happens hour by hour.',
+    'E se eu não gostar de nenhum?':'What if I don’t like any of them?',
+    'Você devolve o kit em até 30 dias e recebe o valor de volta. Sem formulário, só uma mensagem.':'Return the kit within 30 days and get your money back. No forms, just a message.',
+    'Quando chega?':'When will it arrive?','Em 2 a 5 dias úteis para capitais, com frete grátis acima de R$ 400.':'In 2 to 5 business days to state capitals, with free shipping over R$ 400.',
+    /* newsletter */
+    'perto':'close','Fique por perto':'Stay close','Novos perfumes, histórias da casa e convites antes de todo mundo. Uma carta por mês.':'New perfumes, stories from the house and invitations before anyone else. One letter a month.',
+    'Seu e-mail':'Your e-mail','Assinar':'Subscribe','Confira o e-mail, parece que falta alguma coisa.':'Check your e-mail, something seems to be missing.',
+    'Pronto. A primeira carta chega em breve.':'Done. The first letter arrives soon.',
+    /* rodapé */
+    'Um brilho que demora a ir embora.':'A glow that takes its time to leave.','Explore':'Explore','Ajuda':'Help','Entregas':'Shipping','Trocas':'Returns','Contato':'Contact','Siga':'Follow',
+    '© 2026 Lueur. Marca conceitual criada para portfólio: perfumes, preços e pedidos são fictícios, e as imagens foram geradas por IA. Nenhuma compra é cobrada.':'© 2026 Lueur. A concept brand created for a portfolio: perfumes, prices and orders are fictional, and the images were generated by AI. No purchase is charged.',
+    /* sacola */
+    'Sua sacola':'Your bag','Fechar':'Close','Sua sacola está vazia.':'Your bag is empty.','Conhecer a coleção':'See the collection','Subtotal':'Subtotal',
+    'Frete grátis acima de R$ 400. Loja de demonstração: nada é cobrado.':'Free shipping over R$ 400. Demo store: nothing is charged.','Finalizar compra':'Checkout',
+    'Pedido de demonstração':'Demo order','Pedido recebido.':'Order received.','A Lueur é uma marca conceitual, então nada foi cobrado e nada será enviado.':'Lueur is a concept brand, so nothing was charged and nothing will be shipped.',
+    'Continuar navegando':'Keep browsing','Diminuir':'Decrease','Aumentar':'Increase',
+    /* perfumes: significado, descrição, inspiração */
+    'Amanhecer':'Dawn','Pele':'Skin','Meia-noite':'Midnight','Linho':'Linen','Figo':'Fig','Veludo':'Velvet',
+    'Fresca, luminosa, limpa. Para quem quer cheirar a banho tomado o dia inteiro.':'Fresh, luminous, clean. For anyone who wants to smell just-showered all day long.',
+    'A janela aberta antes de todo mundo acordar. Lençol limpo, casca de bergamota, o ar ainda frio.':'The window open before anyone else is awake. Clean sheets, bergamot peel, the air still cool.',
+    'Macia, morna, íntima. Parece o cheiro da sua pele, só que melhor.':'Soft, warm, intimate. It smells like your skin, only better.',
+    'Aquele perfume que ninguém identifica, mas todo mundo quer saber qual é. Chegam perto para descobrir.':'The perfume no one can name, but everyone wants to know. They come closer to find out.',
+    'Âmbar, densa, magnética. Chega antes de você e fica depois.':'Amber, dense, magnetic. It arrives before you and stays after.',
+    'A última taça, a música mais baixa, o caminho de volta para casa com o casaco de outra pessoa.':'The last glass, the music turned down, the way home in someone else’s coat.',
+    'Limpa, branca, delicada. Lençol de linho secando ao sol.':'Clean, white, delicate. Linen sheets drying in the sun.',
+    'Uma camisa branca recém-passada, a janela aberta, a íris no vaso da mesa.':'A freshly ironed white shirt, the window open, an iris in the vase on the table.',
+    'Verde, leitosa, ensolarada. Um quintal no fim da tarde.':'Green, milky, sunlit. A backyard at the end of the afternoon.',
+    'A figueira do quintal da avó, a folha amassada entre os dedos, o chá servido na varanda.':'Grandmother’s fig tree, a leaf crushed between the fingers, tea served on the porch.',
+    'Rosa escura, profunda, envolvente. Veludo na pele.':'Dark rose, deep, enveloping. Velvet on the skin.',
+    'Um vestido de veludo, cortinas pesadas, a rosa que alguém deixou na mesa do jantar.':'A velvet dress, heavy curtains, the rose someone left on the dinner table.',
+    /* ocasiões */
+    'Manhã':'Morning','Tarde':'Afternoon','Noite':'Night','Sempre':'Always','Todo dia':'Every day','Inverno':'Winter','Especial':'Special','Frio':'Cold','Verão':'Summer','Viagem':'Travel','Encontro':'Date',
+    'Dias de trabalho':'Workdays','Calor e sol':'Heat and sun','Quando você quer parecer descansada':'When you want to look rested','Do café ao jantar':'From breakfast to dinner',
+    'Encontros a dois':'Dates for two','Abraços longos':'Long hugs','Jantares e festas':'Dinners and parties','Dias que pedem presença':'Days that call for presence','Outono e inverno':'Autumn and winter',
+    'Escritório e reuniões':'Office and meetings','Dias claros':'Bright days','Quando você quer leveza':'When you want lightness','Fins de semana':'Weekends','Dias ao ar livre':'Days outdoors','Calor seco':'Dry heat',
+    'Ocasiões especiais':'Special occasions','Noites frias':'Cold nights','Quando você quer ser lembrada':'When you want to be remembered',
+    /* notas */
+    'Bergamota · Pera · Pimenta rosa':'Bergamot · Pear · Pink pepper','Flor de laranjeira · Íris':'Orange blossom · Iris','Almíscar branco · Cedro claro':'White musk · Pale cedar',
+    'Semente de âmbar · Aldeídos suaves':'Amber seed · Soft aldehydes','Íris · Rosa':'Iris · Rose','Almíscar · Sândalo · Baunilha':'Musk · Sandalwood · Vanilla',
+    'Açafrão · Ameixa':'Saffron · Plum','Jasmim · Tuberosa':'Jasmine · Tuberose','Âmbar · Fava tonka · Oud suave':'Amber · Tonka bean · Soft oud',
+    'Aldeídos · Bergamota':'Aldehydes · Bergamot','Íris · Flor de algodão':'Iris · Cotton flower','Almíscar branco · Cashmeran':'White musk · Cashmeran',
+    'Folha de figo · Cassis':'Fig leaf · Blackcurrant','Leite de figo · Chá verde':'Fig milk · Green tea','Cedro · Vetiver':'Cedar · Vetiver',
+    'Framboesa · Pimenta rosa':'Raspberry · Pink pepper','Rosa turca · Peônia':'Turkish rose · Peony','Oud · Couro macio · Patchouli':'Oud · Soft leather · Patchouli',
+    'Bergamota':'Bergamot','Pera':'Pear','Flor de laranjeira':'Orange blossom','Cítricos':'Citrus','Rosa':'Rose','Íris':'Iris','Baunilha':'Vanilla','Açafrão':'Saffron','Ameixa':'Plum','Jasmim':'Jasmine','Fava tonka':'Tonka bean',
+    /* notas no tempo */
+    'Bergamota e pera logo de cara. Fresco, quase cítrico.':'Bergamot and pear right away. Fresh, almost citrus.',
+    'A flor de laranjeira aparece e tudo fica mais macio.':'Orange blossom comes through and everything softens.',
+    'O almíscar branco assume. Cheiro de pele limpa.':'White musk takes over. The scent of clean skin.',
+    'Ainda está lá, bem perto da pele. Só quem chega perto sente.':'Still there, close to the skin. Only those who come near can tell.',
+    'Começa leve, quase um sussurro de âmbar.':'It starts light, almost a whisper of amber.',
+    'A íris e a rosa esquentam junto com a sua pele.':'Iris and rose warm up with your skin.',
+    'Sândalo e baunilha. É aqui que perguntam qual perfume você está usando.':'Sandalwood and vanilla. This is when people ask what you are wearing.',
+    'No fim do dia, ainda na sua roupa.':'At the end of the day, still on your clothes.',
+    'Açafrão e ameixa de cara. Ele anuncia que você chegou.':'Saffron and plum right away. It announces that you have arrived.',
+    'Jasmim e tuberosa abrem espaço. É o auge.':'Jasmine and tuberose open up. This is its peak.',
+    'Âmbar e fava tonka. Deixa rastro por onde você passa.':'Amber and tonka bean. It leaves a trail wherever you go.',
+    'No dia seguinte, ainda no seu casaco.':'The next day, still on your coat.',
+    'Aldeídos e bergamota. Cheiro de roupa limpa.':'Aldehydes and bergamot. The scent of clean laundry.',
+    'A íris aparece, empoada e macia.':'Iris appears, powdery and soft.','Almíscar branco, bem rente à pele.':'White musk, close to the skin.',
+    'Fica como um tecido bom: discreto e presente.':'It stays like good fabric: quiet and present.',
+    'Folha de figo verde, quase crocante.':'Green fig leaf, almost crisp.','O leite de figo amacia tudo. Fica cremoso.':'Fig milk softens everything. It turns creamy.',
+    'Cedro e vetiver, como madeira ao sol.':'Cedar and vetiver, like wood in the sun.','Um verde suave que ainda aparece no fim do dia.':'A soft green that still shows at the end of the day.',
+    'Framboesa e pimenta rosa. Começa vibrante.':'Raspberry and pink pepper. It starts vibrant.','A rosa turca abre, densa e aveludada.':'Turkish rose opens, dense and velvety.',
+    'Oud e couro macio. Profundo e envolvente.':'Oud and soft leather. Deep and enveloping.','Na manhã seguinte, a rosa ainda está na sua pele.':'The next morning, the rose is still on your skin.'
+  };
+  /* ocasiões aparecem em minúsculas depois do ponto: "· dias de trabalho" */
+  Object.keys(D).forEach(function(k){ if (/^[A-ZÀ-Ú]/.test(k) && k.indexOf(' · ') < 0 && k.length < 40) D['· ' + k.toLowerCase()] = '· ' + D[k].toLowerCase(); });
+  var RX = [
+    [/^Frasco do perfume (.+)$/, '$1 bottle'], [/^Frasco do (.+)$/, '$1 bottle'],
+    [/^(\d+(?:[.,]\d+)?)h depois$/, '$1h later'], [/^(\d+(?:[.,]\d+)?) horas ?$/, '$1 hours'], [/^(\d+(?:[.,]\d+)? )horas (.*)$/, '$1hours $2']
+  ];
+  function tr(s){
+    var t = s.trim(); if (!t) return s;
+    var r = D[t];
+    if (r === undefined) for (var i = 0; i < RX.length; i++) if (RX[i][0].test(t)) { r = t.replace(RX[i][0], RX[i][1]); break; }
+    if (r === undefined || r === t) return s;
+    var a = s.match(/^\s*/)[0], b = s.match(/\s*$/)[0]; return a + r + b;
+  }
+  var ATTR = ['aria-label', 'alt', 'placeholder', 'title', 'aria-valuetext'];
+  function el(n){
+    for (var i = 0; i < ATTR.length; i++){ var v = n.getAttribute && n.getAttribute(ATTR[i]); if (v){ var w = tr(v); if (w !== v) n.setAttribute(ATTR[i], w); } }
+  }
+  function walk(root){
+    if (root.nodeType === 3){ var v = tr(root.nodeValue); if (v !== root.nodeValue) root.nodeValue = v; return; }
+    if (root.nodeType !== 1 || root.nodeName === 'SCRIPT' || root.nodeName === 'STYLE') return;
+    el(root);
+    var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT), n;
+    while ((n = w.nextNode())){ if (n.nodeType === 3){ if (n.parentNode && /SCRIPT|STYLE/.test(n.parentNode.nodeName)) continue; var x = tr(n.nodeValue); if (x !== n.nodeValue) n.nodeValue = x; } else el(n); }
+  }
+  walk(document.body);
+  document.title = 'Lueur · Fragrance house';
+  var md = document.querySelector('meta[name=description]'); if (md) md.content = 'Lueur: eaux de parfum made to stay on your skin all day. Your essence, something no one forgets.';
+  new MutationObserver(function(ms){
+    ms.forEach(function(m){
+      if (m.type === 'childList') m.addedNodes.forEach(walk);
+      else if (m.type === 'characterData') walk(m.target);
+      else if (m.type === 'attributes') el(m.target);
+    });
+  }).observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ATTR });
+})();
+</script>
 <script>
 (() => {
 'use strict';
