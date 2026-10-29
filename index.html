@@ -643,38 +643,51 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
 .s-img .halo,.s-img .sheen,.bottle .mist{display:none}
 @media (max-width:860px){.s-img{width:min(88vw,40svh,400px)}}
 
-/* Coleção I: uma cena fotografada por perfume, deitado, com sombra; as cenas sobem uma a uma */
-.c1-track{height:calc(var(--n,3) * 100vh + 30vh + var(--c1-intro,70vh))}
-.c1-pin{background:#EFE6DC}
+/* A casa entra logo depois da abertura, dentro da mesma sala */
+.c1{--c1-intro:170vh}
+.c1-track{--c1-intro:170vh}
+.c1-anchor-casa{top:60vh}
+.c1-manif{position:absolute;inset:0;z-index:4;opacity:0;visibility:hidden;align-content:center;padding:0 var(--gutter)!important;pointer-events:none;will-change:opacity,transform}
+/* Coleção I: uma cena própria por perfume; as cenas passam na horizontal */
+.c1-track{height:calc(var(--n,3) * 100vh + 30vh + var(--c1-intro))}
+.c1-pin{background:#F4ECE3}
 .c1-bottles,.c1-ghosts,.c1-lines{display:none!important}
 .c1-scenes{overflow:hidden}
-.c1-scenes img.shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;opacity:1;transform:translateY(100%);transition:transform 1.15s cubic-bezier(.7,0,.2,1),filter 1.15s var(--ease-io);-webkit-mask:none;mask:none;filter:none}
-.c1-scenes img.shot.past{transform:translateY(-28%);filter:brightness(.82)}
+.c1-scenes img.shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:0% 50%;opacity:1;transform:translateX(100%);transition:transform 1.15s cubic-bezier(.7,0,.2,1),filter 1.15s var(--ease-io);-webkit-mask:none;mask:none;filter:none}
+.c1-scenes img.shot[data-k=peau]{object-position:60% 50%}
+.c1-scenes img.shot.past{transform:translateX(-30%);filter:brightness(.8)}
 .c1-scenes img.shot.on{transform:none;z-index:1}
-/* text: name and price on top, notes on the sides, each on a soft veil of the scene's own light */
-.c1-scenes::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;transition:background 1s var(--ease-io);
-  background:linear-gradient(180deg,rgba(250,245,239,.82) 0%,rgba(250,245,239,.45) 22%,rgba(250,245,239,0) 36%),
-  linear-gradient(90deg,rgba(250,245,239,.72) 0%,rgba(250,245,239,0) 28%,rgba(250,245,239,0) 72%,rgba(250,245,239,.72) 100%)}
-.c1-pin.dk .c1-scenes::after{background:linear-gradient(180deg,rgba(26,18,13,.78) 0%,rgba(26,18,13,.4) 22%,rgba(26,18,13,0) 36%),
-  linear-gradient(90deg,rgba(26,18,13,.72) 0%,rgba(26,18,13,0) 28%,rgba(26,18,13,0) 72%,rgba(26,18,13,.72) 100%)}
+.c1-scenes::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(250,245,239,.9) 0%,rgba(250,245,239,.7) 20%,rgba(250,245,239,0) 36%)}
+.c1-pin.dk .c1-scenes::after{background:linear-gradient(90deg,rgba(24,16,11,.88) 0%,rgba(24,16,11,.62) 20%,rgba(24,16,11,0) 36%)}
+.c1-pin.intro .c1-scenes::after{opacity:0}
+/* all the words on the left, top to bottom: name, price, then the notes */
 .c1-left,.c1-right,.c1-foot,.c1-prog{z-index:3}
-.c1-left,.c1-right{top:56%}
-.c1-foot{top:clamp(84px,11vh,120px);bottom:auto;height:auto;min-height:150px}
-.c1-foot .c1-block{top:0;bottom:auto}
+.c1-foot{left:max(var(--gutter),5vw);right:auto;top:clamp(96px,14vh,140px);bottom:auto;translate:0 0;width:min(27vw,400px);height:auto;text-align:left}
+.c1-foot .c1-block{top:0;bottom:auto;translate:0}
+.c1-foot .ds{margin-left:0}
+.c1-foot .act{justify-content:flex-start}
+.c1-left,.c1-right{top:auto;bottom:clamp(40px,9vh,90px);translate:0;width:min(13vw,190px);text-align:left}
+.c1-left{left:max(var(--gutter),5vw)}
+.c1-right{right:auto;left:calc(max(var(--gutter),5vw) + min(14vw,210px))}
+.c1-block{top:auto!important;bottom:0;translate:0!important}
+.c1-foot .c1-block{top:0!important;bottom:auto}
+.c1-row{padding:9px 0}
 .c1-pin.dk .c1-left,.c1-pin.dk .c1-right,.c1-pin.dk .c1-foot,.c1-pin.dk .c1-prog{color:#F4EADF;--ink:#F4EADF;--ink-2:rgba(244,234,223,.72)}
 .c1-pin.dk .c1-foot button{background:#F4EADF;color:#2A1D15}
 .c1-pin.dk .c1-int b{border-color:#F4EADF}.c1-pin.dk .c1-int b.f{background:#F4EADF}
-.c1-left,.c1-right,.c1-foot{transition:color .8s var(--ease-io)}
-.c1-block{transition:opacity .4s var(--ease-io),transform .7s var(--ease-out)!important;transform:translateY(22px)}
-.c1-block.past{transform:translateY(-22px)}
-.c1-block.on{transform:none;transition:opacity .7s var(--ease-io) .45s,transform .9s var(--ease-out) .45s!important}
+.c1-block{transition:opacity .4s var(--ease-io),transform .7s var(--ease-out)!important;transform:translateX(26px)}
+.c1-block.past{transform:translateX(-26px)}
+.c1-block.on{transform:none;transition:opacity .7s var(--ease-io) .5s,transform .9s var(--ease-out) .5s!important}
 @media (max-width:860px){
-  .c1-track{height:calc(var(--n,3) * 96svh + 24svh + var(--c1-intro,70vh))}
-  .c1-scenes img.shot{object-position:50% 50%}
-  .c1-scenes::after{background:linear-gradient(180deg,rgba(250,245,239,.88) 0%,rgba(250,245,239,.55) 24%,rgba(250,245,239,0) 38%,rgba(250,245,239,0) 58%,rgba(250,245,239,.75) 74%,rgba(250,245,239,.92) 100%)}
-  .c1-pin.dk .c1-scenes::after{background:linear-gradient(180deg,rgba(26,18,13,.85) 0%,rgba(26,18,13,.5) 24%,rgba(26,18,13,0) 38%,rgba(26,18,13,0) 58%,rgba(26,18,13,.72) 74%,rgba(26,18,13,.9) 100%)}
-  .c1-foot{top:68px}
-  .c1-left,.c1-right{top:auto;bottom:22px}
+  .c1-track{height:calc(var(--n,3) * 96svh + 24svh + var(--c1-intro))}
+  .c1-scenes img.shot{top:29svh;bottom:auto;height:38svh;object-position:var(--mx,50%) 50%}
+  .c1-scenes img.shot[data-k=aube]{--mx:50%}.c1-scenes img.shot[data-k=peau]{--mx:62%}.c1-scenes img.shot[data-k=minuit]{--mx:48%}
+  .c1-scenes::after{display:none}
+  .c1-pin.dk{background:#1E1510}
+  .c1-foot{left:var(--gutter);right:var(--gutter);top:66px;width:auto}
+  .c1-foot .ds{margin-bottom:8px}
+  .c1-left,.c1-right{bottom:18px;width:44vw}
+  .c1-left{left:var(--gutter)}.c1-right{left:auto;right:var(--gutter)}
 }
 @media (prefers-reduced-motion:reduce){.c1-scenes img.shot{transition:opacity .3s!important;transform:none!important;opacity:0}.c1-scenes img.shot.on{opacity:1}}
 </style>
@@ -700,7 +713,7 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
 <main id="main" tabindex="-1">
 
   <section class="c1 c1-hero" id="top" aria-labelledby="h1">
-    <span id="colecao" class="c1-anchor"></span>
+    <span id="casa" class="c1-anchor c1-anchor-casa"></span><span id="colecao" class="c1-anchor"></span>
     <div class="c1-track" id="c1Track">
       <div class="c1-pin" id="c1Pin">
         <div class="c1-scenes" aria-hidden="true"></div>
@@ -712,6 +725,11 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
         <div class="c1-right"></div>
         <div class="c1-foot"></div>
         <ol class="c1-prog mono" aria-hidden="true"></ol>
+        <div class="c1-manif manifesto" id="manif" aria-label="A casa">
+    <span class="mono">A casa · Lueur</span>
+    <p id="manifesto">O que importa num perfume é o que ainda está na sua pele às seis da tarde.</p>
+    <small class="rv-s">Mostramos cada fragrância do jeito que ela acontece: a primeira borrifada, o meio do dia, o fim da noite. Escolha pelo que fica.</small>
+  </div>
         <div class="c1-intro" id="heroCopy">
           <h1 id="h1"><span class="ln"><span>O que fica</span></span><span class="ln"><span>depois que</span></span><span class="ln"><span class="it">você sai.</span></span></h1>
           <p>Algo que ninguém esquece.</p>
@@ -720,11 +738,7 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
       </div>
     </div>
   </section>
-  <section class="manifesto" id="casa" aria-label="A casa">
-    <span class="mono">A casa · Lueur</span>
-    <p id="manifesto">O que importa num perfume é o que ainda está na sua pele às seis da tarde.</p>
-    <small class="rv-s">Mostramos cada fragrância do jeito que ela acontece: a primeira borrifada, o meio do dia, o fim da noite. Escolha pelo que fica.</small>
-  </section>
+  
 
 
   <section class="col" id="selecao" aria-labelledby="colTitle">
@@ -1113,8 +1127,7 @@ function frame(){
   lastY = y;
   if (RM.matches) return;
   // manifesto words light up as it crosses the viewport
-  const mp = $('#manifesto').getBoundingClientRect();
-  const prog = Math.min(1, Math.max(0, (vh * 0.85 - mp.top) / (vh * 0.55)));
+  const prog = window.manifP || 0;
   const on = Math.round(prog * mWords.length);
   if (on !== lastWordsOn){ mWords.forEach((w, i) => w.classList.toggle('on', i < on)); lastWordsOn = on; }
   // campaign parallax
@@ -1153,7 +1166,7 @@ window.c1 = (() => {
   const parts = { tint:[], ghost:[], bottle:[], left:[], right:[], foot:[], prog:[] };
   C1K.forEach((k, i) => {
     const p = P[k], c = C1[k];
-    const t = el('img'); t.src = 'assets/c1-scene-' + k + (matchMedia('(max-width:860px)').matches ? '-m' : '') + '.webp?v=2'; t.alt = ''; t.decoding = 'async'; t.className = 'shot'; pin.querySelector('.c1-scenes').append(t); parts.tint.push(t);
+    const t = el('img'); t.src = 'assets/c1-scene-' + k + '.webp?v=3'; t.dataset.k = k; t.alt = ''; t.decoding = 'async'; t.className = 'shot'; pin.querySelector('.c1-scenes').append(t); parts.tint.push(t);
     const g = el('span', '', p.name); g.style.setProperty('--t', c.tint); pin.querySelector('.c1-ghosts').append(g); parts.ghost.push(g);
     const ig = [];
     const b = el('span', 'bottle'); b.dataset.k = k; b.setAttribute('role', 'img'); b.setAttribute('aria-label', 'Frasco do ' + p.name);
@@ -1214,8 +1227,8 @@ window.c1 = (() => {
   new ResizeObserver(redraw).observe(pin);
   // the opening: the first room, a little closer, with the headline. As you scroll it settles back into place
   const intro = $('#heroCopy'), cue = $('#cue'), scenes = pin.querySelector('.c1-scenes'), bottles = pin.querySelector('.c1-bottles');
-  const introLen = () => innerHeight * .7;
-  const photo = $('#heroPhoto'), pimg = photo.querySelector('img');
+  const introLen = () => innerHeight * 1.7;
+  const photo = $('#heroPhoto'), pimg = photo.querySelector('img'), manif = $('#manif');
   function showIntro(){
     if (cur === -2) return; cur = -2;
     pin.style.setProperty('--room', '#FAF1EB');   // clean: just the bottle and the words; the scene and notes come after
@@ -1228,11 +1241,15 @@ window.c1 = (() => {
     pin.classList.toggle('intro', t < 1);
     const sc = RMm ? 1 : 1.04 - .04 * e;
     scenes.style.transform = 'scale(' + sc.toFixed(4) + ')'; bottles.style.transform = 'scale(' + sc.toFixed(4) + ')';
-    const fo = Math.max(0, 1 - t * 1.6);
+    const cl = v => Math.min(1, Math.max(0, v));
+    const fo = 1 - cl(t / .16);
     intro.style.opacity = fo.toFixed(3); intro.style.transform = 'translateY(' + (-t * 40).toFixed(1) + 'px)'; intro.style.visibility = fo > 0 ? 'visible' : 'hidden';
     cue.style.opacity = Math.max(0, 1 - t * 4).toFixed(3);
     // the photograph holds, drifts a touch closer, then dissolves into the first room of the collection
-    const po = 1 - Math.max(0, Math.min(1, (t - .5) / .5));
+    const po = 1 - cl((t - .16) / .16);
+    const mo = cl((t - .26) / .08) * (1 - cl((t - .88) / .1));
+    manif.style.opacity = mo.toFixed(3); manif.style.visibility = mo > 0 ? 'visible' : 'hidden'; manif.style.transform = 'translateY(' + ((1 - cl((t - .26) / .12)) * 30 - cl((t - .88) / .1) * 30).toFixed(1) + 'px)';
+    window.manifP = cl((t - .32) / .42);
     photo.style.opacity = po.toFixed(3); photo.style.visibility = po > 0 ? 'visible' : 'hidden';
     if (!RMm) pimg.style.scale = (1 + t * .05).toFixed(4);
     if (t < 1) { showIntro(); return; }
