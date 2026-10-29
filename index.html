@@ -614,13 +614,13 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
 @media (prefers-reduced-motion:reduce){.c1-intro *{animation:none!important}}
 /* the opening: one photograph, the bottle where it belongs. It gives way to the collection as you scroll */
 .c1-photo{position:absolute;inset:0;overflow:hidden;z-index:2;pointer-events:none;will-change:opacity;background:#fff}
-.c1-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:66% 50%;transform-origin:66% 60%;will-change:transform;animation:photoIn 2.4s var(--ease-out) both}
+.c1-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 50%;transform-origin:57% 70%;will-change:transform;animation:photoIn 2.4s var(--ease-out) both}
 .c1-photo::after{content:none}
 @keyframes photoIn{from{opacity:0;transform:scale(1.05)}to{opacity:1;transform:scale(1)}}
 .c1-intro{z-index:4}.c1-cue{z-index:4}
 @media (max-width:860px){
   .c1-photo{background:#fff}
-  .c1-photo img{height:62svh;top:6svh;object-position:66% 55%;-webkit-mask:linear-gradient(#000 72%,transparent);mask:linear-gradient(#000 72%,transparent)}
+  .c1-photo img{height:62svh;top:6svh;object-position:57% 55%;-webkit-mask:linear-gradient(#000 72%,transparent);mask:linear-gradient(#000 72%,transparent)}
   .c1-photo::after{display:none}
 }
 @media (prefers-reduced-motion:reduce){.c1-photo img{animation:none}}
