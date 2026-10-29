@@ -8,7 +8,7 @@
 <!-- DEPLOY STEP: patch og:url and og:image with the live absolute URL -->
 <meta property="og:title" content="Lueur · O que fica depois que você sai">
 <meta property="og:description" content="A sua essência. Algo que ninguém esquece.">
-<meta property="og:image" content="assets/hero-light.webp">
+<meta property="og:image" content="assets/hero-light.webp?v=3">
 <meta property="og:url" content="">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F1ECE6'/%3E%3Cellipse cx='32' cy='22' rx='11' ry='8' fill='%23C9AFA3'/%3E%3Crect x='22' y='31' width='20' height='22' rx='4' fill='none' stroke='%23292827' stroke-width='2.5'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,7 +46,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 
 /* header */
 .hdr{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:40;height:var(--header-h);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 var(--gutter);transition:background-color .5s var(--ease-out),height .5s var(--ease-out),box-shadow .5s var(--ease-out),transform .5s var(--ease-out)}
-.hdr.scrolled{height:60px;background:rgba(248,246,243,.82);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(41,40,39,.06)}
+.hdr{background:linear-gradient(180deg,rgba(255,253,250,.42),rgba(255,251,246,.22));-webkit-backdrop-filter:blur(18px) saturate(1.5);backdrop-filter:blur(18px) saturate(1.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 1px 0 rgba(41,40,39,.07),0 10px 30px -18px rgba(60,42,30,.18)}
+.hdr.scrolled{height:60px;background:linear-gradient(180deg,rgba(255,253,250,.62),rgba(250,246,241,.48))}
 .hdr.hide{transform:translateY(-100%)}
 .logo{font:300 19px/1 var(--f-display);letter-spacing:.42em;text-decoration:none;justify-self:start;padding:8px 0}
 .nav{display:flex;gap:clamp(20px,3vw,44px)}
@@ -109,7 +110,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .hprog i{display:block;width:1px;height:28px;background:var(--line);position:relative;overflow:hidden}
 .hprog i b{position:absolute;inset:0;background:var(--accent);transform-origin:top;transform:scaleY(var(--f,0))}
 .hdr.dark{color:#F3E9DD}
-.hdr.dark.scrolled{background:rgba(30,22,17,.5);box-shadow:0 1px 0 rgba(243,233,221,.08)}
+.hdr.dark{background:linear-gradient(180deg,rgba(40,30,24,.34),rgba(30,22,17,.22));box-shadow:inset 0 1px 0 rgba(255,240,225,.10),0 1px 0 rgba(243,233,221,.08)}
+.hdr.dark.scrolled{background:linear-gradient(180deg,rgba(40,30,24,.55),rgba(30,22,17,.45))}
 /* manifesto */
 .manifesto{padding:clamp(120px,22vh,240px) var(--gutter) clamp(110px,18vh,200px);display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px}
 .manifesto .mono{grid-column:2 / span 3;color:var(--ink-2);padding-top:18px}
@@ -667,7 +669,7 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
     <div class="c1-track" id="c1Track">
       <div class="c1-pin" id="c1Pin">
         <div class="c1-scenes" aria-hidden="true"></div>
-        <div class="c1-photo" id="heroPhoto" aria-hidden="true"><img src="assets/hero-light.webp" alt="" fetchpriority="high" decoding="async"></div>
+        <div class="c1-photo" id="heroPhoto" aria-hidden="true"><img src="assets/hero-light.webp?v=3" alt="" fetchpriority="high" decoding="async"></div>
         <div class="c1-ghosts" aria-hidden="true"></div>
         <svg class="c1-lines" id="c1Lines" aria-hidden="true"></svg>
         <div class="c1-left"></div>
@@ -697,15 +699,15 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
     </div>
     <div class="grid" id="grid">
       <button class="item rv-s" data-id="lin" aria-label="Abrir Lin">
-        <span class="case"><span class="tone" aria-hidden="true"></span><span class="idx mono">I</span><span class="bwrap"><span class="bottle" data-k="lin"><img class="body" src="assets/p-lin.webp" alt="" width="1024" height="1024"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
+        <span class="case"><span class="tone" aria-hidden="true"></span><span class="idx mono">I</span><span class="bwrap"><span class="bottle" data-k="lin"><img class="body" src="assets/p-lin.webp?v=3" alt="" width="1024" height="1024"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
         <span class="item-meta"><span><span class="item-name">Lin</span><span class="item-line">Limpa, branca, delicada.</span></span><span class="mono">R$ 459</span></span>
       </button>
       <button class="item rv-s" data-id="figue" aria-label="Abrir Figue">
-        <span class="case"><span class="tone" aria-hidden="true"></span><span class="idx mono">II</span><span class="bwrap"><span class="bottle" data-k="figue"><img class="body" src="assets/p-figue.webp" alt="" width="1024" height="1024"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
+        <span class="case"><span class="tone" aria-hidden="true"></span><span class="idx mono">II</span><span class="bwrap"><span class="bottle" data-k="figue"><img class="body" src="assets/p-figue.webp?v=3" alt="" width="1024" height="1024"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
         <span class="item-meta"><span><span class="item-name">Figue</span><span class="item-line">Verde, leitosa, ensolarada.</span></span><span class="mono">R$ 479</span></span>
       </button>
       <button class="item rv-s" data-id="velours" aria-label="Abrir Velours">
-        <span class="case"><span class="tone" aria-hidden="true"></span><span class="idx mono">III</span><span class="bwrap"><span class="bottle" data-k="velours"><img class="body" src="assets/p-velours.webp" alt="" width="1024" height="1024"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
+        <span class="case"><span class="tone" aria-hidden="true"></span><span class="idx mono">III</span><span class="bwrap"><span class="bottle" data-k="velours"><img class="body" src="assets/p-velours.webp?v=3" alt="" width="1024" height="1024"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
         <span class="item-meta"><span><span class="item-name">Velours</span><span class="item-line">Rosa escura, profunda.</span></span><span class="mono">R$ 599</span></span>
       </button>
     </div>
@@ -757,9 +759,9 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
   </section>
 
   <section class="camp" aria-label="Campanha">
-    <figure class="camp-w rv-s"><img src="assets/campanha-peau-w.webp" alt="O Peau sobre uma mesa clara e espelhada, com luz de janela e reflexos de prisma" loading="lazy" data-par="0.06"><figcaption class="mono">Peau · luz de janela</figcaption></figure>
-    <figure class="camp-a rv-s"><img src="assets/campanha-peau.webp" alt="O Aube na borda de um pedestal, com luz de prisma espalhada pela parede" loading="lazy" data-par="0.08"><figcaption class="mono">Aube · manhã</figcaption></figure>
-    <figure class="camp-b rv-s"><img src="assets/campanha-minuit-2.webp" alt="O Minuit sobre superfície escura e espelhada, em luz âmbar de fim de noite" loading="lazy" data-par="0.12"><figcaption class="mono">Minuit · à noite</figcaption></figure>
+    <figure class="camp-w rv-s"><img src="assets/campanha-peau-w.webp?v=3" alt="O Peau sobre uma mesa clara e espelhada, com luz de janela e reflexos de prisma" loading="lazy" data-par="0.06"><figcaption class="mono">Peau · luz de janela</figcaption></figure>
+    <figure class="camp-a rv-s"><img src="assets/campanha-peau.webp?v=3" alt="O Aube na borda de um pedestal, com luz de prisma espalhada pela parede" loading="lazy" data-par="0.08"><figcaption class="mono">Aube · manhã</figcaption></figure>
+    <figure class="camp-b rv-s"><img src="assets/campanha-minuit-2.webp?v=3" alt="O Minuit sobre superfície escura e espelhada, em luz âmbar de fim de noite" loading="lazy" data-par="0.12"><figcaption class="mono">Minuit · à noite</figcaption></figure>
     <blockquote class="camp-quote rv-s"><span>Ninguém lembra do frasco.</span><span>Lembram de você passando.</span></blockquote>
     <p class="camp-c rv-s"><span class="mono">Campanha · Outono 2026</span>Fotografamos os perfumes como a luz os encontra: no vidro, no reflexo, na sombra que fica.</p>
   </section>
@@ -768,9 +770,9 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
     <div class="kit-visual" id="kitVis">
       <svg class="box" aria-hidden="true"><rect x="0.5" y="0.5" rx="2"/></svg>
       <div class="vials">
-        <figure class="item-mini" data-id="aube"><span class="bottle" data-k="aube"><img class="body" src="assets/p-aube.webp" alt="" loading="lazy"></span></figure>
-        <figure class="item-mini" data-id="peau"><span class="bottle" data-k="peau"><img class="body" src="assets/p-peau.webp" alt="" loading="lazy"></span></figure>
-        <figure class="item-mini" data-id="minuit"><span class="bottle" data-k="minuit"><img class="body" src="assets/p-minuit.webp" alt="" loading="lazy"></span></figure>
+        <figure class="item-mini" data-id="aube"><span class="bottle" data-k="aube"><img class="body" src="assets/p-aube.webp?v=3" alt="" loading="lazy"></span></figure>
+        <figure class="item-mini" data-id="peau"><span class="bottle" data-k="peau"><img class="body" src="assets/p-peau.webp?v=3" alt="" loading="lazy"></span></figure>
+        <figure class="item-mini" data-id="minuit"><span class="bottle" data-k="minuit"><img class="body" src="assets/p-minuit.webp?v=3" alt="" loading="lazy"></span></figure>
       </div>
       <div class="kit-vlabel mono" aria-hidden="true"><span>Aube</span><span>Peau</span><span>Minuit</span></div>
     </div>
@@ -988,42 +990,42 @@ const brl = n => 'R$ ' + n.toLocaleString('pt-BR');
 
 /* ---------- data ---------- */
 const P = {
-  aube:{name:'Aube',meaning:'Amanhecer',img:'assets/p-aube.webp',bg:'#E9E8E5',dark:false,
+  aube:{name:'Aube',meaning:'Amanhecer',img:'assets/p-aube.webp?v=3',bg:'#E9E8E5',dark:false,
     desc:'Fresca, luminosa, limpa. Para quem quer cheirar a banho tomado o dia inteiro.',
     insp:'A janela aberta antes de todo mundo acordar. Lençol limpo, casca de bergamota, o ar ainda frio.',
     occ:[['Manhã','Dias de trabalho'],['Tarde','Calor e sol'],['Sempre','Quando você quer parecer descansada']],
     notes:{top:'Bergamota · Pera · Pimenta rosa',heart:'Flor de laranjeira · Íris',base:'Almíscar branco · Cedro claro'},
     price:{50:489,100:689},life:7,
     say:[[0,1,'Bergamota e pera logo de cara. Fresco, quase cítrico.'],[1,3,'A flor de laranjeira aparece e tudo fica mais macio.'],[3,6,'O almíscar branco assume. Cheiro de pele limpa.'],[6,10.1,'Ainda está lá, bem perto da pele. Só quem chega perto sente.']]},
-  peau:{name:'Peau',meaning:'Pele',img:'assets/p-peau.webp',bg:'#ECE4DB',dark:false,
+  peau:{name:'Peau',meaning:'Pele',img:'assets/p-peau.webp?v=3',bg:'#ECE4DB',dark:false,
     desc:'Macia, morna, íntima. Parece o cheiro da sua pele, só que melhor.',
     insp:'Aquele perfume que ninguém identifica, mas todo mundo quer saber qual é. Chegam perto para descobrir.',
     occ:[['Todo dia','Do café ao jantar'],['Noite','Encontros a dois'],['Inverno','Abraços longos']],
     notes:{top:'Semente de âmbar · Aldeídos suaves',heart:'Íris · Rosa',base:'Almíscar · Sândalo · Baunilha'},
     price:{50:529,100:749},life:9.5,
     say:[[0,1,'Começa leve, quase um sussurro de âmbar.'],[1,4,'A íris e a rosa esquentam junto com a sua pele.'],[4,8,'Sândalo e baunilha. É aqui que perguntam qual perfume você está usando.'],[8,10.1,'No fim do dia, ainda na sua roupa.']]},
-  minuit:{name:'Minuit',meaning:'Meia-noite',img:'assets/p-minuit.webp',bg:'#EADCCD',dark:false,
+  minuit:{name:'Minuit',meaning:'Meia-noite',img:'assets/p-minuit.webp?v=3',bg:'#EADCCD',dark:false,
     desc:'Âmbar, densa, magnética. Chega antes de você e fica depois.',
     insp:'A última taça, a música mais baixa, o caminho de volta para casa com o casaco de outra pessoa.',
     occ:[['Noite','Jantares e festas'],['Especial','Dias que pedem presença'],['Frio','Outono e inverno']],
     notes:{top:'Açafrão · Ameixa',heart:'Jasmim · Tuberosa',base:'Âmbar · Fava tonka · Oud suave'},
     price:{50:569,100:799},life:12,
     say:[[0,1,'Açafrão e ameixa de cara. Ele anuncia que você chegou.'],[1,4,'Jasmim e tuberosa abrem espaço. É o auge.'],[4,9,'Âmbar e fava tonka. Deixa rastro por onde você passa.'],[9,10.1,'No dia seguinte, ainda no seu casaco.']]},
-  lin:{name:'Lin',meaning:'Linho',img:'assets/p-lin.webp',bg:'#ECEAF0',dark:false,
+  lin:{name:'Lin',meaning:'Linho',img:'assets/p-lin.webp?v=3',bg:'#ECEAF0',dark:false,
     desc:'Limpa, branca, delicada. Lençol de linho secando ao sol.',
     insp:'Uma camisa branca recém-passada, a janela aberta, a íris no vaso da mesa.',
     occ:[['Manhã','Escritório e reuniões'],['Verão','Dias claros'],['Sempre','Quando você quer leveza']],
     notes:{top:'Aldeídos · Bergamota',heart:'Íris · Flor de algodão',base:'Almíscar branco · Cashmeran'},
     price:{50:459,100:659},life:7,
     say:[[0,1,'Aldeídos e bergamota. Cheiro de roupa limpa.'],[1,3,'A íris aparece, empoada e macia.'],[3,6,'Almíscar branco, bem rente à pele.'],[6,10.1,'Fica como um tecido bom: discreto e presente.']]},
-  figue:{name:'Figue',meaning:'Figo',img:'assets/p-figue.webp',bg:'#E9EBE1',dark:false,
+  figue:{name:'Figue',meaning:'Figo',img:'assets/p-figue.webp?v=3',bg:'#E9EBE1',dark:false,
     desc:'Verde, leitosa, ensolarada. Um quintal no fim da tarde.',
     insp:'A figueira do quintal da avó, a folha amassada entre os dedos, o chá servido na varanda.',
     occ:[['Tarde','Fins de semana'],['Viagem','Dias ao ar livre'],['Verão','Calor seco']],
     notes:{top:'Folha de figo · Cassis',heart:'Leite de figo · Chá verde',base:'Cedro · Vetiver'},
     price:{50:479,100:679},life:8,
     say:[[0,1,'Folha de figo verde, quase crocante.'],[1,4,'O leite de figo amacia tudo. Fica cremoso.'],[4,8,'Cedro e vetiver, como madeira ao sol.'],[8,10.1,'Um verde suave que ainda aparece no fim do dia.']]},
-  velours:{name:'Velours',meaning:'Veludo',img:'assets/p-velours.webp',bg:'#EEDFE0',dark:false,
+  velours:{name:'Velours',meaning:'Veludo',img:'assets/p-velours.webp?v=3',bg:'#EEDFE0',dark:false,
     desc:'Rosa escura, profunda, envolvente. Veludo na pele.',
     insp:'Um vestido de veludo, cortinas pesadas, a rosa que alguém deixou na mesa do jantar.',
     occ:[['Noite','Ocasiões especiais'],['Inverno','Noites frias'],['Encontro','Quando você quer ser lembrada']],
@@ -1257,7 +1259,7 @@ function fill(id){
   $('#sOcc').innerHTML = p.occ.map(o => '<li><span class="mono">' + o[0] + '</span><span>' + o[1] + '</span></li>').join('');
   for (const k in p.notes) tierEls[k].querySelector('.notes').textContent = p.notes[k];
   sBottle.dataset.k = id; $('#sBox').style.setProperty('--ar', getComputedStyle(sBottle).getPropertyValue('--ar'));
-  $('#sBody').src = 'assets/p-' + id + '.webp'; $('#sCap').removeAttribute('src'); sBottle.setAttribute('aria-label', 'Frasco do perfume ' + p.name);
+  $('#sBody').src = 'assets/p-' + id + '.webp?v=3'; $('#sCap').removeAttribute('src'); sBottle.setAttribute('aria-label', 'Frasco do perfume ' + p.name);
   const m = 'url(' + p.img + ')'; $('#sSheen').style.webkitMaskImage = m; $('#sSheen').style.maskImage = m; resetTilt();
   document.querySelectorAll('.sizes button').forEach(b => b.setAttribute('aria-pressed', b.dataset.size === '50'));
   $('#sPrice').textContent = brl(p.price[50]);
@@ -1377,7 +1379,7 @@ document.querySelectorAll('.faq details').forEach(d => {
 
 /* ---------- bag (demo) ---------- */
 const bag = []; const drawer = $('#drawer');
-const KIT = {key:'kit', name:'Kit de descoberta', sub:'3 × 10 ml', img:'assets/p-peau.webp', price:149};
+const KIT = {key:'kit', name:'Kit de descoberta', sub:'3 × 10 ml', img:'assets/p-peau.webp?v=3', price:149};
 function add(item){
   const f = bag.find(x => x.key === item.key); if (f) f.q++; else bag.push({...item, q:1});
   render(); const c = $('#bagBtn'); c.classList.add('bump'); setTimeout(() => c.classList.remove('bump'), 350); openBag();
