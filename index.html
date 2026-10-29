@@ -643,30 +643,40 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
 .s-img .halo,.s-img .sheen,.bottle .mist{display:none}
 @media (max-width:860px){.s-img{width:min(88vw,40svh,400px)}}
 
-/* Coleção I, refeita: um só cenário de luz para os três; o frasco troca descendo, sem apagar a sala */
-.c1-track{height:calc(var(--n,3) * 92vh + 30vh + var(--c1-intro,70vh))}
-.c1-pin{background:#F6EFE7}
-.c1-scenes img.room{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 60%;opacity:1;transform:none;-webkit-mask:none;mask:none}
-.c1-scenes>i{position:absolute;inset:0;opacity:0;transition:opacity 1.1s var(--ease-io);background:radial-gradient(ellipse 26% 40% at 50% 48%,var(--t) 0%,transparent 72%);mix-blend-mode:soft-light}
-.c1-scenes>i.on{opacity:.55}
-.c1-pin .c1-bottles{left:50%;top:0;width:0;height:100%}
-.c1-pin .c1-bottles .bottle{--ch:min(72vh,56vw);position:absolute;left:0;top:calc(67% - var(--ch) * .6667);bottom:auto;height:var(--ch);aspect-ratio:640/1350;translate:-50% 0;opacity:0;transform:translateY(7vh);filter:blur(4px);transition:opacity .75s var(--ease-io),transform 1s var(--ease-out),filter .8s var(--ease-io)}
-.c1-pin .c1-bottles .bottle.past{transform:translateY(-7vh)}
-.c1-pin .c1-bottles .bottle.on{opacity:1;transform:none;filter:none;transition-delay:.08s}
-.c1-pin .c1-bottles .bottle img{width:100%;height:100%;object-fit:contain}
-.c1-ghosts>span{transition:opacity .8s var(--ease-io),transform 1s var(--ease-out)!important;transform:translateY(5vh)}
-.c1-ghosts>span.past{transform:translateY(-5vh)}
-.c1-ghosts>span.on{opacity:.16;transform:none;transition-delay:.05s!important}
-.c1-block{transition:opacity .45s var(--ease-io),transform .7s var(--ease-out)!important;transform:translateY(16px)}
-.c1-block.past{transform:translateY(-16px)}
-.c1-block.on{transform:none;transition:opacity .7s var(--ease-io) .3s,transform .9s var(--ease-out) .3s!important}
-.c1-foot .c1-block.on{transition-delay:.4s,.4s!important}
+/* Coleção I: uma cena fotografada por perfume, deitado, com sombra; as cenas sobem uma a uma */
+.c1-track{height:calc(var(--n,3) * 100vh + 30vh + var(--c1-intro,70vh))}
+.c1-pin{background:#EFE6DC}
+.c1-bottles,.c1-ghosts,.c1-lines{display:none!important}
+.c1-scenes{overflow:hidden}
+.c1-scenes img.shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;opacity:1;transform:translateY(100%);transition:transform 1.15s cubic-bezier(.7,0,.2,1),filter 1.15s var(--ease-io);-webkit-mask:none;mask:none;filter:none}
+.c1-scenes img.shot.past{transform:translateY(-28%);filter:brightness(.82)}
+.c1-scenes img.shot.on{transform:none;z-index:1}
+/* text: name and price on top, notes on the sides, each on a soft veil of the scene's own light */
+.c1-scenes::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;transition:background 1s var(--ease-io);
+  background:linear-gradient(180deg,rgba(250,245,239,.82) 0%,rgba(250,245,239,.45) 22%,rgba(250,245,239,0) 36%),
+  linear-gradient(90deg,rgba(250,245,239,.72) 0%,rgba(250,245,239,0) 28%,rgba(250,245,239,0) 72%,rgba(250,245,239,.72) 100%)}
+.c1-pin.dk .c1-scenes::after{background:linear-gradient(180deg,rgba(26,18,13,.78) 0%,rgba(26,18,13,.4) 22%,rgba(26,18,13,0) 36%),
+  linear-gradient(90deg,rgba(26,18,13,.72) 0%,rgba(26,18,13,0) 28%,rgba(26,18,13,0) 72%,rgba(26,18,13,.72) 100%)}
+.c1-left,.c1-right,.c1-foot,.c1-prog{z-index:3}
+.c1-left,.c1-right{top:56%}
+.c1-foot{top:clamp(84px,11vh,120px);bottom:auto;height:auto;min-height:150px}
+.c1-foot .c1-block{top:0;bottom:auto}
+.c1-pin.dk .c1-left,.c1-pin.dk .c1-right,.c1-pin.dk .c1-foot,.c1-pin.dk .c1-prog{color:#F4EADF;--ink:#F4EADF;--ink-2:rgba(244,234,223,.72)}
+.c1-pin.dk .c1-foot button{background:#F4EADF;color:#2A1D15}
+.c1-pin.dk .c1-int b{border-color:#F4EADF}.c1-pin.dk .c1-int b.f{background:#F4EADF}
+.c1-left,.c1-right,.c1-foot{transition:color .8s var(--ease-io)}
+.c1-block{transition:opacity .4s var(--ease-io),transform .7s var(--ease-out)!important;transform:translateY(22px)}
+.c1-block.past{transform:translateY(-22px)}
+.c1-block.on{transform:none;transition:opacity .7s var(--ease-io) .45s,transform .9s var(--ease-out) .45s!important}
 @media (max-width:860px){
-  .c1-track{height:calc(var(--n,3) * 90svh + 24svh + var(--c1-intro,70vh))}
-  .c1-scenes img.room{height:100%;inset:0;top:0;object-position:50% 40%}
-  .c1-pin .c1-bottles .bottle{--ch:52svh;top:calc(46% - var(--ch) * .6667)}
+  .c1-track{height:calc(var(--n,3) * 96svh + 24svh + var(--c1-intro,70vh))}
+  .c1-scenes img.shot{object-position:50% 50%}
+  .c1-scenes::after{background:linear-gradient(180deg,rgba(250,245,239,.88) 0%,rgba(250,245,239,.55) 24%,rgba(250,245,239,0) 38%,rgba(250,245,239,0) 58%,rgba(250,245,239,.75) 74%,rgba(250,245,239,.92) 100%)}
+  .c1-pin.dk .c1-scenes::after{background:linear-gradient(180deg,rgba(26,18,13,.85) 0%,rgba(26,18,13,.5) 24%,rgba(26,18,13,0) 38%,rgba(26,18,13,0) 58%,rgba(26,18,13,.72) 74%,rgba(26,18,13,.9) 100%)}
+  .c1-foot{top:68px}
+  .c1-left,.c1-right{top:auto;bottom:22px}
 }
-@media (prefers-reduced-motion:reduce){.c1-pin .c1-bottles .bottle{transform:none!important;filter:none!important}}
+@media (prefers-reduced-motion:reduce){.c1-scenes img.shot{transition:opacity .3s!important;transform:none!important;opacity:0}.c1-scenes img.shot.on{opacity:1}}
 </style>
 
 
@@ -1143,8 +1153,7 @@ window.c1 = (() => {
   const parts = { tint:[], ghost:[], bottle:[], left:[], right:[], foot:[], prog:[] };
   C1K.forEach((k, i) => {
     const p = P[k], c = C1[k];
-    if (!i) { const r = el('img'); r.src = 'assets/c1-room.webp?v=1'; r.alt = ''; r.decoding = 'async'; r.className = 'room'; pin.querySelector('.c1-scenes').append(r); }
-    const t = el('i'); t.style.setProperty('--t', c.tint); pin.querySelector('.c1-scenes').append(t); parts.tint.push(t);
+    const t = el('img'); t.src = 'assets/c1-scene-' + k + (matchMedia('(max-width:860px)').matches ? '-m' : '') + '.webp?v=2'; t.alt = ''; t.decoding = 'async'; t.className = 'shot'; pin.querySelector('.c1-scenes').append(t); parts.tint.push(t);
     const g = el('span', '', p.name); g.style.setProperty('--t', c.tint); pin.querySelector('.c1-ghosts').append(g); parts.ghost.push(g);
     const ig = [];
     const b = el('span', 'bottle'); b.dataset.k = k; b.setAttribute('role', 'img'); b.setAttribute('aria-label', 'Frasco do ' + p.name);
@@ -1166,6 +1175,7 @@ window.c1 = (() => {
   function show(i){
     if (i === cur) return; cur = i;
     pin.style.setProperty('--room', i >= 0 ? C1[C1K[i]].room : '#FDFCFA');
+    pin.classList.toggle('dk', i >= 0 && C1K[i] === 'minuit');
     for (const key of Object.keys(parts)) parts[key].forEach((x, j) => {
       const on = j === i; (Array.isArray(x) ? x : [x]).forEach(n => { n.classList.toggle('on', on); n.classList.toggle('past', i >= 0 && j < i); if (key === 'left' || key === 'right' || key === 'foot') n.setAttribute('aria-hidden', on ? 'false' : 'true'); });
     });
@@ -1178,7 +1188,7 @@ window.c1 = (() => {
     document.querySelectorAll('.c1-row.in').forEach(r => r.classList.remove('in'));
     if (cur < 0) { lines.innerHTML = ''; return; }
     const rows = [...parts.left[cur].querySelectorAll('.c1-row')].map(r => [r, -1]).concat([...parts.right[cur].querySelectorAll('.c1-row')].map(r => [r, 1]));
-    if (innerWidth <= 860) { lines.innerHTML = ''; rows.forEach(([r]) => r.classList.add('in')); return; }
+    { lines.innerHTML = ''; rows.forEach(([r], n) => rowT.push(setTimeout(() => r.classList.add('in'), 380 + n * 70))); return; }
     const pr = pin.getBoundingClientRect(), bf = parts.bottle[cur].getBoundingClientRect(), BB = { aube:[.10,.14,.90,.66], peau:[.15,.16,.85,.66], minuit:[.22,.10,.78,.66] }[C1K[cur]] || [.15,.14,.85,.66];
     const b = { left: bf.left + bf.width * BB[0], top: bf.top + bf.height * BB[1], right: bf.left + bf.width * BB[2], bottom: bf.top + bf.height * BB[3] }; b.width = b.right - b.left; b.height = b.bottom - b.top;   // the right side clears the box
     const top = b.top - pr.top + b.height * .3, bot = b.bottom - pr.top - b.height * .08, gap = 34;
