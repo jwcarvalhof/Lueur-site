@@ -643,52 +643,49 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
 .s-img .halo,.s-img .sheen,.bottle .mist{display:none}
 @media (max-width:860px){.s-img{width:min(88vw,40svh,400px)}}
 
-/* A casa entra logo depois da abertura, dentro da mesma sala */
-.c1{--c1-intro:170vh}
-.c1-track{--c1-intro:170vh}
-.c1-anchor-casa{top:60vh}
-.c1-manif{position:absolute;inset:0;z-index:4;opacity:0;visibility:hidden;align-content:center;padding:0 var(--gutter)!important;pointer-events:none;will-change:opacity,transform}
-/* Coleção I: uma cena própria por perfume; as cenas passam na horizontal */
-.c1-track{height:calc(var(--n,3) * 100vh + 30vh + var(--c1-intro))}
-.c1-pin{background:#F4ECE3}
-.c1-bottles,.c1-ghosts,.c1-lines{display:none!important}
-.c1-scenes{overflow:hidden}
-.c1-scenes img.shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:72% 50%;opacity:1;transform:translateX(100%);transition:transform 1.15s cubic-bezier(.7,0,.2,1),filter 1.15s var(--ease-io);-webkit-mask:none;mask:none;filter:none}
-.c1-scenes img.shot.past{transform:translateX(-30%);filter:brightness(.8)}
-.c1-scenes img.shot.on{transform:none;z-index:1}
-.c1-scenes::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(250,245,239,.9) 0%,rgba(250,245,239,.7) 20%,rgba(250,245,239,0) 36%)}
-.c1-pin.dk .c1-scenes::after{background:linear-gradient(90deg,rgba(24,16,11,.88) 0%,rgba(24,16,11,.62) 20%,rgba(24,16,11,0) 36%)}
-.c1-pin.intro .c1-scenes::after{opacity:0}
-/* all the words on the left, top to bottom: name, price, then the notes */
-.c1-left,.c1-right,.c1-foot,.c1-prog{z-index:3}
-.c1-foot{left:max(var(--gutter),5vw);right:auto;top:clamp(96px,14vh,140px);bottom:auto;translate:0 0;width:min(27vw,400px);height:auto;text-align:left}
-.c1-foot .c1-block{top:0;bottom:auto;translate:0}
-.c1-foot .ds{margin-left:0}
-.c1-foot .act{justify-content:flex-start}
-.c1-left,.c1-right{top:auto;bottom:clamp(40px,9vh,90px);translate:0;width:min(13vw,190px);text-align:left}
-.c1-left{left:max(var(--gutter),5vw)}
-.c1-right{right:auto;left:calc(max(var(--gutter),5vw) + min(14vw,210px))}
-.c1-block{top:auto!important;bottom:0;translate:0!important}
-.c1-foot .c1-block{top:0!important;bottom:auto}
-.c1-row{padding:9px 0}
-.c1-pin.dk .c1-left,.c1-pin.dk .c1-right,.c1-pin.dk .c1-foot,.c1-pin.dk .c1-prog{color:#F4EADF;--ink:#F4EADF;--ink-2:rgba(244,234,223,.72)}
-.c1-pin.dk .c1-foot button{background:#F4EADF;color:#2A1D15}
-.c1-pin.dk .c1-int b{border-color:#F4EADF}.c1-pin.dk .c1-int b.f{background:#F4EADF}
-.c1-block{transition:opacity .4s var(--ease-io),transform .7s var(--ease-out)!important;transform:translateX(26px)}
-.c1-block.past{transform:translateX(-26px)}
-.c1-block.on{transform:none;transition:opacity .7s var(--ease-io) .5s,transform .9s var(--ease-out) .5s!important}
+/* abertura direta: a foto, as palavras; A casa logo abaixo */
+.hx{position:relative;height:100vh;height:100svh;overflow:hidden;background:#fff}
+.hx .c1-intro{z-index:4}
+#casa.manifesto{padding-top:clamp(90px,15vh,170px);padding-bottom:clamp(90px,15vh,170px)}
+/* Coleção I: uma tela por perfume, passando na horizontal */
+.cx{position:relative;background:#F7F1EA}
+.cx-track{position:relative;height:calc(3 * 100vh + 70vh)}
+.cx-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.cx-rail{display:flex;height:100%;width:300%;will-change:transform}
+.cx-slide{flex:0 0 33.3334%;height:100%;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,400px) auto;grid-template-rows:1fr auto auto 1fr;grid-template-areas:". img" "head img" "notes img" ". img";justify-content:center;align-items:center;column-gap:clamp(48px,7vw,120px);padding:clamp(84px,12vh,120px) max(var(--gutter),6vw) clamp(48px,8vh,80px)}
+.cx-head{grid-area:head}
+.cx-notes{grid-area:notes}
+.cx-img{grid-area:img;margin:0;height:min(calc(100vh - 190px),780px);height:min(calc(100svh - 190px),780px);aspect-ratio:4/5;overflow:hidden;background:#EFE6DC;box-shadow:0 40px 70px -46px rgba(60,42,30,.45)}
+.cx-img img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.16);will-change:transform}
+.cx-kick{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2);margin:0 0 12px}
+.cx-nm{font:200 clamp(42px,4.2vw,66px)/1 var(--f-display);letter-spacing:.22em;text-transform:uppercase;margin:0 0 14px}
+.cx-ds{margin:0 0 22px;color:var(--ink-2);font-size:15.5px;line-height:1.55;max-width:36ch}
+.cx-act{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.cx-pr{font:300 20px var(--f-display)}
+.cx-pr small{color:var(--ink-2);margin-left:4px}
+.cx-act button{font:500 11px/1 var(--f-body);letter-spacing:.18em;text-transform:uppercase;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:14px 22px;cursor:pointer;transition:background .4s}
+.cx-act button:hover{background:var(--accent)}
+.cx-notes{margin-top:30px;padding-top:24px;border-top:1px solid var(--line,rgba(41,40,39,.14));display:grid;grid-template-columns:1fr 1fr;gap:16px 28px}
+.cx-notes .mono{display:block;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);margin-bottom:4px}
+.cx-notes .v{display:block;font-size:14.5px;line-height:1.45}
+.cx-notes .v i{font-style:normal;color:var(--ink-2)}
+.cx-int{display:inline-flex;gap:4px;margin-right:8px;vertical-align:1px}
+.cx-int b{width:6px;height:6px;border-radius:50%;border:1px solid var(--ink)}.cx-int b.f{background:var(--ink)}
+.cx-bar{position:absolute;left:50%;bottom:clamp(18px,3.5vh,32px);translate:-50% 0;width:120px;height:1px;background:rgba(41,40,39,.14)}
+.cx-bar i{display:block;height:100%;width:33.33%;background:var(--ink);transform-origin:left;will-change:transform}
 @media (max-width:860px){
-  .c1-track{height:calc(var(--n,3) * 96svh + 24svh + var(--c1-intro))}
-  .c1-scenes img.shot{top:29svh;bottom:auto;height:38svh;object-position:var(--mx,50%) 50%}
-  .c1-scenes img.shot{--mx:82%}
-  .c1-scenes::after{display:none}
-  .c1-pin.dk{background:#1E1510}
-  .c1-foot{left:var(--gutter);right:var(--gutter);top:66px;width:auto}
-  .c1-foot .ds{margin-bottom:8px}
-  .c1-left,.c1-right{bottom:18px;width:44vw}
-  .c1-left{left:var(--gutter)}.c1-right{left:auto;right:var(--gutter)}
+  .cx-track{height:calc(3 * 100svh + 50svh)}
+  .cx-slide{grid-template-columns:100%;grid-template-rows:auto auto auto;grid-template-areas:"head" "img" "notes";align-content:center;row-gap:16px;padding:70px var(--gutter) 34px}
+  .cx-img{height:clamp(190px,36svh,360px);width:100%;aspect-ratio:auto}
+  .cx-kick{margin-bottom:6px;font-size:10px}
+  .cx-nm{font-size:34px;margin-bottom:8px}
+  .cx-ds{font-size:13.5px;margin-bottom:12px}
+  .cx-act{gap:14px}.cx-act button{padding:12px 18px}
+  .cx-pr{font-size:18px}
+  .cx-notes{margin-top:0;padding-top:14px;gap:10px 18px}
+  .cx-notes .v{font-size:13px}
+  .cx-bar{bottom:14px}
 }
-@media (prefers-reduced-motion:reduce){.c1-scenes img.shot{transition:opacity .3s!important;transform:none!important;opacity:0}.c1-scenes img.shot.on{opacity:1}}
 </style>
 
 
@@ -711,29 +708,25 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
 
 <main id="main" tabindex="-1">
 
-  <section class="c1 c1-hero" id="top" aria-labelledby="h1">
-    <span id="casa" class="c1-anchor c1-anchor-casa"></span><span id="colecao" class="c1-anchor"></span>
-    <div class="c1-track" id="c1Track">
-      <div class="c1-pin" id="c1Pin">
-        <div class="c1-scenes" aria-hidden="true"></div>
-        <div class="c1-photo" id="heroPhoto" aria-hidden="true"><img src="assets/hero-light.webp?v=3" alt="" fetchpriority="high" decoding="async"></div>
-        <div class="c1-ghosts" aria-hidden="true"></div>
-        <svg class="c1-lines" id="c1Lines" aria-hidden="true"></svg>
-        <div class="c1-left"></div>
-        <div class="c1-bottles"></div>
-        <div class="c1-right"></div>
-        <div class="c1-foot"></div>
-        <ol class="c1-prog mono" aria-hidden="true"></ol>
-        <div class="c1-manif manifesto" id="manif" aria-label="A casa">
+  <section class="hx" id="top" aria-labelledby="h1">
+    <div class="c1-photo" id="heroPhoto" aria-hidden="true"><img src="assets/hero-light.webp?v=3" alt="" fetchpriority="high" decoding="async"></div>
+    <div class="c1-intro" id="heroCopy">
+      <h1 id="h1"><span class="ln"><span>O que fica</span></span><span class="ln"><span>depois que</span></span><span class="ln"><span class="it">você sai.</span></span></h1>
+      <p>Algo que ninguém esquece.</p>
+    </div>
+  </section>
+
+  <section class="manifesto" id="casa" aria-label="A casa">
     <span class="mono">A casa · Lueur</span>
     <p id="manifesto">O que importa num perfume é o que ainda está na sua pele às seis da tarde.</p>
     <small class="rv-s">Mostramos cada fragrância do jeito que ela acontece: a primeira borrifada, o meio do dia, o fim da noite. Escolha pelo que fica.</small>
-  </div>
-        <div class="c1-intro" id="heroCopy">
-          <h1 id="h1"><span class="ln"><span>O que fica</span></span><span class="ln"><span>depois que</span></span><span class="ln"><span class="it">você sai.</span></span></h1>
-          <p>Algo que ninguém esquece.</p>
-        </div>
-        <div class="c1-cue mono" id="cue" aria-hidden="true"><i></i>Role devagar</div>
+  </section>
+
+  <section class="cx" id="colecao" aria-label="Coleção">
+    <div class="cx-track" id="c1Track">
+      <div class="cx-pin" id="c1Pin">
+        <div class="cx-rail" id="cxRail"></div>
+        <div class="cx-bar" aria-hidden="true"><i></i></div>
       </div>
     </div>
   </section>
@@ -742,7 +735,7 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
 
   <section class="col" id="selecao" aria-labelledby="colTitle">
     <div class="col-head">
-      <h2 id="colTitle">Coleção II <span class="it">Uma pequena seleção.</span></h2>
+      <h2 id="colTitle">Seleção <span class="it">Uma pequena seleção.</span></h2>
       <span class="mono">Eau de parfum · 50 e 100 ml</span>
     </div>
     <div class="grid" id="grid">
@@ -910,7 +903,7 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
     'O que importa num perfume é o que ainda está na sua pele às seis da tarde.':'What matters in a perfume is what is still on your skin at six in the evening.',
     'Mostramos cada fragrância do jeito que ela acontece: a primeira borrifada, o meio do dia, o fim da noite. Escolha pelo que fica.':'We show each fragrance the way it happens: the first spray, the middle of the day, the end of the night. Choose by what stays.',
     /* coleção II */
-    'Coleção II':'Collection II','Uma pequena seleção.':'A small selection.','Eau de parfum · 50 e 100 ml':'Eau de parfum · 50 and 100 ml','Descobrir':'Discover',
+    'Seleção':'Selection','Uma pequena seleção.':'A small selection.','Eau de parfum · 50 e 100 ml':'Eau de parfum · 50 and 100 ml','Descobrir':'Discover',
     'Limpa, branca, delicada.':'Clean, white, delicate.','Verde, leitosa, ensolarada.':'Green, milky, sunlit.','Rosa escura, profunda.':'Dark rose, deep.',
     'Abrir Lin':'Open Lin','Abrir Figue':'Open Figue','Abrir Velours':'Open Velours',
     /* página do perfume */
@@ -1098,8 +1091,7 @@ document.querySelectorAll('.nav a').forEach(a => a.addEventListener('click', () 
 const heroCopy = $('#heroCopy'), bigWord = $('#bigWord');
 /* ---------- hero: the bottle opens with the scroll ---------- */
 const H = (() => {
-  const t = $('#c1Track');
-  return { onScroll: () => {}, place: () => {}, end: () => t.offsetTop + innerHeight * .7, at: f => t.offsetTop + innerHeight * .7 * f, rerender: () => { if (window.c1) dispatchEvent(new Event('scroll')); } };
+  return { onScroll: () => {}, place: () => {}, end: () => innerHeight * .7, at: f => innerHeight * .7 * f, rerender: () => {} };
 })();
 /* soft, eased scrolling for the calls to action */
 let easeRaf = null;
@@ -1126,7 +1118,8 @@ function frame(){
   lastY = y;
   if (RM.matches) return;
   // manifesto words light up as it crosses the viewport
-  const prog = window.manifP || 0;
+  const mr = mWords[0].parentElement.getBoundingClientRect();
+  const prog = Math.min(1, Math.max(0, (vh * .85 - mr.top) / (vh * .5)));
   const on = Math.round(prog * mWords.length);
   if (on !== lastWordsOn){ mWords.forEach((w, i) => w.classList.toggle('on', i < on)); lastWordsOn = on; }
   // campaign parallax
@@ -1155,109 +1148,46 @@ const pauseStyle = document.createElement('style'); pauseStyle.textContent = 'bo
 document.addEventListener('visibilitychange', () => document.body.classList.toggle('paused', document.hidden));
 
 
-/* ---------- Coleção I: the room changes with the scroll, the bottle stays still ---------- */
+/* ---------- Coleção I: one screen per perfume, sliding sideways with the scroll ---------- */
 const C1K = ['aube','peau','minuit'];
 window.c1 = (() => {
-  const track = $('#c1Track'), pin = $('#c1Pin'), lines = $('#c1Lines');
-  track.style.setProperty('--n', C1K.length);
-  const ROMAN = ['I','II','III','IV','V','VI'];
-  const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
-  const parts = { tint:[], ghost:[], bottle:[], left:[], right:[], foot:[], prog:[] };
+  const track = $('#c1Track'), rail = $('#cxRail'), bar = document.querySelector('.cx-bar i');
+  const slides = [], imgs = [];
   C1K.forEach((k, i) => {
     const p = P[k], c = C1[k];
-    const t = el('img'); t.src = 'assets/c1-scene-' + k + '.webp?v=4'; t.dataset.k = k; t.alt = ''; t.decoding = 'async'; t.className = 'shot'; pin.querySelector('.c1-scenes').append(t); parts.tint.push(t);
-    const g = el('span', '', p.name); g.style.setProperty('--t', c.tint); pin.querySelector('.c1-ghosts').append(g); parts.ghost.push(g);
-    const ig = [];
-    const b = el('span', 'bottle'); b.dataset.k = k; b.setAttribute('role', 'img'); b.setAttribute('aria-label', 'Frasco do ' + p.name);
-    b.innerHTML = '<img class="body" src="assets/c1-' + k + '.webp?v=1" alt="">'; pin.querySelector('.c1-bottles').append(b); parts.bottle.push(b);
-    const L = el('div', 'c1-block', [['Saída', p.notes.top], ['Coração', p.notes.heart], ['Fundo', p.notes.base]].map(r => '<div class="c1-row"><span class="mono">' + r[0] + '</span><span class="v">' + r[1] + '</span></div>').join(''));
-    pin.querySelector('.c1-left').append(L); parts.left.push(L);
     const dots = Array.from({length:5}, (_, j) => '<b class="' + (j < c.int ? 'f' : '') + '"></b>').join('');
-    const R = el('div', 'c1-block', '<div class="c1-row"><span class="mono">Ocasião</span><span class="v">' + p.occ.slice(0, 2).map(o => o[0] + ' <i>· ' + o[1].toLowerCase() + '</i>').join('<br>') + '</span></div>' +
-      '<div class="c1-row"><span class="mono">Intensidade</span><span class="v"><span class="c1-int" aria-hidden="true">' + dots + '</span>' + c.intL + '</span></div>' +
-      '<div class="c1-row"><span class="mono">Fixação</span><span class="v">' + c.fix + '</span></div>');
-    pin.querySelector('.c1-right').append(R); parts.right.push(R);
-    const F = el('div', 'c1-block', '<span class="mono" style="color:var(--ink-2)">' + ROMAN[i] + ' · ' + p.meaning + '</span><h3 class="nm">' + p.name + '</h3><p class="ds">' + p.desc + '</p><div class="act"><span class="pr">' + brl(p.price[50]) + ' <small class="mono" style="color:var(--ink-2)">50 ml</small></span><button type="button" data-k="' + k + '">Adicionar à sacola</button></div>');
-    pin.querySelector('.c1-foot').append(F); parts.foot.push(F);
-    const pr = el('li', '', ROMAN[i]); pin.querySelector('.c1-prog').append(pr); parts.prog.push(pr);
+    const s = document.createElement('article'); s.className = 'cx-slide'; s.dataset.k = k; s.setAttribute('aria-label', p.name);
+    s.innerHTML =
+      '<div class="cx-head"><span class="cx-kick mono">' + p.meaning + '</span><h3 class="cx-nm">' + p.name + '</h3><p class="cx-ds">' + p.desc + '</p>' +
+      '<div class="cx-act"><span class="cx-pr">' + brl(p.price[50]) + '<small class="mono">50 ml</small></span><button type="button" data-k="' + k + '">Adicionar à sacola</button></div></div>' +
+      '<figure class="cx-img"><img src="assets/c1-shot-' + k + '.webp?v=1" alt="Frasco do ' + p.name + '" decoding="async"' + (i ? ' loading="lazy"' : '') + '></figure>' +
+      '<div class="cx-notes">' +
+        '<div><span class="mono">Saída</span><span class="v">' + p.notes.top + '</span></div>' +
+        '<div><span class="mono">Ocasião</span><span class="v">' + p.occ.slice(0, 2).map(o => o[0] + ' <i>· ' + o[1].toLowerCase() + '</i>').join('<br>') + '</span></div>' +
+        '<div><span class="mono">Coração</span><span class="v">' + p.notes.heart + '</span></div>' +
+        '<div><span class="mono">Intensidade</span><span class="v"><span class="cx-int" aria-hidden="true">' + dots + '</span>' + c.intL + '</span></div>' +
+        '<div><span class="mono">Fundo</span><span class="v">' + p.notes.base + '</span></div>' +
+        '<div><span class="mono">Fixação</span><span class="v">' + c.fix + '</span></div>' +
+      '</div>';
+    rail.append(s); slides.push(s); imgs.push(s.querySelector('.cx-img img'));
   });
-  pin.querySelector('.c1-foot').addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (!b) return; const k = b.dataset.k; add({key:k + 50, name:P[k].name, sub:'Eau de parfum · 50 ml', img:P[k].img || 'assets/b-' + k + '.webp', price:P[k].price[50]}); });
+  rail.addEventListener('click', e => { const b = e.target.closest('button[data-k]'); if (!b) return; const k = b.dataset.k; add({key:k + 50, name:P[k].name, sub:'Eau de parfum · 50 ml', img:P[k].img || 'assets/b-' + k + '.webp', price:P[k].price[50]}); });
+  const n = C1K.length - 1, sm = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
   let cur = -1;
-  const mix = (hex, k) => { const n = parseInt(hex.slice(1), 16), base = [253, 252, 250]; return 'rgb(' + [n >> 16, n >> 8 & 255, n & 255].map((v, j) => Math.round(base[j] + (v - base[j]) * k)).join(',') + ')'; };
-  function show(i){
-    if (i === cur) return; cur = i;
-    pin.style.setProperty('--room', i >= 0 ? C1[C1K[i]].room : '#FDFCFA');
-    pin.classList.toggle('dk', i >= 0 && C1K[i] === 'minuit');
-    for (const key of Object.keys(parts)) parts[key].forEach((x, j) => {
-      const on = j === i; (Array.isArray(x) ? x : [x]).forEach(n => { n.classList.toggle('on', on); n.classList.toggle('past', i >= 0 && j < i); if (key === 'left' || key === 'right' || key === 'foot') n.setAttribute('aria-hidden', on ? 'false' : 'true'); });
-    });
-    drawLines();
-  }
-  // each line starts just off the bottle and travels out to its information, which then appears
-  let lineT = null, rowT = [];
-  function drawLines(){
-    rowT.forEach(clearTimeout); rowT = [];
-    document.querySelectorAll('.c1-row.in').forEach(r => r.classList.remove('in'));
-    if (cur < 0) { lines.innerHTML = ''; return; }
-    const rows = [...parts.left[cur].querySelectorAll('.c1-row')].map(r => [r, -1]).concat([...parts.right[cur].querySelectorAll('.c1-row')].map(r => [r, 1]));
-    { lines.innerHTML = ''; rows.forEach(([r], n) => rowT.push(setTimeout(() => r.classList.add('in'), 380 + n * 70))); return; }
-    const pr = pin.getBoundingClientRect(), bf = parts.bottle[cur].getBoundingClientRect(), BB = { aube:[.10,.14,.90,.66], peau:[.15,.16,.85,.66], minuit:[.22,.10,.78,.66] }[C1K[cur]] || [.15,.14,.85,.66];
-    const b = { left: bf.left + bf.width * BB[0], top: bf.top + bf.height * BB[1], right: bf.left + bf.width * BB[2], bottom: bf.top + bf.height * BB[3] }; b.width = b.right - b.left; b.height = b.bottom - b.top;   // the right side clears the box
-    const top = b.top - pr.top + b.height * .3, bot = b.bottom - pr.top - b.height * .08, gap = 34;
-    lines.setAttribute('viewBox', '0 0 ' + pr.width + ' ' + pr.height);
-    let html = '';
-    const plan = [];
-    rows.forEach(([r, side], n) => {
-      const rr = r.querySelector('.v').getBoundingClientRect();
-      const yt = rr.top - pr.top + rr.height / 2, yb = Math.min(bot, Math.max(top, yt));
-      const xb = side < 0 ? b.left - pr.left - gap : b.right - pr.left + gap;   // start: a clear breath away from the glass
-      const xt = side < 0 ? rr.right - pr.left + 14 : rr.left - pr.left - 14;           // end: just before the words
-      const k = side < 0 ? n : n - 3, delay = .45 + k * .14;
-      if ((side < 0 ? xb - xt : xt - xb) < 40) { plan.push([r, delay]); return; }        // no room: the words simply appear
-      html += '<g style="--d:' + delay + 's"><circle cx="' + xb.toFixed(1) + '" cy="' + yb.toFixed(1) + '" r="2" style="transition-delay:' + delay + 's"/>' +
-        '<path pathLength="1" d="M' + xb.toFixed(1) + ' ' + yb.toFixed(1) + ' L' + xt.toFixed(1) + ' ' + yt.toFixed(1) + '" style="transition-delay:' + delay + 's"/></g>';
-      plan.push([r, delay + .55]);
-    });
-    lines.innerHTML = html;
-    requestAnimationFrame(() => requestAnimationFrame(() => lines.querySelectorAll('g').forEach(g => g.classList.add('go'))));
-    plan.forEach(([r, t]) => rowT.push(setTimeout(() => r.classList.add('in'), t * 1000)));
-  }
-  const redraw = () => { clearTimeout(lineT); lineT = setTimeout(drawLines, 120); };
-  new ResizeObserver(redraw).observe(pin);
-  // the opening: the first room, a little closer, with the headline. As you scroll it settles back into place
-  const intro = $('#heroCopy'), cue = $('#cue'), scenes = pin.querySelector('.c1-scenes'), bottles = pin.querySelector('.c1-bottles');
-  const introLen = () => innerHeight * 1.7;
-  const photo = $('#heroPhoto'), pimg = photo.querySelector('img'), manif = $('#manif');
-  function showIntro(){
-    if (cur === -2) return; cur = -2;
-    pin.style.setProperty('--room', '#FAF1EB');   // clean: just the bottle and the words; the scene and notes come after
-    for (const key of Object.keys(parts)) parts[key].forEach((x, j) => (Array.isArray(x) ? x : [x]).forEach(n => n.classList.toggle('on', false)));
-    drawLines();
-  }
   function onScroll(){
-    const r = track.getBoundingClientRect(), y = -r.top, L0 = introLen(), range = track.offsetHeight - innerHeight - L0;
-    const t = Math.min(1, Math.max(0, y / L0)), e = t * t * (3 - 2 * t), RMm = RM.matches;
-    pin.classList.toggle('intro', t < 1);
-    const sc = RMm ? 1 : 1.04 - .04 * e;
-    scenes.style.transform = 'scale(' + sc.toFixed(4) + ')'; bottles.style.transform = 'scale(' + sc.toFixed(4) + ')';
-    const cl = v => Math.min(1, Math.max(0, v));
-    const fo = 1 - cl(t / .16);
-    intro.style.opacity = fo.toFixed(3); intro.style.transform = 'translateY(' + (-t * 40).toFixed(1) + 'px)'; intro.style.visibility = fo > 0 ? 'visible' : 'hidden';
-    cue.style.opacity = Math.max(0, 1 - t * 4).toFixed(3);
-    // the photograph holds, drifts a touch closer, then dissolves into the first room of the collection
-    const po = 1 - cl((t - .16) / .16);
-    const mo = cl((t - .26) / .08) * (1 - cl((t - .88) / .1));
-    manif.style.opacity = mo.toFixed(3); manif.style.visibility = mo > 0 ? 'visible' : 'hidden'; manif.style.transform = 'translateY(' + ((1 - cl((t - .26) / .12)) * 30 - cl((t - .88) / .1) * 30).toFixed(1) + 'px)';
-    window.manifP = cl((t - .32) / .42);
-    photo.style.opacity = po.toFixed(3); photo.style.visibility = po > 0 ? 'visible' : 'hidden';
-    if (!RMm) pimg.style.scale = (1 + t * .05).toFixed(4);
-    if (t < 1) { showIntro(); return; }
-    const p = Math.min(.999, Math.max(0, (y - L0) / range));
-    show(Math.min(C1K.length - 1, Math.floor(p * C1K.length)));
+    const r = track.getBoundingClientRect(), range = track.offsetHeight - innerHeight;
+    const s = Math.min(1, Math.max(0, -r.top / range));
+    let pos = 0; for (let j = 0; j < n; j++) pos += sm(.22, .78, s * n - j);
+    rail.style.transform = 'translate3d(' + (-pos * innerWidth).toFixed(1) + 'px,0,0)';
+    if (!RM.matches) imgs.forEach((im, i) => { im.style.transform = 'translate3d(' + ((pos - i) * 14).toFixed(2) + '%,0,0) scale(1.16)'; });
+    bar.style.transform = 'translateX(' + (pos * 100).toFixed(1) + '%)';
+    const c = Math.round(pos);
+    if (c !== cur){ cur = c; slides.forEach((x, i) => { x.toggleAttribute('inert', i !== c); x.setAttribute('aria-hidden', i !== c ? 'true' : 'false'); }); }
   }
   addEventListener('scroll', onScroll, {passive:true});
+  addEventListener('resize', onScroll);
   onScroll();
-  return { parts, redraw: drawLines };
+  return { redraw: () => {} };
 })();
 const c1 = window.c1;
 /* ---------- notes in time ---------- */
