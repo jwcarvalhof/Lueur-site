@@ -1375,7 +1375,7 @@ function close(fromHistory){
     setTimeout(() => { btn.classList.remove('chosen'); }, RM.matches ? 0 : DUR * 0.55);
     others.forEach((el, i) => el.style.transitionDelay = (0.12 + i * 0.12) + 's');
     setTimeout(() => grid.classList.remove('away'), RM.matches ? 0 : DUR * 0.45);
-    setTimeout(() => { others.forEach(el => el.style.transitionDelay = '0s'); busy = false; btn.focus({preventScroll:true}); }, RM.matches ? 0 : DUR + 500);
+    setTimeout(() => { others.forEach(el => el.style.transitionDelay = '0s'); busy = false; btn.focus({preventScroll:true, focusVisible:false}); }, RM.matches ? 0 : DUR + 500);
     if (!fromHistory) try { history.pushState({}, '', location.pathname + location.search); } catch(_){}
   }, RM.matches ? 0 : 480);
 }
