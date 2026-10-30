@@ -749,6 +749,15 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
   .camp-b{grid-column:2;grid-row:2 / span 2}
   .camp-c{grid-column:1 / -1;grid-row:4}
 }
+/* Seleção v3: mesma largura do resto da página, cards 4:5 como a coleção */
+#selecao .col-head,#selecao .grid,#selecao .strip-hint{max-width:min(1240px,calc((100svh - 290px) * .8 * 3 + 56px));margin-left:auto;margin-right:auto}
+#selecao .grid .case{height:auto;aspect-ratio:4/5}
+#selecao .grid{gap:0 28px}
+.camp{max-width:1240px}
+@media (max-width:860px){
+  #selecao .col-head,#selecao .grid,#selecao .strip-hint{max-width:none}
+  #selecao .grid .case{height:auto;aspect-ratio:4/5}
+}
 </style>
 
 
