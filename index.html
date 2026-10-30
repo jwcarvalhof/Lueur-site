@@ -653,8 +653,7 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
 .c1-pin{background:#F4ECE3}
 .c1-bottles,.c1-ghosts,.c1-lines{display:none!important}
 .c1-scenes{overflow:hidden}
-.c1-scenes img.shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:0% 50%;opacity:1;transform:translateX(100%);transition:transform 1.15s cubic-bezier(.7,0,.2,1),filter 1.15s var(--ease-io);-webkit-mask:none;mask:none;filter:none}
-.c1-scenes img.shot[data-k=peau]{object-position:60% 50%}
+.c1-scenes img.shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:72% 50%;opacity:1;transform:translateX(100%);transition:transform 1.15s cubic-bezier(.7,0,.2,1),filter 1.15s var(--ease-io);-webkit-mask:none;mask:none;filter:none}
 .c1-scenes img.shot.past{transform:translateX(-30%);filter:brightness(.8)}
 .c1-scenes img.shot.on{transform:none;z-index:1}
 .c1-scenes::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(250,245,239,.9) 0%,rgba(250,245,239,.7) 20%,rgba(250,245,239,0) 36%)}
@@ -681,7 +680,7 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
 @media (max-width:860px){
   .c1-track{height:calc(var(--n,3) * 96svh + 24svh + var(--c1-intro))}
   .c1-scenes img.shot{top:29svh;bottom:auto;height:38svh;object-position:var(--mx,50%) 50%}
-  .c1-scenes img.shot[data-k=aube]{--mx:50%}.c1-scenes img.shot[data-k=peau]{--mx:62%}.c1-scenes img.shot[data-k=minuit]{--mx:48%}
+  .c1-scenes img.shot{--mx:82%}
   .c1-scenes::after{display:none}
   .c1-pin.dk{background:#1E1510}
   .c1-foot{left:var(--gutter);right:var(--gutter);top:66px;width:auto}
@@ -1166,7 +1165,7 @@ window.c1 = (() => {
   const parts = { tint:[], ghost:[], bottle:[], left:[], right:[], foot:[], prog:[] };
   C1K.forEach((k, i) => {
     const p = P[k], c = C1[k];
-    const t = el('img'); t.src = 'assets/c1-scene-' + k + '.webp?v=3'; t.dataset.k = k; t.alt = ''; t.decoding = 'async'; t.className = 'shot'; pin.querySelector('.c1-scenes').append(t); parts.tint.push(t);
+    const t = el('img'); t.src = 'assets/c1-scene-' + k + '.webp?v=4'; t.dataset.k = k; t.alt = ''; t.decoding = 'async'; t.className = 'shot'; pin.querySelector('.c1-scenes').append(t); parts.tint.push(t);
     const g = el('span', '', p.name); g.style.setProperty('--t', c.tint); pin.querySelector('.c1-ghosts').append(g); parts.ghost.push(g);
     const ig = [];
     const b = el('span', 'bottle'); b.dataset.k = k; b.setAttribute('role', 'img'); b.setAttribute('aria-label', 'Frasco do ' + p.name);
