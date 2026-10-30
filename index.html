@@ -686,6 +686,38 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
   .cx-notes .v{font-size:13px}
   .cx-bar{bottom:14px}
 }
+/* Seleção: cabe numa tela */
+.col{min-height:0;padding:clamp(64px,9vh,100px) var(--gutter) clamp(56px,8vh,90px)}
+.col-head{margin-bottom:clamp(24px,4vh,44px);align-items:end}
+.col-head h2{font-size:clamp(30px,3.2vw,48px)}
+.col-head .it{font-size:.5em;margin-top:8px}
+.grid .item:nth-child(n){margin-top:0}
+.grid .case{aspect-ratio:auto;height:clamp(280px,48vh,460px)}
+.item-meta{padding-top:16px}
+.item-name{font-size:20px}
+.item-line{font-size:17px;margin-top:6px}
+/* Campanha em bento */
+.camp{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:clamp(150px,21vh,230px);gap:14px;padding:clamp(70px,10vh,110px) var(--gutter);align-items:stretch}
+.camp>*{margin:0!important;border-radius:6px;overflow:hidden;position:relative;aspect-ratio:auto!important}
+.camp figure img{width:100%!important;height:100%!important;object-fit:cover;transform:none!important;transition:transform 1.4s var(--ease-out)!important}
+.camp figure:hover img{transform:scale(1.03)!important}
+.camp-w{grid-column:1 / span 3;grid-row:1 / span 2}
+.camp-b{grid-column:4;grid-row:1 / span 3}
+.camp-a{grid-column:1 / span 2;grid-row:3 / span 2}
+.camp-a img{object-position:50% 50%}
+.camp-quote{grid-column:3;grid-row:3 / span 2;background:#EFE4D8;padding:clamp(20px,2.4vw,36px);display:flex;flex-direction:column;justify-content:flex-end;font-size:clamp(24px,2.3vw,36px);line-height:1.1}
+.camp-quote span:nth-child(2){padding-left:0}
+.camp-c{grid-column:4;grid-row:4;background:#2A1D15;color:rgba(244,234,223,.8);padding:clamp(18px,1.8vw,26px);font-size:14px;max-width:none;display:flex;flex-direction:column;justify-content:flex-end}
+.camp-c .mono{color:#F4EADF}
+@media (max-width:860px){
+  .grid .case{height:min(62vw,52svh)}
+  .camp{grid-template-columns:1fr 1fr;grid-auto-rows:34vw;gap:10px}
+  .camp-w{grid-column:1 / -1;grid-row:auto / span 2}
+  .camp-a{grid-column:1;grid-row:auto / span 3}
+  .camp-b{grid-column:2;grid-row:auto / span 3}
+  .camp-quote{grid-column:1 / -1;grid-row:auto / span 1;font-size:24px}
+  .camp-c{grid-column:1 / -1;grid-row:auto / span 1}
+}
 </style>
 
 
@@ -740,15 +772,15 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
     </div>
     <div class="grid" id="grid">
       <button class="item rv-s" data-id="lin" aria-label="Abrir Lin">
-        <span class="case"><span class="tone" aria-hidden="true"></span><span class="idx mono">I</span><span class="bwrap"><span class="bottle" data-k="lin"><img class="body" src="assets/p-lin.webp?v=3" alt="" width="1024" height="1024"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
+        <span class="case"><span class="tone" aria-hidden="true"></span><span class="bwrap"><span class="bottle" data-k="lin"><img class="body" src="assets/p-lin.webp?v=3" alt="" width="1024" height="1024"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
         <span class="item-meta"><span><span class="item-name">Lin</span><span class="item-line">Limpa, branca, delicada.</span></span><span class="mono">R$ 459</span></span>
       </button>
       <button class="item rv-s" data-id="figue" aria-label="Abrir Figue">
-        <span class="case"><span class="tone" aria-hidden="true"></span><span class="idx mono">II</span><span class="bwrap"><span class="bottle" data-k="figue"><img class="body" src="assets/p-figue.webp?v=3" alt="" width="1024" height="1024"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
+        <span class="case"><span class="tone" aria-hidden="true"></span><span class="bwrap"><span class="bottle" data-k="figue"><img class="body" src="assets/p-figue.webp?v=3" alt="" width="1024" height="1024"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
         <span class="item-meta"><span><span class="item-name">Figue</span><span class="item-line">Verde, leitosa, ensolarada.</span></span><span class="mono">R$ 479</span></span>
       </button>
       <button class="item rv-s" data-id="velours" aria-label="Abrir Velours">
-        <span class="case"><span class="tone" aria-hidden="true"></span><span class="idx mono">III</span><span class="bwrap"><span class="bottle" data-k="velours"><img class="body" src="assets/p-velours.webp?v=3" alt="" width="1024" height="1024"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
+        <span class="case"><span class="tone" aria-hidden="true"></span><span class="bwrap"><span class="bottle" data-k="velours"><img class="body" src="assets/p-velours.webp?v=3" alt="" width="1024" height="1024"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
         <span class="item-meta"><span><span class="item-name">Velours</span><span class="item-line">Rosa escura, profunda.</span></span><span class="mono">R$ 599</span></span>
       </button>
     </div>
@@ -800,9 +832,9 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
   </section>
 
   <section class="camp" aria-label="Campanha">
-    <figure class="camp-w rv-s"><img src="assets/campanha-peau-w.webp?v=3" alt="O Peau sobre uma mesa clara e espelhada, com luz de janela e reflexos de prisma" loading="lazy" data-par="0.06"><figcaption class="mono">Peau · luz de janela</figcaption></figure>
-    <figure class="camp-a rv-s"><img src="assets/campanha-peau.webp?v=3" alt="O Aube na borda de um pedestal, com luz de prisma espalhada pela parede" loading="lazy" data-par="0.08"><figcaption class="mono">Aube · manhã</figcaption></figure>
-    <figure class="camp-b rv-s"><img src="assets/campanha-minuit-2.webp?v=3" alt="O Minuit sobre superfície escura e espelhada, em luz âmbar de fim de noite" loading="lazy" data-par="0.12"><figcaption class="mono">Minuit · à noite</figcaption></figure>
+    <figure class="camp-w rv-s"><img src="assets/campanha-peau-w.webp?v=3" alt="O Peau sobre uma mesa clara e espelhada, com luz de janela e reflexos de prisma" loading="lazy"><figcaption class="mono">Peau · luz de janela</figcaption></figure>
+    <figure class="camp-a rv-s"><img src="assets/campanha-peau.webp?v=3" alt="O Aube na borda de um pedestal, com luz de prisma espalhada pela parede" loading="lazy"><figcaption class="mono">Aube · manhã</figcaption></figure>
+    <figure class="camp-b rv-s"><img src="assets/campanha-minuit-2.webp?v=3" alt="O Minuit sobre superfície escura e espelhada, em luz âmbar de fim de noite" loading="lazy"><figcaption class="mono">Minuit · à noite</figcaption></figure>
     <blockquote class="camp-quote rv-s"><span>Ninguém lembra do frasco.</span><span>Lembram de você passando.</span></blockquote>
     <p class="camp-c rv-s"><span class="mono">Campanha · Outono 2026</span>Fotografamos os perfumes como a luz os encontra: no vidro, no reflexo, na sombra que fica.</p>
   </section>
