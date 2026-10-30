@@ -656,7 +656,7 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
 .cx-head{grid-area:head}
 .cx-notes{grid-area:notes}
 .cx-img{grid-area:img;margin:0;height:min(calc(100vh - 190px),780px);height:min(calc(100svh - 190px),780px);aspect-ratio:4/5;overflow:hidden;background:#EFE6DC;box-shadow:0 40px 70px -46px rgba(60,42,30,.45)}
-.cx-img img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.16);will-change:transform}
+.cx-img img{width:100%;height:100%;object-fit:cover;display:block;will-change:transform}
 .cx-kick{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2);margin:0 0 12px}
 .cx-nm{font:200 clamp(42px,4.2vw,66px)/1 var(--f-display);letter-spacing:.22em;text-transform:uppercase;margin:0 0 14px}
 .cx-ds{margin:0 0 22px;color:var(--ink-2);font-size:15.5px;line-height:1.55;max-width:36ch}
@@ -676,7 +676,7 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
 @media (max-width:860px){
   .cx-track{height:calc(3 * 100svh + 50svh)}
   .cx-slide{grid-template-columns:100%;grid-template-rows:auto auto auto;grid-template-areas:"head" "img" "notes";align-content:center;row-gap:16px;padding:70px var(--gutter) 34px}
-  .cx-img{height:clamp(190px,36svh,360px);width:100%;aspect-ratio:auto}
+  .cx-img{height:clamp(200px,calc(100svh - 470px),560px);width:auto;aspect-ratio:4/5;justify-self:center}
   .cx-kick{margin-bottom:6px;font-size:10px}
   .cx-nm{font-size:34px;margin-bottom:8px}
   .cx-ds{font-size:13.5px;margin-bottom:12px}
@@ -731,6 +731,24 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
 .grid .item-line{margin-top:8px}
 .grid .item-meta .mono{color:var(--ink)}
 .grid .hint{bottom:16px}
+/* bento v2: proporções fixas, nada esticado */
+.camp{grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:auto;grid-template-rows:none;max-width:1400px;margin:0 auto;gap:14px}
+.camp>*{min-height:0}
+.camp-w{grid-column:1 / span 2;grid-row:1 / span 2;aspect-ratio:16/9!important}
+.camp-b{grid-column:3;grid-row:1 / span 3}
+.camp-a{grid-column:1;grid-row:3 / span 2;aspect-ratio:1/1!important}
+.camp-quote{grid-column:2;grid-row:3 / span 2}
+.camp-c{grid-column:3;grid-row:4}
+.camp figcaption{color:rgba(248,246,243,.9)!important;text-shadow:0 1px 8px rgba(0,0,0,.25)}
+.grid .bwrap{left:10%;right:10%;top:10%;bottom:8%}
+@media (max-width:860px){
+  .camp{grid-template-columns:1fr 1fr;grid-auto-rows:auto;gap:10px}
+  .camp-w{grid-column:1 / -1;grid-row:1}
+  .camp-a{grid-column:1;grid-row:2}
+  .camp-quote{grid-column:1;grid-row:3;font-size:20px}
+  .camp-b{grid-column:2;grid-row:2 / span 2}
+  .camp-c{grid-column:1 / -1;grid-row:4}
+}
 </style>
 
 
@@ -785,15 +803,15 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
     </div>
     <div class="grid" id="grid">
       <button class="item rv-s" data-id="lin" aria-label="Abrir Lin">
-        <span class="case"><span class="tone" aria-hidden="true"></span><span class="bwrap"><span class="bottle" data-k="lin"><img class="body" src="assets/p-lin.webp?v=3" alt="" width="1024" height="1024"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
+        <span class="case"><span class="tone" aria-hidden="true"></span><span class="bwrap"><span class="bottle" data-k="lin"><img class="body" src="assets/sel-lin.webp?v=1" alt="" width="739" height="964"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
         <span class="item-meta"><span><span class="item-name">Lin</span><span class="item-line">Limpa, branca, delicada.</span></span><span class="mono">R$ 459</span></span>
       </button>
       <button class="item rv-s" data-id="figue" aria-label="Abrir Figue">
-        <span class="case"><span class="tone" aria-hidden="true"></span><span class="bwrap"><span class="bottle" data-k="figue"><img class="body" src="assets/p-figue.webp?v=4" alt="" width="1024" height="1024"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
+        <span class="case"><span class="tone" aria-hidden="true"></span><span class="bwrap"><span class="bottle" data-k="figue"><img class="body" src="assets/sel-figue.webp?v=1" alt="" width="943" height="776"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
         <span class="item-meta"><span><span class="item-name">Figue</span><span class="item-line">Verde, leitosa, ensolarada.</span></span><span class="mono">R$ 479</span></span>
       </button>
       <button class="item rv-s" data-id="velours" aria-label="Abrir Velours">
-        <span class="case"><span class="tone" aria-hidden="true"></span><span class="bwrap"><span class="bottle" data-k="velours"><img class="body" src="assets/p-velours.webp?v=3" alt="" width="1024" height="1024"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
+        <span class="case"><span class="tone" aria-hidden="true"></span><span class="bwrap"><span class="bottle" data-k="velours"><img class="body" src="assets/sel-velours.webp?v=1" alt="" width="838" height="988"><span class="mist" aria-hidden="true"><i></i><i></i><i></i></span></span></span><span class="hint mono">Descobrir</span></span>
         <span class="item-meta"><span><span class="item-name">Velours</span><span class="item-line">Rosa escura, profunda.</span></span><span class="mono">R$ 599</span></span>
       </button>
     </div>
@@ -845,9 +863,9 @@ html.gl .c1-bottles .bottle{height:calc(var(--bh) * var(--ghn,1) * 1.25);top:aut
   </section>
 
   <section class="camp" aria-label="Campanha">
-    <figure class="camp-w rv-s"><img src="assets/campanha-peau-w.webp?v=3" alt="O Peau sobre uma mesa clara e espelhada, com luz de janela e reflexos de prisma" loading="lazy"><figcaption class="mono">Peau · luz de janela</figcaption></figure>
-    <figure class="camp-a rv-s"><img src="assets/campanha-peau.webp?v=3" alt="O Aube na borda de um pedestal, com luz de prisma espalhada pela parede" loading="lazy"><figcaption class="mono">Aube · manhã</figcaption></figure>
-    <figure class="camp-b rv-s"><img src="assets/campanha-minuit-2.webp?v=3" alt="O Minuit sobre superfície escura e espelhada, em luz âmbar de fim de noite" loading="lazy"><figcaption class="mono">Minuit · à noite</figcaption></figure>
+    <figure class="camp-w rv-s"><img src="assets/camp-peau.webp?v=1" alt="O Peau deitado sobre um líquido rosado, com ondas ao redor do frasco" loading="lazy" width="1536" height="864"><figcaption class="mono">Peau · pele</figcaption></figure>
+    <figure class="camp-b rv-s"><img src="assets/camp-minuit.webp?v=1" alt="O Minuit deitado sobre veludo preto, envolto em fumaça" loading="lazy" width="1024" height="1536"><figcaption class="mono">Minuit · à noite</figcaption></figure>
+    <figure class="camp-a rv-s"><img src="assets/camp-aube.webp?v=1" alt="O Aube deitado num feixe de sol, com reflexos dourados" loading="lazy" width="1024" height="1024"><figcaption class="mono">Aube · manhã</figcaption></figure>
     <blockquote class="camp-quote rv-s"><span>Ninguém lembra do frasco.</span><span>Lembram de você passando.</span></blockquote>
     <p class="camp-c rv-s"><span class="mono">Campanha · Outono 2026</span>Fotografamos os perfumes como a luz os encontra: no vidro, no reflexo, na sombra que fica.</p>
   </section>
@@ -1224,7 +1242,7 @@ window.c1 = (() => {
     const s = Math.min(1, Math.max(0, -r.top / range));
     let pos = 0; for (let j = 0; j < n; j++) pos += sm(.22, .78, s * n - j);
     rail.style.transform = 'translate3d(' + (-pos * innerWidth).toFixed(1) + 'px,0,0)';
-    if (!RM.matches) imgs.forEach((im, i) => { im.style.transform = 'translate3d(' + ((pos - i) * 14).toFixed(2) + '%,0,0) scale(1.16)'; });
+    if (!RM.matches) imgs.forEach((im, i) => { const d = Math.max(-1, Math.min(1, pos - i)); im.style.transform = 'translate3d(' + (d * 8).toFixed(2) + '%,0,0) scale(' + (1 + Math.abs(d) * .18).toFixed(4) + ')'; });
     bar.style.transform = 'translateX(' + (pos * 100).toFixed(1) + '%)';
     const c = Math.round(pos);
     if (c !== cur){ cur = c; slides.forEach((x, i) => { x.toggleAttribute('inert', i !== c); x.setAttribute('aria-hidden', i !== c ? 'true' : 'false'); }); }
