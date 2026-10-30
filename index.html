@@ -1305,6 +1305,7 @@ function sweep(to){ // one guided sweep on open: shows the visitor that the note
 /* ---------- collection: select and return ---------- */
 const col = $('#selecao'), grid = $('#grid'), stage = $('#stage'), sBottle = $('#sBottle');
 let busy = false, openBtn = null;
+grid.querySelectorAll('.bottle img').forEach(i => { const x = new Image(); x.src = i.getAttribute('src'); });
 const DUR = 900, EASE = 'cubic-bezier(.76,0,.24,1)';
 function fill(id){
   const p = P[id]; cur = id; size = 50;
@@ -1313,16 +1314,23 @@ function fill(id){
   $('#sOcc').innerHTML = p.occ.map(o => '<li><span class="mono">' + o[0] + '</span><span>' + o[1] + '</span></li>').join('');
   for (const k in p.notes) tierEls[k].querySelector('.notes').textContent = p.notes[k];
   sBottle.dataset.k = id; $('#sBox').style.setProperty('--ar', getComputedStyle(sBottle).getPropertyValue('--ar'));
-  $('#sBody').src = 'assets/p-' + id + '.webp?v=3'; $('#sCap').removeAttribute('src'); sBottle.setAttribute('aria-label', 'Frasco do perfume ' + p.name);
-  const m = 'url(' + p.img + ')'; $('#sSheen').style.webkitMaskImage = m; $('#sSheen').style.maskImage = m; resetTilt();
+  const gi = grid.querySelector('[data-id="' + id + '"] .bottle img'), src = gi ? gi.getAttribute('src') : 'assets/p-' + id + '.webp?v=3';
+  $('#sBody').src = src; $('#sCap').removeAttribute('src'); sBottle.setAttribute('aria-label', 'Frasco do perfume ' + p.name);
+  const m = 'url(' + src + ')'; $('#sSheen').style.webkitMaskImage = m; $('#sSheen').style.maskImage = m; resetTilt();
   document.querySelectorAll('.sizes button').forEach(b => b.setAttribute('aria-pressed', b.dataset.size === '50'));
   $('#sPrice').textContent = brl(p.price[50]);
   drawCurve(p); lastSay = ''; range.value = 0; setTime(0);
 }
+// the photo is drawn with object-fit: contain, so we move its visible picture, never the box: one uniform scale, nothing squeezed
+function picRect(img){
+  const r = img.getBoundingClientRect(), nw = img.naturalWidth || 1, nh = img.naturalHeight || 1, k = Math.min(r.width / nw, r.height / nh), w = nw * k, h = nh * k;
+  return { left: r.left + (r.width - w) / 2, top: r.top + (r.height - h) / 2, width: w, height: h };
+}
 function flip(el, from, to, done){
   if (RM.matches){ done && done(); return; }
-  const dx = from.left - to.left, dy = from.top - to.top, sx = from.width / to.width, sy = from.height / to.height;
-  el.animate([{transform:'translate(' + dx + 'px,' + dy + 'px) scale(' + sx + ',' + sy + ')'},{transform:'none'}], {duration:DUR, easing:EASE}).onfinish = done;
+  const E = el.getBoundingClientRect(), k = from.width / to.width;
+  const tx = from.left - E.left - k * (to.left - E.left), ty = from.top - E.top - k * (to.top - E.top);
+  el.animate([{transformOrigin:'0 0', transform:'translate(' + tx + 'px,' + ty + 'px) scale(' + k + ')'},{transformOrigin:'0 0', transform:'none'}], {duration:DUR, easing:EASE}).onfinish = done;
 }
 function sectionTop(){ progScroll = performance.now(); return col.getBoundingClientRect().top + scrollY - (innerWidth <= 860 ? 0 : 20); }
 function open(id, fromHistory){
@@ -1334,16 +1342,18 @@ function open(id, fromHistory){
   btn.classList.add('chosen'); grid.classList.add('away');
   col.style.setProperty('--sec-bg', P[id].bg);
   col.classList.toggle('dark', P[id].dark);
-  setTimeout(() => {
-    const from = gb.getBoundingClientRect();
+  const gimg = gb.querySelector('img'), sb = $('#sBody');
+  const ready = (sb.decode ? sb.decode() : Promise.resolve()).catch(() => {});
+  setTimeout(() => ready.then(() => {
+    const from = picRect(gimg);
     scrollTo({top: sectionTop(), behavior:'instant'});
     col.classList.add('open'); stage.classList.add('flipping');
-    const to = sBottle.getBoundingClientRect();
+    const to = picRect(sb);
     flip(sBottle, from, to, () => stage.classList.remove('flipping'));
     requestAnimationFrame(() => stage.classList.add('in'));
     setTimeout(() => { stage.classList.add('settled'); busy = false; sweep(3.2); $('#sName').focus({preventScroll:true}); }, RM.matches ? 0 : DUR + 150);
     if (!fromHistory) try { history.pushState({p:id}, '', '#' + id); } catch(_){}
-  }, RM.matches ? 0 : 380);
+  }), RM.matches ? 0 : 200);
 }
 function close(fromHistory){
   if (busy || !col.classList.contains('open')) return;
@@ -1354,12 +1364,12 @@ function close(fromHistory){
   resetTilt(); stage.classList.add('leaving'); stage.classList.remove('in','settled');
   setTimeout(() => {
     // 2. the bottle travels home while the room changes color
-    const from = sBottle.getBoundingClientRect();
+    const from = picRect($('#sBody'));
     col.classList.remove('open','dark'); col.style.removeProperty('--sec-bg'); stage.classList.remove('leaving');
     grid.classList.add('landing');
     scrollTo({top: sectionTop(), behavior:'instant'});
     if (innerWidth <= 860) btn.scrollIntoView({inline:'center', block:'nearest', behavior:'instant'});
-    const to = gb.getBoundingClientRect();
+    const to = picRect(gb.querySelector('img'));
     flip(gb, from, to, () => { grid.classList.remove('landing'); });
     // 3. its case and the siblings return in sequence, after the bottle is on its way
     setTimeout(() => { btn.classList.remove('chosen'); }, RM.matches ? 0 : DUR * 0.55);
@@ -1367,7 +1377,7 @@ function close(fromHistory){
     setTimeout(() => grid.classList.remove('away'), RM.matches ? 0 : DUR * 0.45);
     setTimeout(() => { others.forEach(el => el.style.transitionDelay = '0s'); busy = false; btn.focus({preventScroll:true}); }, RM.matches ? 0 : DUR + 500);
     if (!fromHistory) try { history.pushState({}, '', location.pathname + location.search); } catch(_){}
-  }, RM.matches ? 0 : 720);
+  }, RM.matches ? 0 : 480);
 }
 grid.addEventListener('pointermove', e => { const c = e.target.closest('.case'); if (!c) return; const r = c.getBoundingClientRect(); c.style.setProperty('--lx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%'); c.style.setProperty('--ly', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%'); });
 if (!matchMedia('(hover: hover)').matches && !RM.matches){
